@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Contact Us - KickOff</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/contact.css"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/Contact.css"/>
 </head>
 
 <body>
