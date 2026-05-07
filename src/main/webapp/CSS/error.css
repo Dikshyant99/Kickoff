@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #0f0f0f;
+  color: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ===== ERROR WRAPPER ===== */
+.error_wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+/* ===== ERROR LABEL ===== */
+.error_label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #2a6fdb;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+/* ===== ERROR CODE ===== */
+.error_code {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 10rem;
+  color: #f0f0f0;
+  line-height: 1;
+  letter-spacing: 8px;
+  margin-bottom: 24px;
+}
+
+/* ===== ERROR TEXT ===== */
+.error_title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #f0f0f0;
+  margin-bottom: 14px;
+}
+.error_subtitle {
+  font-size: 1rem;
+  color: #888;
+  line-height: 1.8;
+  max-width: 480px;
+  margin-bottom: 36px;
+}
+
+/* ===== ERROR DETAIL ===== */
+.error_detail {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  padding: 12px 20px;
+  margin-bottom: 28px;
+  max-width: 600px;
+}
+.error_detail code {
+  font-family: monospace;
+  font-size: 13px;
+  color: #e53e3e;
+}
+
+/* ===== ACTIONS ===== */
+.error_actions {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 11px 28px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+  display: inline-block;
+}
+.btn_primary { background: #2a6fdb; color: #fff; }
+.btn_primary:hover { background: #1a5fc8; }
+.btn_outline {
+  background: transparent;
+  border: 2px solid #2a6fdb;
+  color: #2a6fdb;
+}
+.btn_outline:hover { background: #2a6fdb; color: #fff; }
+
+
+@media (max-width: 600px) {
+  .error_code { font-size: 6rem; }
+  .error_title { font-size: 1.3rem; }
+  .error_actions { flex-direction: column; align-items: center; }
+}
