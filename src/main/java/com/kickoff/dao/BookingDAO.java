@@ -160,7 +160,7 @@ public class BookingDAO {
     // MAP ResultSet TO Booking
     private Booking mapBooking(ResultSet rs) throws SQLException {
         Booking b = new Booking();
-        b.setBookingId(rs.getInt("booking_id"));
+        b.setbookingId(rs.getInt("booking_id"));
         b.setUserId(rs.getInt("user_id"));
         b.setGroundId(rs.getInt("ground_id"));
         b.setSlotId(rs.getInt("slot_id"));
