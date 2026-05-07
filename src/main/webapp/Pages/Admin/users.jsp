@@ -11,10 +11,10 @@
 <body>
 
   <nav class="navbar">
-    <a href="${pageContext.request.contextPath}/Pages/Root/Homepage.jsp" class="navbar_logo">Kick<span>Off</span></a>
+    <a href="${pageContext.request.contextPath}/home" class="navbar_logo">Kick<span>Off</span></a>
     <ul class="navbar_links">
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/Homepage.jsp">Home</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/grounds.jsp">Grounds</a></li>
+      <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
+      <li><a href="${pageContext.request.contextPath}/grounds">Grounds</a></li>
       <li><a href="${pageContext.request.contextPath}/Pages/Root/teams.jsp">Teams</a></li>
       <li><a href="${pageContext.request.contextPath}/Pages/Root/about.jsp">About</a></li>
     </ul>
@@ -23,16 +23,26 @@
 
   <div class="layout">
     <aside class="sidebar">
-      <a href="${pageContext.request.contextPath}/AdminServlet"             class="sidebar_item">Overview</a>
-      <a href="${pageContext.request.contextPath}/Pages/Admin/users.jsp"    class="sidebar_item active">Users</a>
-      <a href="${pageContext.request.contextPath}/Pages/Admin/grounds.jsp"  class="sidebar_item">Grounds</a>
-      <a href="${pageContext.request.contextPath}/Pages/Admin/teams.jsp"    class="sidebar_item">Teams</a>
-      <a href="${pageContext.request.contextPath}/Pages/Admin/bookings.jsp" class="sidebar_item">Booking Requests</a>
-      <a href="${pageContext.request.contextPath}/LogoutServlet"            class="sidebar_item">Logout</a>
+      <a href="${pageContext.request.contextPath}/admin"        class="sidebar_item">Overview</a>
+      <a href="${pageContext.request.contextPath}/listUsers"    class="sidebar_item active">Users</a>
+      <a href="${pageContext.request.contextPath}/listGrounds"  class="sidebar_item">Grounds</a>
+      <a href="${pageContext.request.contextPath}/listTeams"    class="sidebar_item">Teams</a>
+      <a href="${pageContext.request.contextPath}/listBookings" class="sidebar_item">Booking Requests</a>
+      <a href="${pageContext.request.contextPath}/logout"       class="sidebar_item">Logout</a>
     </aside>
 
     <main class="main">
       <p class="page_title">Users</p>
+
+      <%-- Success / Error messages --%>
+      <c:if test="${not empty sessionScope.successMsg}">
+        <div class="msg_success">${sessionScope.successMsg}</div>
+        <c:remove var="successMsg" scope="session"/>
+      </c:if>
+      <c:if test="${not empty sessionScope.errorMsg}">
+        <div class="msg_error">${sessionScope.errorMsg}</div>
+        <c:remove var="errorMsg" scope="session"/>
+      </c:if>
 
       <input type="text" id="searchInput" class="search_input"
              placeholder="Search users..."
@@ -49,40 +59,56 @@
               <th>Sport</th>
               <th>Role</th>
               <th>Joined</th>
+              <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            <%-- Static rows - will be replaced by c:forEach when servlet is wired --%>
-            <tr>
-              <td>1</td>
-              <td>John Doe</td>
-              <td>john@test.com</td>
-              <td>9812345678</td>
-              <td>Football</td>
-              <td><span class="badge badge_blue">user</span></td>
-              <td>2026-04-15</td>
-              <td>
-                <a href="${pageContext.request.contextPath}/AdminServlet?action=deleteUser&id=1"
-                   class="btn btn_red"
-                   onclick="return confirm('Delete this user?')">Delete</a>
-              </td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Admin KickOff</td>
-              <td>admin@kickoff.com</td>
-              <td>9800000000</td>
-              <td>Football</td>
-              <td><span class="badge badge_green">admin</span></td>
-              <td>2026-04-01</td>
-              <td>
-                <a href="${pageContext.request.contextPath}/AdminServlet?action=deleteUser&id=2"
-                   class="btn btn_red"
-                   onclick="return confirm('Delete this user?')">Delete</a>
-              </td>
-            </tr>
-          </body>
+            <c:choose>
+              <c:when test="${empty requestScope.users}">
+                <tr>
+                  <td colspan="9" style="text-align:center; color:#888;">No users registered yet.</td>
+                </tr>
+              </c:when>
+              <c:otherwise>
+                <c:forEach var="user" items="${requestScope.users}" varStatus="loop">
+                  <tr>
+                    <td>${loop.count}</td>
+                    <td>${user.firstName} ${user.lastName}</td>
+                    <td>${user.email}</td>
+                    <td>${user.phone}</td>
+                    <td>${user.sport}</td>
+                    <td><span class="badge badge_blue">${user.role}</span></td>
+                    <td>${user.joinedDate}</td>
+                    <td>
+                      <c:choose>
+                        <c:when test="${user.active}">
+                          <span class="badge badge_green">Active</span>
+                        </c:when>
+                        <c:otherwise>
+                          <span class="badge badge_red">Inactive</span>
+                        </c:otherwise>
+                      </c:choose>
+                    </td>
+                    <td style="display:flex; gap:8px;">
+                      <c:choose>
+                        <c:when test="${user.active}">
+                          <a href="${pageContext.request.contextPath}/deleteUser?id=${user.userId}"
+                             class="btn btn_red"
+                             onclick="return confirm('Deactivate this user?')">Deactivate</a>
+                        </c:when>
+                        <c:otherwise>
+                          <a href="${pageContext.request.contextPath}/restoreUser?id=${user.userId}"
+                             class="btn btn_green"
+                             onclick="return confirm('Restore this user?')">Restore</a>
+                        </c:otherwise>
+                      </c:choose>
+                    </td>
+                  </tr>
+                </c:forEach>
+              </c:otherwise>
+            </c:choose>
+          </tbody>
         </table>
       </div>
 

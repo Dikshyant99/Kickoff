@@ -24,7 +24,7 @@
     </p>
 
     <div class="error_actions">
-      <a href="${pageContext.request.contextPath}/HomeServlet" class="btn btn_primary">
+      <a href="${pageContext.request.contextPath}/home" class="btn btn_primary">
         Go to Homepage
       </a>
       <a href="javascript:history.back()" class="btn btn_outline">

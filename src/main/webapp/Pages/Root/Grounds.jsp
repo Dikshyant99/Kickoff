@@ -13,10 +13,10 @@
 
   <!-- ===== NAVBAR ===== -->
   <nav class="navbar">
-    <a href="${pageContext.request.contextPath}/HomeServlet" class="navbar_logo">Kick<span>Off</span></a>
+    <a href="${pageContext.request.contextPath}/home" class="navbar_logo">Kick<span>Off</span></a>
     <ul class="navbar_links">
-      <li><a href="${pageContext.request.contextPath}/HomeServlet">Home</a></li>
-      <li><a href="${pageContext.request.contextPath}/GroundServlet" class="active">Grounds</a></li>
+      <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
+      <li><a href="${pageContext.request.contextPath}/grounds" class="active">Grounds</a></li>
       <li><a href="${pageContext.request.contextPath}/Pages/Root/teams.jsp">Teams</a></li>
       <li><a href="${pageContext.request.contextPath}/Pages/Root/about.jsp">About</a></li>
     </ul>
@@ -26,17 +26,17 @@
           <span class="welcome_text">Hi, ${sessionScope.firstName}</span>
           <c:choose>
             <c:when test="${sessionScope.role eq 'admin'}">
-              <a href="${pageContext.request.contextPath}/AdminServlet" class="btn btn--outline">Dashboard</a>
+              <a href="${pageContext.request.contextPath}/admin" class="btn btn--outline">Dashboard</a>
             </c:when>
             <c:otherwise>
-              <a href="${pageContext.request.contextPath}/ProfileServlet" class="btn btn--outline">Dashboard</a>
+              <a href="${pageContext.request.contextPath}/profile" class="btn btn--outline">Dashboard</a>
             </c:otherwise>
           </c:choose>
-          <a href="${pageContext.request.contextPath}/LogoutServlet" class="btn btn--primary">Logout</a>
+          <a href="${pageContext.request.contextPath}/logout" class="btn btn--primary">Logout</a>
         </c:when>
         <c:otherwise>
-          <a href="${pageContext.request.contextPath}/LoginServlet" class="btn btn--outline">Login</a>
-          <a href="${pageContext.request.contextPath}/RegisterServlet" class="btn btn--primary">Register</a>
+          <a href="${pageContext.request.contextPath}/login"    class="btn btn--outline">Login</a>
+          <a href="${pageContext.request.contextPath}/register" class="btn btn--primary">Register</a>
         </c:otherwise>
       </c:choose>
     </div>
@@ -47,7 +47,7 @@
     <h1 class="page-header_title">Browse <span>Grounds</span></h1>
     <p class="page-header_sub">Find and book sports grounds near you</p>
     <div class="page-header_search">
-      <form action="${pageContext.request.contextPath}/GroundServlet" method="get"
+      <form action="${pageContext.request.contextPath}/grounds" method="get"
             style="display:flex; gap:10px; width:100%;">
         <input type="text" name="q" placeholder="Search grounds, sports, location..."
                value="${param.q}"/>
@@ -65,22 +65,22 @@
         <label class="sidebar_label">Sport</label>
         <ul class="sidebar_list">
           <li class="sidebar_item ${empty param.sport ? 'active' : ''}">
-            <a href="${pageContext.request.contextPath}/GroundServlet">All Sports</a>
+            <a href="${pageContext.request.contextPath}/grounds">All Sports</a>
           </li>
           <li class="sidebar_item ${param.sport eq 'Football' ? 'active' : ''}">
-            <a href="${pageContext.request.contextPath}/GroundServlet?sport=Football">Football</a>
+            <a href="${pageContext.request.contextPath}/grounds?sport=Football">Football</a>
           </li>
           <li class="sidebar_item ${param.sport eq 'Cricket' ? 'active' : ''}">
-            <a href="${pageContext.request.contextPath}/GroundServlet?sport=Cricket">Cricket</a>
+            <a href="${pageContext.request.contextPath}/grounds?sport=Cricket">Cricket</a>
           </li>
           <li class="sidebar_item ${param.sport eq 'Basketball' ? 'active' : ''}">
-            <a href="${pageContext.request.contextPath}/GroundServlet?sport=Basketball">Basketball</a>
+            <a href="${pageContext.request.contextPath}/grounds?sport=Basketball">Basketball</a>
           </li>
           <li class="sidebar_item ${param.sport eq 'Volleyball' ? 'active' : ''}">
-            <a href="${pageContext.request.contextPath}/GroundServlet?sport=Volleyball">Volleyball</a>
+            <a href="${pageContext.request.contextPath}/grounds?sport=Volleyball">Volleyball</a>
           </li>
           <li class="sidebar_item ${param.sport eq 'Tennis' ? 'active' : ''}">
-            <a href="${pageContext.request.contextPath}/GroundServlet?sport=Tennis">Tennis</a>
+            <a href="${pageContext.request.contextPath}/grounds?sport=Tennis">Tennis</a>
           </li>
         </ul>
       </div>
@@ -89,16 +89,16 @@
         <label class="sidebar_label">Location</label>
         <ul class="sidebar_list">
           <li class="sidebar_item ${empty param.city ? 'active' : ''}">
-            <a href="${pageContext.request.contextPath}/GroundServlet">All Areas</a>
+            <a href="${pageContext.request.contextPath}/grounds">All Areas</a>
           </li>
           <li class="sidebar_item ${param.city eq 'Kathmandu' ? 'active' : ''}">
-            <a href="${pageContext.request.contextPath}/GroundServlet?city=Kathmandu">Kathmandu</a>
+            <a href="${pageContext.request.contextPath}/grounds?city=Kathmandu">Kathmandu</a>
           </li>
           <li class="sidebar_item ${param.city eq 'Lalitpur' ? 'active' : ''}">
-            <a href="${pageContext.request.contextPath}/GroundServlet?city=Lalitpur">Lalitpur</a>
+            <a href="${pageContext.request.contextPath}/grounds?city=Lalitpur">Lalitpur</a>
           </li>
           <li class="sidebar_item ${param.city eq 'Bhaktapur' ? 'active' : ''}">
-            <a href="${pageContext.request.contextPath}/GroundServlet?city=Bhaktapur">Bhaktapur</a>
+            <a href="${pageContext.request.contextPath}/grounds?city=Bhaktapur">Bhaktapur</a>
           </li>
         </ul>
       </div>
@@ -163,18 +163,16 @@
                   </div>
 
                   <%-- Book Now button - only for logged in users --%>
-                  <p style="color:red">${ground.groundId}</p>
                   <c:choose>
                     <c:when test="${sessionScope.loggedIn eq true and sessionScope.role ne 'admin'}">
-                      <a href="${pageContext.request.contextPath}/BookingServlet?action=showForm&groundId=${ground.groundId}"
+                      <a href="${pageContext.request.contextPath}/bookingForm?groundId=${ground.groundId}"
                          class="btn btn--primary"
                          style="display:block; text-align:center; margin-top:12px; width:100%;">
                         Book Now
                       </a>
                     </c:when>
                     <c:when test="${sessionScope.role eq 'admin'}">
-                      <%-- Admin sees manage button instead --%>
-                      <a href="${pageContext.request.contextPath}/AdminServlet?action=listGrounds"
+                      <a href="${pageContext.request.contextPath}/listGrounds"
                          class="btn btn--outline"
                          style="display:block; text-align:center; margin-top:12px; width:100%;">
                         Manage
@@ -182,7 +180,7 @@
                     </c:when>
                     <c:otherwise>
                       <%-- Not logged in --%>
-                      <a href="${pageContext.request.contextPath}/LoginServlet"
+                      <a href="${pageContext.request.contextPath}/login"
                          class="btn btn--outline"
                          style="display:block; text-align:center; margin-top:12px; width:100%;">
                         Login to Book
@@ -202,7 +200,7 @@
 
   <!-- ===== FOOTER ===== -->
   <footer class="footer">
-    <a href="${pageContext.request.contextPath}/HomeServlet" class="footer_logo">Kick<span>Off</span></a>
+    <a href="${pageContext.request.contextPath}/home" class="footer_logo">Kick<span>Off</span></a>
     <ul class="footer_links">
       <li><a href="${pageContext.request.contextPath}/Pages/Root/contact.jsp">Contact</a></li>
       <li><a href="#">Privacy</a></li>

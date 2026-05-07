@@ -6,12 +6,13 @@ import com.kickoff.util.CookiesUtil;
 import com.kickoff.util.SessionUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(asyncSupported=true,urlPatterns={"/LoginServlet"})
+@WebServlet(asyncSupported = true, urlPatterns = {"/login"})
 public class LoginServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -20,10 +21,27 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        // Read remember me cookies and pass to JSP
+        String savedEmail = "";
+        boolean remembered = false;
+
+        Cookie emailCookie    = CookiesUtil.getCookie(request, "userEmail");
+        Cookie rememberCookie = CookiesUtil.getCookie(request, "rememberMe");
+
+        if (emailCookie != null) {
+            savedEmail = emailCookie.getValue();
+        }
+        if (rememberCookie != null) {
+            remembered = true;
+        }
+
+        request.setAttribute("savedEmail", savedEmail);
+        request.setAttribute("remembered", remembered);
+
         request.getRequestDispatcher("/Pages/Auth/login.jsp")
                 .forward(request, response);
     }
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -59,7 +77,7 @@ public class LoginServlet extends HttpServlet {
 
             // SET COOKIES
             if ("on".equals(rememberMe)) {
-                // Remember me ticked save for 7 days
+                // Remember me ticked — save for 7 days
                 CookiesUtil.addCookie(response, "userEmail",  email,  7 * 24 * 60 * 60);
                 CookiesUtil.addCookie(response, "rememberMe", "true", 7 * 24 * 60 * 60);
             } else {
@@ -70,12 +88,9 @@ public class LoginServlet extends HttpServlet {
 
             // Redirect to admin or user
             if (user.getRole().equals("admin")) {
-                response.sendRedirect(request.getContextPath()
-                        + "/AdminServlet");
+                response.sendRedirect(request.getContextPath() + "/admin");
             } else {
-                System.out.println("USER LOGIN  redirecting to ProfileServlet");
-                response.sendRedirect(request.getContextPath()
-                        + "/ProfileServlet");
+                response.sendRedirect(request.getContextPath() + "/profile");
             }
 
         } else if (result.equals("wrong_password")) {

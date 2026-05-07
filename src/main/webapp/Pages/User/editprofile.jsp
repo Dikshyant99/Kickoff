@@ -22,8 +22,6 @@
       width: 100%;
       max-width: 560px;
     }
-
-    /* ── Avatar row ── */
     .edit_avatar_row {
       display: flex;
       align-items: center;
@@ -57,8 +55,6 @@
       color: #888;
       font-size: 13px;
     }
-
-    /* ── Section title ── */
     .edit_section_title {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 13px;
@@ -69,8 +65,6 @@
       padding-bottom: 8px;
       border-bottom: 1px solid #2a2a4a;
     }
-
-    /* ── Form ── */
     .form_group { margin-bottom: 16px; }
     .form_group label {
       display: block;
@@ -107,15 +101,11 @@
       grid-template-columns: 1fr 1fr;
       gap: 14px;
     }
-
-    /* ── Divider ── */
     .edit_divider {
       border: none;
       border-top: 1px solid #2a2a4a;
       margin: 28px 0;
     }
-
-    /* ── Actions ── */
     .form_actions {
       display: flex;
       gap: 12px;
@@ -134,8 +124,6 @@
       text-decoration: none;
       display: inline-block;
     }
-
-    /* ── Messages ── */
     .msg_success {
       background: rgba(39,174,96,0.15);
       border: 1px solid #27ae60;
@@ -158,12 +146,12 @@
 </head>
 <body>
 
-  <!-- NAVBAR  -->
+  <!-- ===== NAVBAR ===== -->
   <nav class="navbar">
-    <a href="${pageContext.request.contextPath}/Pages/Root/Homepage.jsp" class="navbar_logo">Kick<span>Off</span></a>
+    <a href="${pageContext.request.contextPath}/home" class="navbar_logo">Kick<span>Off</span></a>
     <ul class="navbar_links">
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/Homepage.jsp">Home</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/grounds.jsp">Grounds</a></li>
+      <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
+      <li><a href="${pageContext.request.contextPath}/grounds">Grounds</a></li>
       <li><a href="${pageContext.request.contextPath}/Pages/Root/teams.jsp">Teams</a></li>
       <li><a href="${pageContext.request.contextPath}/Pages/Root/about.jsp">About</a></li>
     </ul>
@@ -183,10 +171,10 @@
 
     <!-- ===== SIDEBAR ===== -->
     <aside class="sidebar">
-      <a href="${pageContext.request.contextPath}/ProfileServlet"          class="sidebar_item active">My Profile</a>
-      <a href="${pageContext.request.contextPath}/Pages/User/myteam.jsp"   class="sidebar_item">My Team</a>
-      <a href="${pageContext.request.contextPath}/Pages/User/bookings.jsp" class="sidebar_item">My Bookings</a>
-      <a href="${pageContext.request.contextPath}/LogoutServlet"           class="sidebar_item">Logout</a>
+      <a href="${pageContext.request.contextPath}/profile"    class="sidebar_item active">My Profile</a>
+      <a href="${pageContext.request.contextPath}/Pages/User/myteam.jsp" class="sidebar_item">My Team</a>
+      <a href="${pageContext.request.contextPath}/myBookings" class="sidebar_item">My Bookings</a>
+      <a href="${pageContext.request.contextPath}/logout"     class="sidebar_item">Logout</a>
     </aside>
 
     <!-- ===== MAIN ===== -->
@@ -202,8 +190,8 @@
                   <img src="${pageContext.request.contextPath}/${user.image}" alt="Profile"/>
                 </c:when>
                 <c:otherwise>
-                  <%= session.getAttribute("firstName") != null ?
-                      session.getAttribute("firstName").toString().substring(0,1).toUpperCase() : "U" %>
+                  <%-- Show first letter of first name using EL --%>
+                  <c:out value="${fn:substring(sessionScope.firstName, 0, 1)}"/>
                 </c:otherwise>
               </c:choose>
             </div>
@@ -223,8 +211,7 @@
           </c:if>
 
           <!-- FORM 1 — EDIT PROFILE -->
-          <form action="${pageContext.request.contextPath}/UpdateProfileServlet" method="post">
-            <input type="hidden" name="action" value="updateProfile"/>
+          <form action="${pageContext.request.contextPath}/updateProfile" method="post">
 
             <p class="edit_section_title">Personal Information</p>
 
@@ -269,8 +256,7 @@
             </div>
 
             <div class="form_actions">
-              <a href="${pageContext.request.contextPath}/ProfileServlet"
-                 class="btn btn_outline">Cancel</a>
+              <a href="${pageContext.request.contextPath}/profile" class="btn btn_outline">Cancel</a>
               <button type="submit" class="btn btn_primary">Save Changes</button>
             </div>
 
@@ -278,9 +264,8 @@
 
           <hr class="edit_divider"/>
 
-          <!-- CHANGE PASSWORD-->
-          <form action="${pageContext.request.contextPath}/UpdateProfileServlet" method="post">
-            <input type="hidden" name="action" value="changePassword"/>
+          <!-- FORM 2 — CHANGE PASSWORD -->
+          <form action="${pageContext.request.contextPath}/changePassword" method="post">
 
             <p class="edit_section_title">Change Password</p>
 
@@ -301,8 +286,7 @@
             </div>
 
             <div class="form_actions">
-              <a href="${pageContext.request.contextPath}/ProfileServlet"
-                 class="btn btn_outline">Cancel</a>
+              <a href="${pageContext.request.contextPath}/profile" class="btn btn_outline">Cancel</a>
               <button type="submit" class="btn btn_primary">Update Password</button>
             </div>
 

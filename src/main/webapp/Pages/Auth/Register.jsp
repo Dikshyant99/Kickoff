@@ -15,17 +15,17 @@
 
   <!-- ===== NAVBAR ===== -->
   <nav class="navbar">
-    <a href="${pageContext.request.contextPath}/Pages/Root/Homepage.jsp" class="navbar_logo">Kick<span>Off</span></a>
+    <a href="${pageContext.request.contextPath}/home" class="navbar_logo">Kick<span>Off</span></a>
     <ul class="navbar_links">
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/Homepage.jsp">Home</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/grounds.jsp">Grounds</a></li>
+      <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
+      <li><a href="${pageContext.request.contextPath}/grounds">Grounds</a></li>
       <li><a href="${pageContext.request.contextPath}/Pages/Root/teams.jsp">Teams</a></li>
       <li><a href="${pageContext.request.contextPath}/Pages/Root/findPlayers.jsp">Find Players</a></li>
       <li><a href="${pageContext.request.contextPath}/Pages/Root/about.jsp">About</a></li>
     </ul>
     <div class="navbar_actions">
-      <a href="${pageContext.request.contextPath}/Pages/Auth/login.jsp" class="login_btn">Login</a>
-      <a href="${pageContext.request.contextPath}/Pages/Auth/Register.jsp" class="register_btn">Register</a>
+      <a href="${pageContext.request.contextPath}/login"    class="login_btn">Login</a>
+      <a href="${pageContext.request.contextPath}/register" class="register_btn">Register</a>
     </div>
   </nav>
 
@@ -34,14 +34,14 @@
     <div class="auth_card">
 
       <div class="auth_brand">
-        <a href="${pageContext.request.contextPath}/Pages/Root/Homepage.jsp">Kick<span>Off</span></a>
+        <a href="${pageContext.request.contextPath}/home">Kick<span>Off</span></a>
       </div>
       <p class="auth_heading">Create your account</p>
       <p class="auth_subheading">Join thousands of players and teams across Nepal</p>
 
       <hr class="auth_divider"/>
 
-      <form action="${pageContext.request.contextPath}/RegisterServlet" method="post" enctype="multipart/form-data">
+      <form action="${pageContext.request.contextPath}/register" method="post" enctype="multipart/form-data">
 
         <%-- Error message --%>
         <c:if test="${not empty requestScope.errorMsg}">
@@ -186,7 +186,7 @@
 
       <p class="auth_footer_text">
         Already have an account?
-        <a href="${pageContext.request.contextPath}/Pages/Auth/login.jsp">Log in</a>
+        <a href="${pageContext.request.contextPath}/login">Log in</a>
       </p>
 
     </div>
@@ -194,9 +194,9 @@
 
   <!-- ===== FOOTER ===== -->
   <footer class="footer">
-    <a href="${pageContext.request.contextPath}/Pages/Root/Homepage.jsp" class="footer_logo">Kick<span>Off</span></a>
+    <a href="${pageContext.request.contextPath}/home" class="footer_logo">Kick<span>Off</span></a>
     <ul class="footer_links">
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/Homepage.jsp">Home</a></li>
+      <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
       <li><a href="${pageContext.request.contextPath}/Pages/Root/about.jsp">About</a></li>
       <li><a href="${pageContext.request.contextPath}/Pages/Root/contact.jsp">Contact</a></li>
     </ul>

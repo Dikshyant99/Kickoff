@@ -7,32 +7,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Team – KickOff</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/userdashboard.css"/>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/userdashboard.css"/>
 </head>
 <body>
 
   <nav class="navbar">
-    <a href="<%= request.getContextPath() %>/Pages/Root/Homepage.jsp" class="navbar_logo">Kick<span>Off</span></a>
+    <a href="${pageContext.request.contextPath}/home" class="navbar_logo">Kick<span>Off</span></a>
     <ul class="navbar_links">
-      <li><a href="<%= request.getContextPath() %>/Pages/Root/Homepage.jsp">Home</a></li>
-      <li><a href="<%= request.getContextPath() %>/Pages/Root/grounds.jsp">Grounds</a></li>
-      <li><a href="<%= request.getContextPath() %>/Pages/Root/teams.jsp">Teams</a></li>
-      <li><a href="<%= request.getContextPath() %>/Pages/Root/about.jsp">About</a></li>
+      <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
+      <li><a href="${pageContext.request.contextPath}/grounds">Grounds</a></li>
+      <li><a href="${pageContext.request.contextPath}/Pages/Root/teams.jsp">Teams</a></li>
+      <li><a href="${pageContext.request.contextPath}/Pages/Root/about.jsp">About</a></li>
     </ul>
     <div class="navbar_avatar">
-      <img src="<%= request.getContextPath() %>/Assets/avatar.png"
-           onerror="this.src='<%= request.getContextPath() %>/Assets/default-avatar.png'"
-           class="avatar_img" alt="Profile"/>
+      <c:choose>
+        <c:when test="${not empty sessionScope.image}">
+          <img src="${pageContext.request.contextPath}/${sessionScope.image}"
+               class="avatar_img" alt="Profile"/>
+        </c:when>
+        <c:otherwise>
+          <img src="${pageContext.request.contextPath}/Assets/default-avatar.png"
+               class="avatar_img" alt="Profile"/>
+        </c:otherwise>
+      </c:choose>
     </div>
   </nav>
 
   <div class="layout">
 
     <aside class="sidebar">
-      <a href="<%= request.getContextPath() %>/Pages/User/dashboard.jsp" class="sidebar_item">My Profile</a>
-      <a href="<%= request.getContextPath() %>/Pages/User/myteam.jsp"    class="sidebar_item active">My Team</a>
-      <a href="<%= request.getContextPath() %>/Pages/User/bookings.jsp"  class="sidebar_item">My Bookings</a>
-      <a href="<%= request.getContextPath() %>/LogoutServlet"            class="sidebar_item">Logout</a>
+      <a href="${pageContext.request.contextPath}/profile"    class="sidebar_item">My Profile</a>
+      <a href="${pageContext.request.contextPath}/Pages/User/myteam.jsp" class="sidebar_item active">My Team</a>
+      <a href="${pageContext.request.contextPath}/myBookings" class="sidebar_item">My Bookings</a>
+      <a href="${pageContext.request.contextPath}/logout"     class="sidebar_item">Logout</a>
     </aside>
 
     <main class="main">

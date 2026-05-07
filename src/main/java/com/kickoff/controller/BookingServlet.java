@@ -15,7 +15,12 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet(asyncSupported = true, urlPatterns = {"/BookingServlet"})
+@WebServlet(asyncSupported = true, urlPatterns = {
+        "/myBookings",
+        "/bookingForm",
+        "/makeBooking",
+        "/cancelBooking"
+})
 public class BookingServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -32,22 +37,23 @@ public class BookingServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String action = request.getParameter("action");
+        String path = request.getServletPath();
 
         try {
-            if (action == null) {
-                showMyBookings(request, response);
-                return;
-            }
-            switch (action) {
-                case "showForm":
+            switch (path) {
+
+                case "/bookingForm":
                     showBookingForm(request, response);
                     break;
-                case "cancel":
+
+                case "/cancelBooking":
                     cancelBooking(request, response);
                     break;
+
+                case "/myBookings":
                 default:
                     showMyBookings(request, response);
+                    break;
             }
         } catch (SQLException e) {
             throw new ServletException("Database error: " + e.getMessage(), e);
@@ -58,25 +64,32 @@ public class BookingServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        String path = request.getServletPath();
+
         try {
-            if ("book".equals(request.getParameter("action"))) {
-                makeBooking(request, response);
-            } else {
-                showMyBookings(request, response);
+            switch (path) {
+
+                case "/makeBooking":
+                    makeBooking(request, response);
+                    break;
+
+                default:
+                    showMyBookings(request, response);
+                    break;
             }
         } catch (SQLException e) {
             throw new ServletException("Database error: " + e.getMessage(), e);
         }
     }
 
-    // Show Booking
+    // ===== SHOW BOOKING FORM =====
     private void showBookingForm(HttpServletRequest request,
                                  HttpServletResponse response)
             throws ServletException, IOException, SQLException {
 
         String groundId = request.getParameter("groundId");
         if (groundId == null) {
-            response.sendRedirect(request.getContextPath() + "/GroundServlet");
+            response.sendRedirect(request.getContextPath() + "/listGrounds");
             return;
         }
 
@@ -89,7 +102,7 @@ public class BookingServlet extends HttpServlet {
                 .forward(request, response);
     }
 
-    //  New Booking
+    // ===== MAKE NEW BOOKING =====
     private void makeBooking(HttpServletRequest request,
                              HttpServletResponse response)
             throws ServletException, IOException, SQLException {
@@ -108,7 +121,7 @@ public class BookingServlet extends HttpServlet {
             session.setAttribute("errorMsg", result);
         }
 
-        response.sendRedirect(request.getContextPath() + "/BookingServlet");
+        response.sendRedirect(request.getContextPath() + "/myBookings");
     }
 
     // ===== SHOW MY BOOKINGS =====
@@ -142,6 +155,6 @@ public class BookingServlet extends HttpServlet {
             session.setAttribute("errorMsg", result);
         }
 
-        response.sendRedirect(request.getContextPath() + "/BookingServlet");
+        response.sendRedirect(request.getContextPath() + "/myBookings");
     }
 }

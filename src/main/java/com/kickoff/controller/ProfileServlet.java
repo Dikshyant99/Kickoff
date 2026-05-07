@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(asyncSupported=true,urlPatterns={"/ProfileServlet"})
+@WebServlet(asyncSupported = true, urlPatterns = {"/profile"})
 public class ProfileServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -24,8 +24,7 @@ public class ProfileServlet extends HttpServlet {
 
         if (email == null) {
             // Not logged in - redirect to login
-            response.sendRedirect(request.getContextPath()
-                    + "/Pages/Auth/login.jsp");
+            response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
 
@@ -34,8 +33,7 @@ public class ProfileServlet extends HttpServlet {
 
         if (user == null) {
             // User not found in database
-            response.sendRedirect(request.getContextPath()
-                    + "/Pages/Auth/login.jsp");
+            response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
 

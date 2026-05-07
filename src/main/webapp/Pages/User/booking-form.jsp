@@ -12,27 +12,27 @@
 <body>
 
   <nav class="navbar">
-    <a href="${pageContext.request.contextPath}/HomeServlet" class="navbar_logo">Kick<span>Off</span></a>
+    <a href="${pageContext.request.contextPath}/home" class="navbar_logo">Kick<span>Off</span></a>
     <ul class="navbar_links">
-      <li><a href="${pageContext.request.contextPath}/HomeServlet">Home</a></li>
-      <li><a href="${pageContext.request.contextPath}/GroundServlet">Grounds</a></li>
+      <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
+      <li><a href="${pageContext.request.contextPath}/grounds">Grounds</a></li>
       <li><a href="${pageContext.request.contextPath}/Pages/Root/teams.jsp">Teams</a></li>
       <li><a href="${pageContext.request.contextPath}/Pages/Root/about.jsp">About</a></li>
     </ul>
     <div class="navbar_actions">
       <span class="welcome_text">Hi, ${sessionScope.firstName}</span>
-      <a href="${pageContext.request.contextPath}/ProfileServlet" class="login_btn">Dashboard</a>
-      <a href="${pageContext.request.contextPath}/LogoutServlet" class="register_btn">Logout</a>
+      <a href="${pageContext.request.contextPath}/profile" class="login_btn">Dashboard</a>
+      <a href="${pageContext.request.contextPath}/logout"  class="register_btn">Logout</a>
     </div>
   </nav>
 
   <div class="layout">
 
     <aside class="sidebar">
-      <a href="${pageContext.request.contextPath}/ProfileServlet"          class="sidebar_item">My Profile</a>
-      <a href="${pageContext.request.contextPath}/Pages/User/myteam.jsp"   class="sidebar_item">My Team</a>
-      <a href="${pageContext.request.contextPath}/BookingServlet"          class="sidebar_item active">My Bookings</a>
-      <a href="${pageContext.request.contextPath}/LogoutServlet"           class="sidebar_item">Logout</a>
+      <a href="${pageContext.request.contextPath}/profile"    class="sidebar_item">My Profile</a>
+      <a href="${pageContext.request.contextPath}/Pages/User/myteam.jsp" class="sidebar_item">My Team</a>
+      <a href="${pageContext.request.contextPath}/myBookings" class="sidebar_item active">My Bookings</a>
+      <a href="${pageContext.request.contextPath}/logout"     class="sidebar_item">Logout</a>
     </aside>
 
     <main class="main">
@@ -41,7 +41,7 @@
 
         <div class="page_header">
           <p class="page_title">Book — ${requestScope.ground.name}</p>
-          <a href="${pageContext.request.contextPath}/GroundServlet" class="btn btn_outline">← Back to Grounds</a>
+          <a href="${pageContext.request.contextPath}/grounds" class="btn btn_outline">← Back to Grounds</a>
         </div>
 
         <%-- Ground info --%>
@@ -77,13 +77,12 @@
               <div class="empty">
                 No available slots for this ground at the moment.
                 <br/>
-                <a href="${pageContext.request.contextPath}/GroundServlet"
+                <a href="${pageContext.request.contextPath}/grounds"
                    style="color:#2a6fdb;">Browse other grounds</a>
               </div>
             </c:when>
             <c:otherwise>
-              <form action="${pageContext.request.contextPath}/BookingServlet" method="post">
-                <input type="hidden" name="action"   value="book"/>
+              <form action="${pageContext.request.contextPath}/makeBooking" method="post">
                 <input type="hidden" name="groundId" value="${requestScope.ground.groundId}"/>
 
                 <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:24px;">
@@ -122,7 +121,7 @@
       <c:if test="${empty requestScope.ground}">
         <div class="msg_error">
           Ground not found.
-          <a href="${pageContext.request.contextPath}/GroundServlet">Go back to grounds</a>.
+          <a href="${pageContext.request.contextPath}/grounds">Go back to grounds</a>.
         </div>
       </c:if>
 

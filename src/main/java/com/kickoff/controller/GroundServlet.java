@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet(asyncSupported = true, urlPatterns = {"/GroundServlet"})
+@WebServlet(asyncSupported = true, urlPatterns = {"/grounds"})
 public class GroundServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;

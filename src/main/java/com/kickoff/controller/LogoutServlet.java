@@ -9,23 +9,25 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(asyncSupported=true,urlPatterns={"/LogoutServlet"})
+@WebServlet(asyncSupported = true, urlPatterns = {"/logout"})
 public class LogoutServlet extends HttpServlet {
+
     private static final long serialVersionUID = 1L;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        //Destroys session
+        // Destroy session
         SessionUtil.invalidateSession(request);
-        //Delete rememberMe cookies
+        // Delete rememberMe cookies
         CookiesUtil.deleteCookie(response, "userEmail");
         CookiesUtil.deleteCookie(response, "rememberMe");
 
         // Redirect to login page after logout
-        response.sendRedirect(request.getContextPath() + "/Pages/Auth/login.jsp");
+        response.sendRedirect(request.getContextPath() + "/login");
     }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

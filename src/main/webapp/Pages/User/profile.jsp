@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,10 +50,10 @@
 
   <!-- ===== NAVBAR ===== -->
   <nav class="navbar">
-    <a href="${pageContext.request.contextPath}/Pages/Root/Homepage.jsp" class="navbar_logo">Kick<span>Off</span></a>
+    <a href="${pageContext.request.contextPath}/home" class="navbar_logo">Kick<span>Off</span></a>
     <ul class="navbar_links">
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/Homepage.jsp">Home</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/grounds.jsp">Grounds</a></li>
+      <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
+      <li><a href="${pageContext.request.contextPath}/grounds">Grounds</a></li>
       <li><a href="${pageContext.request.contextPath}/Pages/Root/teams.jsp">Teams</a></li>
       <li><a href="${pageContext.request.contextPath}/Pages/Root/about.jsp">About</a></li>
     </ul>
@@ -74,10 +75,10 @@
 
     <!-- ===== SIDEBAR ===== -->
     <aside class="sidebar">
-      <a href="${pageContext.request.contextPath}/ProfileServlet"          class="sidebar_item active">My Profile</a>
-      <a href="${pageContext.request.contextPath}/Pages/User/myteam.jsp"   class="sidebar_item">My Team</a>
-      <a href="${pageContext.request.contextPath}/Pages/User/bookings.jsp" class="sidebar_item">My Bookings</a>
-      <a href="${pageContext.request.contextPath}/LogoutServlet"           class="sidebar_item">Logout</a>
+      <a href="${pageContext.request.contextPath}/profile"    class="sidebar_item active">My Profile</a>
+      <a href="${pageContext.request.contextPath}/Pages/User/myteam.jsp" class="sidebar_item">My Team</a>
+      <a href="${pageContext.request.contextPath}/myBookings" class="sidebar_item">My Bookings</a>
+      <a href="${pageContext.request.contextPath}/logout"     class="sidebar_item">Logout</a>
     </aside>
 
     <!-- ===== MAIN ===== -->
@@ -96,7 +97,7 @@
       <c:if test="${empty requestScope.user}">
         <div class="msg_error">
           Could not load profile. Please
-          <a href="${pageContext.request.contextPath}/Pages/Auth/login.jsp">login again</a>.
+          <a href="${pageContext.request.contextPath}/login">login again</a>.
         </div>
       </c:if>
 
@@ -112,8 +113,7 @@
                        class="profile_avatar_img" alt="Profile"/>
                 </c:when>
                 <c:otherwise>
-                  <%= session.getAttribute("firstName") != null ?
-                      session.getAttribute("firstName").toString().substring(0,1).toUpperCase() : "U" %>
+                  <c:out value="${fn:toUpperCase(fn:substring(sessionScope.firstName, 0, 1))}"/>
                 </c:otherwise>
               </c:choose>
             </div>
@@ -183,9 +183,9 @@
 
           <!-- Actions -->
           <div class="profile_actions">
-            <a href="${pageContext.request.contextPath}/EditProfileServlet"
+            <a href="${pageContext.request.contextPath}/editProfile"
                class="btn btn_primary">Edit Profile</a>
-            <a href="${pageContext.request.contextPath}/EditProfileServlet"
+            <a href="${pageContext.request.contextPath}/editProfile"
                class="btn btn_outline">Change Password</a>
           </div>
 

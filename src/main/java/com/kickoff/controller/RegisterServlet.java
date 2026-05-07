@@ -10,9 +10,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import java.io.IOException;
 
-@WebServlet(asyncSupported=true,urlPatterns={"/RegisterServlet"})
+@WebServlet(asyncSupported = true, urlPatterns = {"/register"})
 @MultipartConfig
 public class RegisterServlet extends HttpServlet {
+
     private static final long serialVersionUID = 1L;
     private UserService userService = new UserService();
 
@@ -21,7 +22,6 @@ public class RegisterServlet extends HttpServlet {
             throws ServletException, IOException {
         request.getRequestDispatcher("/Pages/Auth/Register.jsp")
                 .forward(request, response);
-
     }
 
     @Override
@@ -58,13 +58,12 @@ public class RegisterServlet extends HttpServlet {
         String result = userService.registerUser(
                 firstName, lastName, email, phone,
                 sport, skillLevel, password, confirmPassword,
-                imagePath   // <-- added
+                imagePath
         );
 
         if (result.equals("success")) {
             // Registration worked - go to login with success message
-            response.sendRedirect(request.getContextPath()
-                    + "/Pages/Auth/login.jsp?registered=true");
+            response.sendRedirect(request.getContextPath() + "/login?registered=true");
         } else {
             // Validation failed: send error back to register page
             request.setAttribute("errorMsg", result);

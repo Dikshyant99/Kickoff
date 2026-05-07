@@ -13,11 +13,11 @@
 
 <!-- ===== NAVBAR ===== -->
 <nav class="navbar">
-    <a href="${pageContext.request.contextPath}/HomeServlet" class="navbar_logo">Kick<span>Off</span></a>
+    <a href="${pageContext.request.contextPath}/home" class="navbar_logo">Kick<span>Off</span></a>
     <ul class="navbar_links">
-        <li><a href="${pageContext.request.contextPath}/HomeServlet" class="active">Home</a></li>
-        <li><a href="${pageContext.request.contextPath}/GroundServlet">Grounds</a></li>
-        <li><a href="${pageContext.request.contextPath}/TeamServlet">Teams</a></li>
+        <li><a href="${pageContext.request.contextPath}/home" class="active">Home</a></li>
+        <li><a href="${pageContext.request.contextPath}/grounds">Grounds</a></li>
+        <li><a href="${pageContext.request.contextPath}/Pages/Root/teams.jsp">Teams</a></li>
         <li><a href="${pageContext.request.contextPath}/Pages/Root/findPlayers.jsp">Find Players</a></li>
         <li><a href="${pageContext.request.contextPath}/Pages/Root/about.jsp">About</a></li>
     </ul>
@@ -27,17 +27,17 @@
                 <span class="welcome_text">Hi, ${sessionScope.firstName}</span>
                 <c:choose>
                     <c:when test="${sessionScope.role eq 'admin'}">
-                        <a href="${pageContext.request.contextPath}/Pages/Admin/dashboard.jsp" class="login_btn">Dashboard</a>
+                        <a href="${pageContext.request.contextPath}/admin"   class="login_btn">Dashboard</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="${pageContext.request.contextPath}/ProfileServlet" class="login_btn">Dashboard</a>
+                        <a href="${pageContext.request.contextPath}/profile" class="login_btn">Dashboard</a>
                     </c:otherwise>
                 </c:choose>
-                <a href="${pageContext.request.contextPath}/LogoutServlet" class="register_btn">Logout</a>
+                <a href="${pageContext.request.contextPath}/logout" class="register_btn">Logout</a>
             </c:when>
             <c:otherwise>
-                <a href="${pageContext.request.contextPath}/LoginServlet" class="login_btn">Login</a>
-                <a href="${pageContext.request.contextPath}/RegisterServlet" class="register_btn">Register</a>
+                <a href="${pageContext.request.contextPath}/login"    class="login_btn">Login</a>
+                <a href="${pageContext.request.contextPath}/register" class="register_btn">Register</a>
             </c:otherwise>
         </c:choose>
     </div>
@@ -59,7 +59,7 @@
     </c:if>
 
     <div class="hero_search_bar">
-        <form action="${pageContext.request.contextPath}/GroundServlet"
+        <form action="${pageContext.request.contextPath}/grounds"
               method="get" style="display:flex; gap:10px; width:100%;">
             <input type="text" name="q"
                    placeholder="Search grounds, sports, location..."/>
@@ -68,10 +68,10 @@
     </div>
 
     <div class="hero_tags">
-        <a href="${pageContext.request.contextPath}/GroundServlet?sport=Football" class="tag">Football</a>
-        <a href="${pageContext.request.contextPath}/GroundServlet?sport=Cricket" class="tag">Cricket</a>
-        <a href="${pageContext.request.contextPath}/GroundServlet?sport=Basketball" class="tag">Basketball</a>
-        <a href="${pageContext.request.contextPath}/GroundServlet?sport=Tennis" class="tag">Tennis</a>
+        <a href="${pageContext.request.contextPath}/grounds?sport=Football"   class="tag">Football</a>
+        <a href="${pageContext.request.contextPath}/grounds?sport=Cricket"    class="tag">Cricket</a>
+        <a href="${pageContext.request.contextPath}/grounds?sport=Basketball" class="tag">Basketball</a>
+        <a href="${pageContext.request.contextPath}/grounds?sport=Tennis"     class="tag">Tennis</a>
     </div>
 </section>
 
@@ -81,13 +81,13 @@
 <div class="section">
     <div class="section_header">
         <h2 class="section_title">Available Grounds</h2>
-        <a href="${pageContext.request.contextPath}/GroundServlet" class="section_link">View all →</a>
+        <a href="${pageContext.request.contextPath}/grounds" class="section_link">View all →</a>
     </div>
     <div class="card_grid">
         <c:choose>
             <c:when test="${empty requestScope.grounds}">
-                <%-- Static fallback cards when no DB data --%>
-                <a href="${pageContext.request.contextPath}/GroundServlet" class="ground_card">
+                <%-- Static --%>
+                <a href="${pageContext.request.contextPath}/grounds" class="ground_card">
                     <div class="ground_card_image">
                         <img src="${pageContext.request.contextPath}/Assets/oldtrff.jpg"
                              style="width:100%; height:100%; object-fit:cover; object-position:bottom;"
@@ -102,7 +102,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="${pageContext.request.contextPath}/GroundServlet" class="ground_card">
+                <a href="${pageContext.request.contextPath}/grounds" class="ground_card">
                     <div class="ground_card_image">
                         <img src="${pageContext.request.contextPath}/Assets/cricket.jpg"
                              style="width:100%; height:100%; object-fit:cover; object-position:bottom;"
@@ -117,7 +117,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="${pageContext.request.contextPath}/GroundServlet" class="ground_card">
+                <a href="${pageContext.request.contextPath}/grounds" class="ground_card">
                     <div class="ground_card_image">
                         <img src="${pageContext.request.contextPath}/Assets/basketball.jpg"
                              style="width:100%; height:100%; object-fit:cover; object-position:center;"
@@ -135,7 +135,7 @@
             </c:when>
             <c:otherwise>
                 <c:forEach var="ground" items="${requestScope.grounds}">
-                    <a href="${pageContext.request.contextPath}/GroundServlet?id=${ground.groundId}"
+                    <a href="${pageContext.request.contextPath}/grounds?id=${ground.groundId}"
                        class="ground_card">
                         <div class="ground_card_image">
                             <c:choose>
@@ -179,13 +179,13 @@
 <div class="section">
     <div class="section_header">
         <h2 class="section_title">Open Teams Recruiting</h2>
-        <a href="${pageContext.request.contextPath}/TeamServlet" class="section_link">View all →</a>
+        <a href="${pageContext.request.contextPath}/Pages/Root/teams.jsp" class="section_link">View all →</a>
     </div>
     <div class="card_grid">
         <c:choose>
             <c:when test="${empty requestScope.teams}">
-                <%-- Static fallback cards when no DB data --%>
-                <a href="${pageContext.request.contextPath}/TeamServlet" class="team_card">
+                <%-- Static --%>
+                <a href="${pageContext.request.contextPath}/Pages/Root/teams.jsp" class="team_card">
                     <div class="team_card_name">Thunder FC</div>
                     <div class="team_card_meta">
                         Football · Needs 3 players<br/>
@@ -193,7 +193,7 @@
                     </div>
                     <span class="badge badge_blue">Recruiting</span>
                 </a>
-                <a href="${pageContext.request.contextPath}/TeamServlet" class="team_card">
+                <a href="${pageContext.request.contextPath}/Pages/Root/teams.jsp" class="team_card">
                     <div class="team_card_name">Storm Cricket XI</div>
                     <div class="team_card_meta">
                         Cricket · Needs 2 players<br/>
@@ -201,7 +201,7 @@
                     </div>
                     <span class="badge badge_blue">Recruiting</span>
                 </a>
-                <a href="${pageContext.request.contextPath}/TeamServlet" class="team_card">
+                <a href="${pageContext.request.contextPath}/Pages/Root/teams.jsp" class="team_card">
                     <div class="team_card_name">Hoops KTM</div>
                     <div class="team_card_meta">
                         Basketball · Full team<br/>
@@ -212,13 +212,13 @@
             </c:when>
             <c:otherwise>
                 <c:forEach var="team" items="${requestScope.teams}">
-                    <a href="${pageContext.request.contextPath}/TeamServlet?id=${team.teamId}"
+                    <a href="${pageContext.request.contextPath}/Pages/Root/teams.jsp?id=${team.teamId}"
                        class="team_card">
                         <div class="team_card_name">${team.name}</div>
                         <div class="team_card_meta">
-                                ${team.sportType} · Needs
-                                ${team.maxPlayers - team.currentPlayers} players<br/>
-                                ${team.location} · ${team.skillLevel}
+                            ${team.sportType} · Needs
+                            ${team.maxPlayers - team.currentPlayers} players<br/>
+                            ${team.location} · ${team.skillLevel}
                         </div>
                         <c:choose>
                             <c:when test="${team.recruitmentStatus eq 'open'}">
@@ -239,9 +239,9 @@
 
 <!-- ===== FOOTER ===== -->
 <footer class="footer">
-    <a href="${pageContext.request.contextPath}/HomeServlet" class="footer_logo">Kick<span>Off</span></a>
+    <a href="${pageContext.request.contextPath}/home" class="footer_logo">Kick<span>Off</span></a>
     <ul class="footer_links">
-        <li><a href="${pageContext.request.contextPath}/HomeServlet">Home</a></li>
+        <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
         <li><a href="${pageContext.request.contextPath}/Pages/Root/about.jsp">About</a></li>
         <li><a href="${pageContext.request.contextPath}/Pages/Root/contact.jsp">Contact</a></li>
     </ul>

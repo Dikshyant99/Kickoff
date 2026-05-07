@@ -10,8 +10,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(asyncSupported=true,urlPatterns={"/UpdateProfileServlet"})
+@WebServlet(asyncSupported = true, urlPatterns = {"/updateProfile", "/changePassword"})
 public class UpdateProfileServlet extends HttpServlet {
+
     private static final long serialVersionUID = 1L;
     private UserDAO userDAO = new UserDAO();
 
@@ -22,23 +23,25 @@ public class UpdateProfileServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
 
         if (session == null || session.getAttribute("email") == null) {
-            response.sendRedirect(request.getContextPath() + "/Pages/Auth/login.jsp");
+            response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
 
         String sessionEmail = (String) session.getAttribute("email");
+        String path = request.getServletPath();
 
-        // Detect which form was submitted
-        String action = request.getParameter("action");
-
-        if ("changePassword".equals(action)) {
-            handleChangePassword(request, response, session, sessionEmail);
-        } else {
-            handleUpdateProfile(request, response, session, sessionEmail);
+        switch (path) {
+            case "/changePassword":
+                handleChangePassword(request, response, session, sessionEmail);
+                break;
+            case "/updateProfile":
+            default:
+                handleUpdateProfile(request, response, session, sessionEmail);
+                break;
         }
     }
 
-    // Handle Profile Update
+    // ===== HANDLE PROFILE UPDATE =====
     private void handleUpdateProfile(HttpServletRequest request,
                                      HttpServletResponse response,
                                      HttpSession session,
@@ -54,7 +57,7 @@ public class UpdateProfileServlet extends HttpServlet {
 
         // Validation
         if (firstName == null || firstName.trim().isEmpty() ||
-                newEmail   == null || newEmail.trim().isEmpty()) {
+                newEmail == null || newEmail.trim().isEmpty()) {
 
             request.setAttribute("error", "First name and email are required.");
             User user = userDAO.getUserByEmail(sessionEmail);
@@ -67,19 +70,19 @@ public class UpdateProfileServlet extends HttpServlet {
         // Fetch existing user
         User user = userDAO.getUserByEmail(sessionEmail);
         if (user == null) {
-            response.sendRedirect(request.getContextPath() + "/Pages/Auth/login.jsp");
+            response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
 
         // Apply updates
         user.setFirstName(firstName.trim());
-        user.setLastName(lastName   != null ? lastName.trim()   : "");
+        user.setLastName(lastName     != null ? lastName.trim()   : "");
         user.setEmail(newEmail.trim());
-        user.setPhone(phone         != null ? phone.trim()      : "");
-        user.setSport(sport         != null ? sport.trim()      : "");
+        user.setPhone(phone           != null ? phone.trim()      : "");
+        user.setSport(sport           != null ? sport.trim()      : "");
         user.setSkillLevel(skillLevel != null ? skillLevel.trim() : "");
 
-        // Saving updated data
+        // Save updated data
         boolean updated = userDAO.updateUser(user);
 
         if (updated) {
@@ -87,8 +90,7 @@ public class UpdateProfileServlet extends HttpServlet {
                 session.setAttribute("email", newEmail.trim());
             }
             session.setAttribute("successMsg", "Profile updated successfully.");
-            response.sendRedirect(request.getContextPath() + "/ProfileServlet");
-            return;
+            response.sendRedirect(request.getContextPath() + "/profile");
         } else {
             request.setAttribute("error", "Failed to update. Please try again.");
             request.setAttribute("user", user);
@@ -97,7 +99,7 @@ public class UpdateProfileServlet extends HttpServlet {
         }
     }
 
-    // Handle Change Password
+    // ===== HANDLE CHANGE PASSWORD =====
     private void handleChangePassword(HttpServletRequest request,
                                       HttpServletResponse response,
                                       HttpSession session,
@@ -113,8 +115,8 @@ public class UpdateProfileServlet extends HttpServlet {
 
         // Validation
         if (currentPassword == null || currentPassword.trim().isEmpty() ||
-                newPassword      == null || newPassword.trim().isEmpty()     ||
-                confirmPassword  == null || confirmPassword.trim().isEmpty()) {
+                newPassword     == null || newPassword.trim().isEmpty()     ||
+                confirmPassword == null || confirmPassword.trim().isEmpty()) {
 
             request.setAttribute("error", "All password fields are required.");
             request.setAttribute("user", user);
@@ -153,8 +155,7 @@ public class UpdateProfileServlet extends HttpServlet {
 
         if (updated) {
             session.setAttribute("successMsg", "Password changed successfully.");
-            response.sendRedirect(request.getContextPath() + "/ProfileServlet");
-            return;
+            response.sendRedirect(request.getContextPath() + "/profile");
         } else {
             request.setAttribute("error", "Failed to update password. Please try again.");
             request.setAttribute("user", user);
@@ -166,6 +167,6 @@ public class UpdateProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect(request.getContextPath() + "/ProfileServlet");
+        response.sendRedirect(request.getContextPath() + "/profile");
     }
 }

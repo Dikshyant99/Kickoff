@@ -9,7 +9,7 @@
 
     <!-- Default welcome page -->
     <welcome-file-list>
-        <welcome-file>HomeServlet</welcome-file>
+        <welcome-file>home</welcome-file>
     </welcome-file-list>
 
     <!-- Session timeout: 30 minutes -->

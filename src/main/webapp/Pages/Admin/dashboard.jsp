@@ -13,10 +13,10 @@
 
   <!-- ===== NAVBAR ===== -->
   <nav class="navbar">
-    <a href="${pageContext.request.contextPath}/Pages/Root/Homepage.jsp" class="navbar_logo">Kick<span>Off</span></a>
+    <a href="${pageContext.request.contextPath}/home" class="navbar_logo">Kick<span>Off</span></a>
     <ul class="navbar_links">
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/Homepage.jsp">Home</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/grounds.jsp">Grounds</a></li>
+      <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
+      <li><a href="${pageContext.request.contextPath}/grounds">Grounds</a></li>
       <li><a href="${pageContext.request.contextPath}/Pages/Root/teams.jsp">Teams</a></li>
       <li><a href="${pageContext.request.contextPath}/Pages/Root/about.jsp">About</a></li>
     </ul>
@@ -27,12 +27,12 @@
 
     <!-- ===== SIDEBAR ===== -->
     <aside class="sidebar">
-      <a href="${pageContext.request.contextPath}/AdminServlet"             class="sidebar_item active">Overview</a>
-      <a href="${pageContext.request.contextPath}/Pages/Admin/users.jsp"    class="sidebar_item">Users</a>
-      <a href="${pageContext.request.contextPath}/Pages/Admin/grounds.jsp"  class="sidebar_item">Grounds</a>
-      <a href="${pageContext.request.contextPath}/Pages/Admin/teams.jsp"    class="sidebar_item">Teams</a>
-      <a href="${pageContext.request.contextPath}/Pages/Admin/bookings.jsp" class="sidebar_item">Booking Requests</a>
-      <a href="${pageContext.request.contextPath}/LogoutServlet"            class="sidebar_item">Logout</a>
+      <a href="${pageContext.request.contextPath}/admin"        class="sidebar_item active">Overview</a>
+      <a href="${pageContext.request.contextPath}/listUsers"    class="sidebar_item">Users</a>
+      <a href="${pageContext.request.contextPath}/listGrounds"  class="sidebar_item">Grounds</a>
+      <a href="${pageContext.request.contextPath}/listTeams"    class="sidebar_item">Teams</a>
+      <a href="${pageContext.request.contextPath}/listBookings" class="sidebar_item">Booking Requests</a>
+      <a href="${pageContext.request.contextPath}/logout"       class="sidebar_item">Logout</a>
     </aside>
 
     <!-- ===== MAIN ===== -->
@@ -104,7 +104,7 @@
                 </div>
                 <div class="list_item_right">
                   <span class="badge badge_blue">${user.role}</span>
-                  <a href="${pageContext.request.contextPath}/AdminServlet?action=deleteUser&id=${user.userId}"
+                  <a href="${pageContext.request.contextPath}/deleteUser?id=${user.userId}"
                      class="btn btn_red"
                      onclick="return confirm('Delete this user?')">Delete</a>
                 </div>
@@ -139,9 +139,9 @@
                     </c:when>
                     <c:when test="${booking.status == 'pending'}">
                       <span class="badge badge_yellow">Pending</span>
-                      <a href="${pageContext.request.contextPath}/AdminServlet?action=approveBooking&id=${booking.bookingId}"
+                      <a href="${pageContext.request.contextPath}/approveBooking?id=${booking.bookingId}"
                          class="btn btn_green">Approve</a>
-                      <a href="${pageContext.request.contextPath}/AdminServlet?action=rejectBooking&id=${booking.bookingId}"
+                      <a href="${pageContext.request.contextPath}/rejectBooking?id=${booking.bookingId}"
                          class="btn btn_red">Reject</a>
                     </c:when>
                     <c:otherwise>
@@ -182,7 +182,7 @@
                       <span class="badge badge_red">Closed</span>
                     </c:otherwise>
                   </c:choose>
-                  <a href="${pageContext.request.contextPath}/AdminServlet?action=deleteTeam&id=${team.teamId}"
+                  <a href="${pageContext.request.contextPath}/deleteTeam?id=${team.teamId}"
                      class="btn btn_red"
                      onclick="return confirm('Delete this team?')">Delete</a>
                 </div>

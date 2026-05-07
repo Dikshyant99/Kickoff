@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.*;
 
-@WebServlet(asyncSupported=true,urlPatterns={"/HomeServlet"})
+@WebServlet(asyncSupported = true, urlPatterns = {"/home"})
 public class HomeServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -21,7 +21,7 @@ public class HomeServlet extends HttpServlet {
 
         try (Connection con = DBUtil.getConnection()) {
 
-            //FEATURED GROUNDS
+            // FEATURED GROUNDS
             // Fetch 3 active grounds for homepage cards
             List<Map<String, Object>> grounds = new ArrayList<>();
             String groundSql = "SELECT ground_id, name, location, city, " +
