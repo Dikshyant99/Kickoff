@@ -82,7 +82,7 @@
                    onclick="return confirm('Delete this user?')">Delete</a>
               </td>
             </tr>
-          </tbody>
+          </body>
         </table>
       </div>
 
