@@ -13,6 +13,7 @@ public class User {
     private String role;
     private String createdAt;
     private String image;
+    private boolean active;
 
     // Empty constructor:needed by UserDAO when reading from database
     public User() {
@@ -36,57 +37,92 @@ public class User {
 
 
     // Getters and Setters
-    public int    getUserId()
+    public int
+    getUserId()
     { return userId; }
 
 
-    public void   setUserId(int userId)
+    public void
+    setUserId(int userId)
     { this.userId = userId; }
 
-    public String getFirstName()
+    public String
+    getFirstName()
     { return firstName; }
-    public void   setFirstName(String firstName)
+
+    public void
+    setFirstName(String firstName)
     { this.firstName = firstName; }
 
-    public String getLastName()
+    public String
+    getLastName()
     { return lastName; }
-    public void   setLastName(String lastName)
+
+    public void
+    setLastName(String lastName)
     { this.lastName = lastName; }
 
-    public String getEmail()
+    public String
+    getEmail()
     { return email; }
-    public void   setEmail(String email)
+    public void
+    setEmail(String email)
     { this.email = email; }
 
-    public String getPhone()
+    public String
+    getPhone()
     { return phone; }
-    public void   setPhone(String phone)
+
+    public void
+    setPhone(String phone)
     { this.phone = phone; }
 
-    public String getSport()
+    public String
+    getSport()
     { return sport; }
-    public void   setSport(String sport)
+
+    public void
+    setSport(String sport)
     { this.sport = sport; }
 
-    public String getSkillLevel()
+    public String
+    getSkillLevel()
     { return skillLevel; }
-    public void   setSkillLevel(String skillLevel)
+
+    public void
+    setSkillLevel(String skillLevel)
     { this.skillLevel = skillLevel; }
 
-    public String getPassword()
+    public String
+    getPassword()
     { return password; }
-    public void   setPassword(String password)
+
+    public void
+    setPassword(String password)
     { this.password = password; }
 
-    public String getRole()
+    public String
+    getRole()
     { return role; }
-    public void   setRole(String role)
+
+    public void
+    setRole(String role)
     { this.role = role; }
 
-    public String getCreatedAt()
+    public String
+    getCreatedAt()
     { return createdAt; }
-    public void   setCreatedAt(String createdAt)
+
+    public void
+    setCreatedAt(String createdAt)
     { this.createdAt = createdAt; }
+
+    public boolean
+    isActive()
+    { return active; }
+    public void
+    setActive(boolean active)
+    { this.active = active; }
 
     // Helper: returns full name in one call
     // Used in LoginServlet: user.getFirstName()

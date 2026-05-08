@@ -86,12 +86,12 @@
     <div class="card_grid">
         <c:choose>
             <c:when test="${empty grounds}">
-                <%-- Static fallback --%>
+                <%Static images%>
                 <a href="${pageContext.request.contextPath}/grounds" class="ground_card">
                     <div class="ground_card_image">
-                        <img src="${pageContext.request.contextPath}/Assets/oldtrff.jpg"
+                        <img src="${pageContext.request.contextPath}/Assets/basketball.jsp"
                              style="width:100%; height:100%; object-fit:cover; object-position:bottom;"
-                             alt="City Football Arena"/>
+                             alt="Bhaktapur BasketballCourt"/>
                     </div>
                     <div class="ground_card_body">
                         <div class="ground_card_name">City Football Arena</div>

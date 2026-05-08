@@ -51,7 +51,7 @@
           <label class="form_label" for="email">Email address</label>
           <input class="form_input" type="email" id="email" name="email"
                  placeholder="you@example.com"
-                 value="${sessionScope.savedEmail}"
+                 value="${savedEmail}"
                  required/>
         </div>
 
@@ -65,7 +65,7 @@
         <div class="form_row">
           <label class="form_checkbox_label">
             <input type="checkbox" name="rememberMe"
-                   <c:if test="${sessionScope.remembered}">checked</c:if>/>
+                   <c:if test="${remembered}">checked</c:if>/>
             Remember me
           </label>
           <a href="#" class="form_forgot">Forgot password?</a>

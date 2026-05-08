@@ -16,7 +16,12 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    private UserService userService = new UserService();
+    private UserService userService; //
+
+    @Override
+    public void init() {
+        userService = new UserService(); //  Initialization
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -35,7 +40,6 @@ public class LoginServlet extends HttpServlet {
             remembered = true;
         }
 
-        // request attributes + forward
         request.setAttribute("savedEmail", savedEmail);
         request.setAttribute("remembered", remembered);
         request.getRequestDispatcher("/Pages/Auth/login.jsp")
@@ -58,6 +62,15 @@ public class LoginServlet extends HttpServlet {
 
             User user = userService.getUserByEmail(email);
 
+            //null check on user
+            if (user == null) {
+                request.getSession().setAttribute("errorMsg",
+                        "Something went wrong. Please try again.");
+                response.sendRedirect(request.getContextPath() + "/login");
+                return;
+            }
+
+            //Stores user details in session
             SessionUtil.setAttribute(request, "loggedIn",   true);
             SessionUtil.setAttribute(request, "userId",     user.getUserId());
             SessionUtil.setAttribute(request, "firstName",  user.getFirstName());
@@ -70,6 +83,7 @@ public class LoginServlet extends HttpServlet {
             SessionUtil.setAttribute(request, "image",      user.getImage());
             SessionUtil.setAttribute(request, "createdAt",  user.getCreatedAt());
 
+            //Handling remember me using Cookies
             if ("on".equals(rememberMe)) {
                 CookiesUtil.addCookie(response, "userEmail",  email,  7 * 24 * 60 * 60);
                 CookiesUtil.addCookie(response, "rememberMe", "true", 7 * 24 * 60 * 60);
@@ -86,19 +100,24 @@ public class LoginServlet extends HttpServlet {
 
         } else {
             if (result.equals("wrong_password")) {
-                request.getSession().setAttribute("errorMsg", "Wrong password. Please try again.");
+                request.getSession().setAttribute("errorMsg",
+                        "Wrong password. Please try again.");
             } else if (result.equals("user_not_found")) {
-                request.getSession().setAttribute("errorMsg", "No account found with this email. Please register.");
+                request.getSession().setAttribute("errorMsg",
+                        "No account found with this email. Please register.");
             } else if (result.equals("email_empty")) {
-                request.getSession().setAttribute("errorMsg", "Please enter your email address.");
+                request.getSession().setAttribute("errorMsg",
+                        "Please enter your email address.");
             } else if (result.equals("password_empty")) {
-                request.getSession().setAttribute("errorMsg", "Please enter your password.");
+                request.getSession().setAttribute("errorMsg",
+                        "Please enter your password.");
             } else if (result.equals("invalid_email")) {
-                request.getSession().setAttribute("errorMsg", "Please enter a valid email address.");
+                request.getSession().setAttribute("errorMsg",
+                        "Please enter a valid email address.");
             } else {
-                request.getSession().setAttribute("errorMsg", "Something went wrong. Please try again.");
+                request.getSession().setAttribute("errorMsg",
+                        "Something went wrong. Please try again.");
             }
-            // FIX: redirect to servlet, not JSP
             response.sendRedirect(request.getContextPath() + "/login");
         }
     }

@@ -128,9 +128,10 @@
       <li><a href="${pageContext.request.contextPath}/about">About</a></li>
     </ul>
     <div class="navbar_avatar">
+
       <c:choose>
-        <c:when test="${not empty sessionScope.user.image}">
-          <img src="${pageContext.request.contextPath}/${sessionScope.user.image}"
+        <c:when test="${not empty user.image}">
+          <img src="${pageContext.request.contextPath}/${user.image}"
                class="avatar_img" alt="Profile"/>
         </c:when>
         <c:otherwise>
@@ -157,9 +158,10 @@
           <%-- avatar row --%>
           <div class="edit_avatar_row">
             <div class="edit_avatar">
+
               <c:choose>
-                <c:when test="${not empty sessionScope.user.image}">
-                  <img src="${pageContext.request.contextPath}/${sessionScope.user.image}" alt="Profile"/>
+                <c:when test="${not empty user.image}">
+                  <img src="${pageContext.request.contextPath}/${user.image}" alt="Profile"/>
                 </c:when>
                 <c:otherwise>
                   ${not empty sessionScope.firstName ? fn:substring(sessionScope.firstName, 0, 1) : 'U'}
@@ -167,7 +169,8 @@
               </c:choose>
             </div>
             <div class="edit_avatar_info">
-              <h3>${sessionScope.user.firstName} ${sessionScope.user.lastName}</h3>
+
+              <h3>${user.firstName} ${user.lastName}</h3>
               <p>Update your profile information below</p>
             </div>
           </div>
@@ -192,25 +195,25 @@
               <div class="form_group">
                 <label>First Name</label>
                 <input type="text" name="firstName"
-                       value="${sessionScope.user.firstName}" required/>
+                       value="${user.firstName}" required/>
               </div>
               <div class="form_group">
                 <label>Last Name</label>
                 <input type="text" name="lastName"
-                       value="${sessionScope.user.lastName}"/>
+                       value="${user.lastName}"/>
               </div>
             </div>
 
             <div class="form_group">
               <label>Email</label>
               <input type="email" name="email"
-                     value="${sessionScope.user.email}" required/>
+                     value="${user.email}" required/>
             </div>
 
             <div class="form_group">
               <label>Phone</label>
               <input type="text" name="phone"
-                     value="${sessionScope.user.phone}" placeholder="Enter phone number"/>
+                     value="${user.phone}" placeholder="Enter phone number"/>
             </div>
 
             <hr class="edit_divider"/>
@@ -221,21 +224,21 @@
               <div class="form_group">
                 <label>Favourite Sport</label>
                 <input type="text" name="sport"
-                       value="${sessionScope.user.sport}" placeholder="e.g. Football"/>
+                       value="${user.sport}" placeholder="e.g. Football"/>
               </div>
               <div class="form_group">
                 <label>Skill Level</label>
                 <select name="skillLevel">
                   <option value="beginner"
-                    <c:if test="${sessionScope.user.skillLevel eq 'beginner'}">selected</c:if>>
+                    <c:if test="${user.skillLevel eq 'beginner'}">selected</c:if>>
                     Beginner
                   </option>
                   <option value="intermediate"
-                    <c:if test="${sessionScope.user.skillLevel eq 'intermediate'}">selected</c:if>>
+                    <c:if test="${user.skillLevel eq 'intermediate'}">selected</c:if>>
                     Intermediate
                   </option>
                   <option value="advanced"
-                    <c:if test="${sessionScope.user.skillLevel eq 'advanced'}">selected</c:if>>
+                    <c:if test="${user.skillLevel eq 'advanced'}">selected</c:if>>
                     Advanced
                   </option>
                 </select>
@@ -252,7 +255,7 @@
 
           <hr class="edit_divider"/>
 
-          <%-- form 2 - change password --%>
+          <%-- form 1 - change password --%>
           <form action="${pageContext.request.contextPath}/changePassword" method="post">
             <input type="hidden" name="action" value="changePassword"/>
 

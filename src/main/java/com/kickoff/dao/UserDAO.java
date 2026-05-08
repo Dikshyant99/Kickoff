@@ -47,6 +47,7 @@ public class UserDAO {
             return "error";
         }
     }
+
     // REGISTER NEW USER
     // Inserts a new user row into the database during registration
     // Returns true if insert succeeded, false if it failed
@@ -103,6 +104,7 @@ public class UserDAO {
                 u.setRole(rs.getString("role"));
                 u.setCreatedAt(rs.getString("created_at"));
                 u.setImage(rs.getString("image"));
+                u.setActive(!rs.getBoolean("is_deleted"));
                 return u;
             }
 
@@ -160,7 +162,7 @@ public class UserDAO {
             ps.setString(4, user.getPhone());
             ps.setString(5, user.getSport());
             ps.setString(6, user.getSkillLevel());
-            ps.setString(7,user.getImage());
+            ps.setString(7, user.getImage());
             ps.setInt(8, user.getUserId());
 
             return ps.executeUpdate() > 0;
@@ -170,6 +172,20 @@ public class UserDAO {
             return false;
         }
     }
+    // UPDATE PASSWORD
+    public boolean updatePassword(int userId, String hashedPassword) {
+        String sql = "UPDATE users SET password=? WHERE user_id=?";
+        try (Connection con = DBUtil.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, hashedPassword);
+            ps.setInt(2, userId);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     // SOFT DELETE
     public boolean softDeleteUser(int userId) {
         String sql = "UPDATE users SET is_deleted = true WHERE user_id = ?";
@@ -181,5 +197,20 @@ public class UserDAO {
             e.printStackTrace();
             return false;
         }
+
     }
+    // RESTORE USER
+    public boolean restoreUser(int userId) {
+        String sql = "UPDATE users SET is_deleted = false WHERE user_id = ?";
+        try (Connection con = DBUtil.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }
+
