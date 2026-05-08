@@ -1,413 +1,487 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html lang="en">
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap');
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Register – KickOff</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/register.css"/>
-</head>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-<body>
+body {
+  background: #0f0f0f;
+  color: #f0f0f0;
+  font-family: 'DM Sans', sans-serif;
+}
 
-  <!-- ===== NAVBAR ===== -->
-  <nav class="navbar">
-    <a href="${pageContext.request.contextPath}/Pages/Root/Homepage.jsp" class="navbar_logo">Kick<span>Off</span></a>
-    <ul class="navbar_links">
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/Homepage.jsp">Home</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/grounds.jsp">Grounds</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/teams.jsp">Teams</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/findPlayers.jsp">Find Players</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/about.jsp">About</a></li>
-    </ul>
-    <div class="navbar_actions">
-      <a href="${pageContext.request.contextPath}/Pages/Auth/login.jsp" class="login_btn">Login</a>
-      <a href="${pageContext.request.contextPath}/Pages/Auth/Register.jsp" class="register_btn">Register</a>
-    </div>
-  </nav>
+/* ===== NAVBAR ===== */
+.navbar {
+  height: 68px;
+  background: #1a1a1a;
+  border-bottom: 3px solid #2a6fdb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
 
-  <!-- ===== AUTH WRAPPER ===== -->
-  <div class="auth_wrapper">
-    <div class="auth_card">
+.navbar_logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  letter-spacing: 1px;
+  color: #f0f0f0;
+  text-decoration: none;
+}
 
-      <div class="auth_brand">
-        <a href="${pageContext.request.contextPath}/Pages/Root/Homepage.jsp">Kick<span>Off</span></a>
-      </div>
-      <p class="auth_heading">Create your account</p>
-      <p class="auth_subheading">Join thousands of players and teams across Nepal</p>
+.navbar_logo span {
+  color: #2a6fdb;
+}
 
-      <hr class="auth_divider"/>
+.navbar_links {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  list-style: none;
+}
 
-      <form action="${pageContext.request.contextPath}/RegisterServlet" method="post" enctype="multipart/form-data">
+.navbar_links a {
+  font-size: 15px;
+  font-weight: 500;
+  color: #f0f0f0;
+  text-decoration: none;
+  position: relative;
+  transition: color 0.2s;
+}
 
-        <%-- Error message --%>
-        <c:if test="${not empty requestScope.errorMsg}">
-          <div class="msg_error">${requestScope.errorMsg}</div>
-        </c:if>
+.navbar_links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #2a6fdb;
+  transition: width 0.25s ease;
+}
 
-        <%-- Success message --%>
-        <c:if test="${not empty requestScope.successMsg}">
-          <div class="msg_success">${requestScope.successMsg}</div>
-        </c:if>
+.navbar_links a:hover {
+  color: #2a6fdb;
+}
 
-        <!-- Personal Info -->
-        <p class="section_tag">Personal Info</p>
+.navbar_links a:hover::after {
+  width: 100%;
+}
 
-        <div class="form_row_2col">
-          <div class="form_group">
-            <label class="form_label" for="firstName">First name</label>
-            <input class="form_input" type="text" id="firstName" name="firstName"
-                   placeholder="Dikshyant"
-                   value="${not empty requestScope.firstName ? requestScope.firstName : ''}"
-                   required/>
-          </div>
-          <div class="form_group">
-            <label class="form_label" for="lastName">Last name</label>
-            <input class="form_input" type="text" id="lastName" name="lastName"
-                   placeholder="Karki"
-                   value="${not empty requestScope.lastName ? requestScope.lastName : ''}"
-                   required/>
-          </div>
-        </div>
+.navbar_links a.active {
+  color: #2a6fdb;
+}
 
-        <div class="form_group">
-          <label class="form_label" for="email">Email address</label>
-          <input class="form_input" type="email" id="email" name="email"
-                 placeholder="dikshyant67@gmail.com"
-                 value="${not empty requestScope.email ? requestScope.email : ''}"
-                 required/>
-        </div>
+.navbar_links a.active::after {
+  width: 100%;
+}
 
-        <div class="form_group">
-          <label class="form_label" for="phone">Phone number</label>
-          <input class="form_input" type="tel" id="phone" name="phone"
-                 placeholder="98XXXXXXXX"
-                 value="${not empty requestScope.phone ? requestScope.phone : ''}"/>
-        </div>
+.navbar_actions {
+  display: flex;
+  gap: 12px;
+}
 
-        <!-- IMAGE UPLOAD -->
-        <div class="form_group">
-          <label class="form_label" for="image">Profile Image</label>
-          <input class="form_input" type="file" id="image" name="image"
-                 accept="image/*"/>
-        </div>
+.login_btn {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 9px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #2a6fdb;
+  border: 2px solid #2a6fdb;
+  background: transparent;
+  transition: all 0.2s;
+}
 
-        <!-- Sports Profile -->
-        <p class="section_tag">Sports Profile</p>
+.login_btn:hover {
+  background: #2a6fdb;
+  color: #ffffff;
+}
 
-        <div class="form_row_2col">
-          <div class="form_group">
-            <label class="form_label" for="sport">Favourite sport</label>
-            <select class="form_select" id="sport" name="sport">
-              <option value="" disabled
-                <c:if test="${empty requestScope.sport}">selected</c:if>>
-                Select sport
-              </option>
-              <option value="football"
-                <c:if test="${requestScope.sport eq 'football'}">selected</c:if>>
-                Football
-              </option>
-              <option value="cricket"
-                <c:if test="${requestScope.sport eq 'cricket'}">selected</c:if>>
-                Cricket
-              </option>
-              <option value="basketball"
-                <c:if test="${requestScope.sport eq 'basketball'}">selected</c:if>>
-                Basketball
-              </option>
-              <option value="tennis"
-                <c:if test="${requestScope.sport eq 'tennis'}">selected</c:if>>
-                Tennis
-              </option>
-            </select>
-          </div>
-          <div class="form_group">
-            <label class="form_label" for="skill">Skill level</label>
-            <select class="form_select" id="skill" name="skillLevel">
-              <option value="" disabled
-                <c:if test="${empty requestScope.skillLevel}">selected</c:if>>
-                Select level
-              </option>
-              <option value="beginner"
-                <c:if test="${requestScope.skillLevel eq 'beginner'}">selected</c:if>>
-                Beginner
-              </option>
-              <option value="intermediate"
-                <c:if test="${requestScope.skillLevel eq 'intermediate'}">selected</c:if>>
-                Intermediate
-              </option>
-              <option value="advanced"
-                <c:if test="${requestScope.skillLevel eq 'advanced'}">selected</c:if>>
-                Advanced
-              </option>
-            </select>
-          </div>
-        </div>
+.register_btn {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 9px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  background: #2a6fdb;
+  color: #ffffff;
+  transition: all 0.2s;
+}
 
-        <!-- Security -->
-        <p class="section_tag">Security</p>
+.register_btn:hover {
+  background: #1a5fc8;
+}
 
-        <div class="form_group">
-          <label class="form_label" for="password">Password</label>
-          <input class="form_input" type="password" id="password" name="password"
-                 placeholder="Min. 8 characters with letters and numbers"
-                 required/>
-        </div>
+/* ===== AUTH WRAPPER ===== */
+.auth_wrapper {
+  min-height: calc(100vh - 68px - 72px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+}
 
-        <div class="form_group">
-          <label class="form_label" for="confirmPassword">Confirm password</label>
-          <input class="form_input" type="password" id="confirmPassword"
-                 name="confirmPassword"
-                 placeholder="Repeat your password"
-                 required/>
-        </div>
+/* ===== AUTH CARD ===== */
+.auth_card {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 18px;
+  padding: 48px 44px;
+  width: 100%;
+  max-width: 500px;
+}
 
-        <div class="terms_row">
-          <input type="checkbox" id="terms" name="terms" required/>
-          <label class="terms_text" for="terms">
-            I agree to KickOff's
-            <a href="#">Terms of Service</a> and
-            <a href="#">Privacy Policy</a>
-          </label>
-        </div>
+.auth_brand {
+  text-align: center;
+  margin-bottom: 10px;
+}
 
-        <button type="submit" class="auth_submit_btn">Create Account</button>
+.auth_brand a {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px;
+  letter-spacing: 1px;
+  color: #f0f0f0;
+  text-decoration: none;
+}
 
-      </form>
+.auth_brand a span {
+  color: #2a6fdb;
+}
 
-      <div class="auth_separator">
-        <div class="auth_separator_line"></div>
-        <span class="auth_separator_text">or sign up with</span>
-        <div class="auth_separator_line"></div>
-      </div>
+.auth_heading {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #f0f0f0;
+  margin-bottom: 4px;
+}
 
-      <p class="auth_footer_text">
-        Already have an account?
-        <a href="${pageContext.request.contextPath}/Pages/Auth/login.jsp">Log in</a>
-      </p>
+.auth_subheading {
+  text-align: center;
+  font-size: 0.875rem;
+  color: #888888;
+  margin-bottom: 32px;
+}
 
-    </div>
-  </div>
+.auth_divider {
+  border: none;
+  border-top: 1px solid #2a2a2a;
+  margin: 0 0 28px;
+}
 
-  <!-- ===== FOOTER ===== -->
-  <footer class="footer">
-    <a href="${pageContext.request.contextPath}/Pages/Root/Homepage.jsp" class="footer_logo">Kick<span>Off</span></a>
-    <ul class="footer_links">
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/Homepage.jsp">Home</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/about.jsp">About</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/contact.jsp">Contact</a></li>
-    </ul>
-    <p class="footer_copy">© 2026 KickOff. All rights reserved.</p>
-  </footer>
+/* ===== SECTION TAG ===== */
+.section_tag {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #2a6fdb;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  margin-bottom: 14px;
+  margin-top: 4px;
+}
 
-</body>
-</html><%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-       <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-       <!DOCTYPE html>
-       <html lang="en">
+/* ===== FORM ELEMENTS ===== */
+.form_group {
+  margin-bottom: 16px;
+}
 
-       <head>
-         <meta charset="UTF-8">
-         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-         <title>Register – KickOff</title>
-         <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
-         <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/register.css"/>
-       </head>
+.form_label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #aaaaaa;
+  margin-bottom: 8px;
+}
 
-       <body>
+.form_input {
+  width: 100%;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  padding: 12px 16px;
+  border: 2px solid #2a2a2a;
+  border-radius: 10px;
+  background: #0f0f0f;
+  color: #f0f0f0;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
 
-         <!-- ===== NAVBAR ===== -->
-         <nav class="navbar">
-           <a href="${pageContext.request.contextPath}/Pages/Root/Homepage.jsp" class="navbar_logo">Kick<span>Off</span></a>
-           <ul class="navbar_links">
-             <li><a href="${pageContext.request.contextPath}/Pages/Root/Homepage.jsp">Home</a></li>
-             <li><a href="${pageContext.request.contextPath}/Pages/Root/grounds.jsp">Grounds</a></li>
-             <li><a href="${pageContext.request.contextPath}/Pages/Root/teams.jsp">Teams</a></li>
-             <li><a href="${pageContext.request.contextPath}/Pages/Root/findPlayers.jsp">Find Players</a></li>
-             <li><a href="${pageContext.request.contextPath}/Pages/Root/about.jsp">About</a></li>
-           </ul>
-           <div class="navbar_actions">
-             <a href="${pageContext.request.contextPath}/Pages/Auth/login.jsp" class="login_btn">Login</a>
-             <a href="${pageContext.request.contextPath}/Pages/Auth/Register.jsp" class="register_btn">Register</a>
-           </div>
-         </nav>
+.form_input:focus {
+  border-color: #2a6fdb;
+}
 
-         <!-- ===== AUTH WRAPPER ===== -->
-         <div class="auth_wrapper">
-           <div class="auth_card">
+.form_input::placeholder {
+  color: #555555;
+}
 
-             <div class="auth_brand">
-               <a href="${pageContext.request.contextPath}/Pages/Root/Homepage.jsp">Kick<span>Off</span></a>
-             </div>
-             <p class="auth_heading">Create your account</p>
-             <p class="auth_subheading">Join thousands of players and teams across Nepal</p>
+.form_select {
+  width: 100%;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  padding: 12px 16px;
+  border: 2px solid #2a2a2a;
+  border-radius: 10px;
+  background: #0f0f0f;
+  color: #888888;
+  outline: none;
+  transition: border-color 0.2s, color 0.2s;
+  box-sizing: border-box;
+  appearance: none;
+  cursor: pointer;
+}
 
-             <hr class="auth_divider"/>
+.form_select:focus {
+  border-color: #2a6fdb;
+  color: #f0f0f0;
+}
 
-             <form action="${pageContext.request.contextPath}/RegisterServlet" method="post" enctype="multipart/form-data">
+.form_select option {
+  background: #1a1a1a;
+  color: #f0f0f0;
+}
 
-               <%-- Error message --%>
-               <c:if test="${not empty requestScope.errorMsg}">
-                 <div class="msg_error">${requestScope.errorMsg}</div>
-               </c:if>
+.form_row_2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
 
-               <%-- Success message --%>
-               <c:if test="${not empty requestScope.successMsg}">
-                 <div class="msg_success">${requestScope.successMsg}</div>
-               </c:if>
+/* ===== PASSWORD STRENGTH ===== */
+.password_strength {
+  display: flex;
+  gap: 4px;
+  margin-top: 8px;
+}
 
-               <!-- Personal Info -->
-               <p class="section_tag">Personal Info</p>
+.strength_bar {
+  flex: 1;
+  height: 3px;
+  border-radius: 2px;
+  background: #2a2a2a;
+  transition: background 0.3s;
+}
 
-               <div class="form_row_2col">
-                 <div class="form_group">
-                   <label class="form_label" for="firstName">First name</label>
-                   <input class="form_input" type="text" id="firstName" name="firstName"
-                          placeholder="Dikshyant"
-                          value="${not empty requestScope.firstName ? requestScope.firstName : ''}"
-                          required/>
-                 </div>
-                 <div class="form_group">
-                   <label class="form_label" for="lastName">Last name</label>
-                   <input class="form_input" type="text" id="lastName" name="lastName"
-                          placeholder="Karki"
-                          value="${not empty requestScope.lastName ? requestScope.lastName : ''}"
-                          required/>
-                 </div>
-               </div>
+.strength_bar.weak   { background: #e53e3e; }
+.strength_bar.medium { background: #f5a623; }
+.strength_bar.strong { background: #1adb5e; }
 
-               <div class="form_group">
-                 <label class="form_label" for="email">Email address</label>
-                 <input class="form_input" type="email" id="email" name="email"
-                        placeholder="dikshyant67@gmail.com"
-                        value="${not empty requestScope.email ? requestScope.email : ''}"
-                        required/>
-               </div>
+.strength_label {
+  font-size: 0.78rem;
+  color: #555555;
+  margin-top: 6px;
+}
 
-               <div class="form_group">
-                 <label class="form_label" for="phone">Phone number</label>
-                 <input class="form_input" type="tel" id="phone" name="phone"
-                        placeholder="98XXXXXXXX"
-                        value="${not empty requestScope.phone ? requestScope.phone : ''}"/>
-               </div>
+/* ===== TERMS ROW ===== */
+.terms_row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 6px;
+  margin-bottom: 24px;
+}
 
-               <!-- IMAGE UPLOAD -->
-               <div class="form_group">
-                 <label class="form_label" for="image">Profile Image</label>
-                 <input class="form_input" type="file" id="image" name="image"
-                        accept="image/*"/>
-               </div>
+.terms_row input[type="checkbox"] {
+  accent-color: #2a6fdb;
+  width: 15px;
+  height: 15px;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
 
-               <!-- Sports Profile -->
-               <p class="section_tag">Sports Profile</p>
+.terms_text {
+  font-size: 0.85rem;
+  color: #888888;
+  line-height: 1.5;
+}
 
-               <div class="form_row_2col">
-                 <div class="form_group">
-                   <label class="form_label" for="sport">Favourite sport</label>
-                   <select class="form_select" id="sport" name="sport">
-                     <option value="" disabled
-                       <c:if test="${empty requestScope.sport}">selected</c:if>>
-                       Select sport
-                     </option>
-                     <option value="football"
-                       <c:if test="${requestScope.sport eq 'football'}">selected</c:if>>
-                       Football
-                     </option>
-                     <option value="cricket"
-                       <c:if test="${requestScope.sport eq 'cricket'}">selected</c:if>>
-                       Cricket
-                     </option>
-                     <option value="basketball"
-                       <c:if test="${requestScope.sport eq 'basketball'}">selected</c:if>>
-                       Basketball
-                     </option>
-                     <option value="tennis"
-                       <c:if test="${requestScope.sport eq 'tennis'}">selected</c:if>>
-                       Tennis
-                     </option>
-                   </select>
-                 </div>
-                 <div class="form_group">
-                   <label class="form_label" for="skill">Skill level</label>
-                   <select class="form_select" id="skill" name="skillLevel">
-                     <option value="" disabled
-                       <c:if test="${empty requestScope.skillLevel}">selected</c:if>>
-                       Select level
-                     </option>
-                     <option value="beginner"
-                       <c:if test="${requestScope.skillLevel eq 'beginner'}">selected</c:if>>
-                       Beginner
-                     </option>
-                     <option value="intermediate"
-                       <c:if test="${requestScope.skillLevel eq 'intermediate'}">selected</c:if>>
-                       Intermediate
-                     </option>
-                     <option value="advanced"
-                       <c:if test="${requestScope.skillLevel eq 'advanced'}">selected</c:if>>
-                       Advanced
-                     </option>
-                   </select>
-                 </div>
-               </div>
+.terms_text a {
+  color: #2a6fdb;
+  text-decoration: none;
+}
 
-               <!-- Security -->
-               <p class="section_tag">Security</p>
+.terms_text a:hover {
+  opacity: 0.8;
+}
 
-               <div class="form_group">
-                 <label class="form_label" for="password">Password</label>
-                 <input class="form_input" type="password" id="password" name="password"
-                        placeholder="Min. 8 characters with letters and numbers"
-                        required/>
-               </div>
+/* ===== SUBMIT BUTTON ===== */
+.auth_submit_btn {
+  width: 100%;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 13px;
+  border-radius: 10px;
+  border: none;
+  background: #2a6fdb;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-bottom: 20px;
+}
 
-               <div class="form_group">
-                 <label class="form_label" for="confirmPassword">Confirm password</label>
-                 <input class="form_input" type="password" id="confirmPassword"
-                        name="confirmPassword"
-                        placeholder="Repeat your password"
-                        required/>
-               </div>
+.auth_submit_btn:hover {
+  background: #1a5fc8;
+}
 
-               <div class="terms_row">
-                 <input type="checkbox" id="terms" name="terms" required/>
-                 <label class="terms_text" for="terms">
-                   I agree to KickOff's
-                   <a href="#">Terms of Service</a> and
-                   <a href="#">Privacy Policy</a>
-                 </label>
-               </div>
+/* ===== SEPARATOR ===== */
+.auth_separator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
 
-               <button type="submit" class="auth_submit_btn">Create Account</button>
+.auth_separator_line {
+  flex: 1;
+  height: 1px;
+  background: #2a2a2a;
+}
 
-             </form>
+.auth_separator_text {
+  font-size: 0.8rem;
+  color: #555555;
+}
 
-             <div class="auth_separator">
-               <div class="auth_separator_line"></div>
-               <span class="auth_separator_text">or sign up with</span>
-               <div class="auth_separator_line"></div>
-             </div>
+/* ===== SOCIAL BUTTON ===== */
+.auth_social_btn {
+  width: 100%;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 11px;
+  border-radius: 10px;
+  border: 2px solid #2a2a2a;
+  background: transparent;
+  color: #aaaaaa;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-decoration: none;
+}
 
-             <p class="auth_footer_text">
-               Already have an account?
-               <a href="${pageContext.request.contextPath}/Pages/Auth/login.jsp">Log in</a>
-             </p>
+.auth_social_btn:hover {
+  border-color: #2a6fdb;
+  color: #f0f0f0;
+}
 
-           </div>
-         </div>
+.auth_social_icon {
+  width: 18px;
+  height: 18px;
+}
 
-         <!-- ===== FOOTER ===== -->
-         <footer class="footer">
-           <a href="${pageContext.request.contextPath}/Pages/Root/Homepage.jsp" class="footer_logo">Kick<span>Off</span></a>
-           <ul class="footer_links">
-             <li><a href="${pageContext.request.contextPath}/Pages/Root/Homepage.jsp">Home</a></li>
-             <li><a href="${pageContext.request.contextPath}/Pages/Root/about.jsp">About</a></li>
-             <li><a href="${pageContext.request.contextPath}/Pages/Root/contact.jsp">Contact</a></li>
-           </ul>
-           <p class="footer_copy">© 2026 KickOff. All rights reserved.</p>
-         </footer>
+/* ===== FOOTER TEXT ===== */
+.auth_footer_text {
+  text-align: center;
+  font-size: 0.875rem;
+  color: #888888;
+  margin-top: 24px;
+}
 
-       </body>
-       </html>
+.auth_footer_text a {
+  color: #2a6fdb;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.auth_footer_text a:hover {
+  opacity: 0.8;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  border-top: 1px solid #2a2a2a;
+  background: #1a1a1a;
+  padding: 2% 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer_logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 1px;
+  color: #f0f0f0;
+  text-decoration: none;
+}
+
+.footer_logo span {
+  color: #2a6fdb;
+}
+
+.footer_links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+}
+
+.footer_links a {
+  font-size: 14px;
+  color: #888888;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer_links a:hover {
+  color: #2a6fdb;
+}
+
+.footer_copy {
+  font-size: 13px;
+  color: #555555;
+}
+.msg_error {
+  background: #e53e3e;
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.msg_success {
+  background: #1adb5e;
+  color: #0a3d1f;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  font-weight: 500;
+}
+/* Profile Image file input */
+input[type="file"].form_input {
+    padding: 10px;
+    cursor: pointer;
+    color: #aaa;
+}
+
+input[type="file"].form_input::file-selector-button {
+    background-color: #1a73e8;
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    margin-right: 10px;
+}
+
+input[type="file"].form_input::file-selector-button:hover {
+    background-color: #1558b0;
+}

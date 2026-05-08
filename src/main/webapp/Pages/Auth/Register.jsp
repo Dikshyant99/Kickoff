@@ -57,14 +57,14 @@
             <input class="form_input" type="text" id="firstName" name="firstName"
                    placeholder="Dikshyant"
                    value="${not empty sessionScope.firstName ? sessionScope.firstName : ''}"
-                   required/>
+                   required autocomplete="given-name"/>
           </div>
           <div class="form_group">
             <label class="form_label" for="lastName">Last name</label>
             <input class="form_input" type="text" id="lastName" name="lastName"
                    placeholder="Karki"
                    value="${not empty sessionScope.lastName ? sessionScope.lastName : ''}"
-                   required/>
+                   required autocomplete="family-name"/>
           </div>
         </div>
 
@@ -73,14 +73,15 @@
           <input class="form_input" type="email" id="email" name="email"
                  placeholder="dikshyant67@gmail.com"
                  value="${not empty sessionScope.email ? sessionScope.email : ''}"
-                 required/>
+                 required autocomplete="email"/>
         </div>
 
         <div class="form_group">
           <label class="form_label" for="phone">Phone number</label>
           <input class="form_input" type="tel" id="phone" name="phone"
                  placeholder="98XXXXXXXX"
-                 value="${not empty sessionScope.phone ? sessionScope.phone : ''}"/>
+                 value="${not empty sessionScope.phone ? sessionScope.phone : ''}"
+                 autocomplete="tel"/>
         </div>
 
         <div class="form_group">
@@ -146,7 +147,7 @@
           <label class="form_label" for="password">Password</label>
           <input class="form_input" type="password" id="password" name="password"
                  placeholder="Min. 8 characters with letters and numbers"
-                 required/>
+                 required autocomplete="new-password"/>
         </div>
 
         <div class="form_group">
@@ -154,7 +155,7 @@
           <input class="form_input" type="password" id="confirmPassword"
                  name="confirmPassword"
                  placeholder="Repeat your password"
-                 required/>
+                 required autocomplete="new-password"/>
         </div>
 
         <div class="terms_row">
@@ -191,7 +192,7 @@
       <li><a href="${pageContext.request.contextPath}/about">About</a></li>
       <li><a href="${pageContext.request.contextPath}/contact">Contact</a></li>
     </ul>
-    <p class="footer_copy">© 2026 KickOff. All rights reserved.</p>
+    <p class="footer_copy">Â© 2026 KickOff. All rights reserved.</p>
   </footer>
 
 </body>

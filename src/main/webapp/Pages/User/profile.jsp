@@ -57,9 +57,10 @@
       <li><a href="${pageContext.request.contextPath}/about">About</a></li>
     </ul>
     <div class="navbar_avatar">
+      <%-- navbar avatar uses session image (set at login, persists) --%>
       <c:choose>
-        <c:when test="${not empty sessionScope.user.image}">
-          <img src="${pageContext.request.contextPath}/${sessionScope.user.image}"
+        <c:when test="${not empty sessionScope.image}">
+          <img src="${pageContext.request.contextPath}/${sessionScope.image}"
                class="avatar_img" alt="Profile"/>
         </c:when>
         <c:otherwise>
@@ -73,10 +74,10 @@
   <div class="layout">
 
     <aside class="sidebar">
-      <a href="${pageContext.request.contextPath}/profile"   class="sidebar_item active">My Profile</a>
-      <a href="${pageContext.request.contextPath}/myTeam"    class="sidebar_item">My Team</a>
+      <a href="${pageContext.request.contextPath}/profile"    class="sidebar_item active">My Profile</a>
+      <a href="${pageContext.request.contextPath}/myTeam"     class="sidebar_item">My Team</a>
       <a href="${pageContext.request.contextPath}/myBookings" class="sidebar_item">My Bookings</a>
-      <a href="${pageContext.request.contextPath}/logout"    class="sidebar_item">Logout</a>
+      <a href="${pageContext.request.contextPath}/logout"     class="sidebar_item">Logout</a>
     </aside>
 
     <main class="main">
@@ -90,21 +91,22 @@
         <c:remove var="errorMsg" scope="session"/>
       </c:if>
 
-      <c:if test="${empty sessionScope.user}">
+      <%-- FIX: use ${user} not ${sessionScope.user} --%>
+      <c:if test="${empty user}">
         <div class="msg_error">
           Could not load profile. Please
           <a href="${pageContext.request.contextPath}/login">login again</a>.
         </div>
       </c:if>
 
-      <c:if test="${not empty sessionScope.user}">
+      <c:if test="${not empty user}">
         <div class="profile_card">
 
           <div class="profile_top">
             <div class="profile_avatar">
               <c:choose>
-                <c:when test="${not empty sessionScope.user.image}">
-                  <img src="${pageContext.request.contextPath}/${sessionScope.user.image}"
+                <c:when test="${not empty user.image}">
+                  <img src="${pageContext.request.contextPath}/${user.image}"
                        class="profile_avatar_img" alt="Profile"/>
                 </c:when>
                 <c:otherwise>
@@ -113,8 +115,8 @@
               </c:choose>
             </div>
             <div class="profile_info">
-              <h2 class="profile_name">${sessionScope.user.firstName} ${sessionScope.user.lastName}</h2>
-              <p class="profile_role">${sessionScope.user.role}</p>
+              <h2 class="profile_name">${user.firstName} ${user.lastName}</h2>
+              <p class="profile_role">${user.role}</p>
             </div>
           </div>
 
@@ -124,14 +126,14 @@
 
             <div class="profile_field">
               <span class="field_label">Email</span>
-              <span class="field_value">${sessionScope.user.email}</span>
+              <span class="field_value">${user.email}</span>
             </div>
 
             <div class="profile_field">
               <span class="field_label">Phone</span>
               <span class="field_value">
                 <c:choose>
-                  <c:when test="${not empty sessionScope.user.phone}">${sessionScope.user.phone}</c:when>
+                  <c:when test="${not empty user.phone}">${user.phone}</c:when>
                   <c:otherwise>Not provided</c:otherwise>
                 </c:choose>
               </span>
@@ -141,7 +143,7 @@
               <span class="field_label">Favourite Sport</span>
               <span class="field_value">
                 <c:choose>
-                  <c:when test="${not empty sessionScope.user.sport}">${sessionScope.user.sport}</c:when>
+                  <c:when test="${not empty user.sport}">${user.sport}</c:when>
                   <c:otherwise>Not set</c:otherwise>
                 </c:choose>
               </span>
@@ -152,7 +154,7 @@
               <span class="field_value">
                 <span class="badge badge_blue">
                   <c:choose>
-                    <c:when test="${not empty sessionScope.user.skillLevel}">${sessionScope.user.skillLevel}</c:when>
+                    <c:when test="${not empty user.skillLevel}">${user.skillLevel}</c:when>
                     <c:otherwise>Not set</c:otherwise>
                   </c:choose>
                 </span>
@@ -161,13 +163,13 @@
 
             <div class="profile_field">
               <span class="field_label">Member Since</span>
-              <span class="field_value">${sessionScope.user.createdAt}</span>
+              <span class="field_value">${user.createdAt}</span>
             </div>
 
             <div class="profile_field">
               <span class="field_label">Role</span>
               <span class="field_value">
-                <span class="badge badge_green">${sessionScope.user.role}</span>
+                <span class="badge badge_green">${user.role}</span>
               </span>
             </div>
 

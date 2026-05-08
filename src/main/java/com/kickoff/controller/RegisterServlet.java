@@ -70,7 +70,7 @@ public class RegisterServlet extends HttpServlet {
             request.getSession().setAttribute("phone",      phone);
             request.getSession().setAttribute("sport",      sport);
             request.getSession().setAttribute("skillLevel", skillLevel);
-            //redirect to servlet, not JSP
+            //redirect to servlet
             response.sendRedirect(request.getContextPath() + "/register");
         }
     }
