@@ -66,7 +66,7 @@ public class AdminServlet extends HttpServlet {
                             .forward(request, response);
                     break;
 
-                // SOFT DELETE USER
+                // Soft deleting user
                 case "/deleteUser":
                     adminService.softDeleteUser(
                             Integer.parseInt(request.getParameter("id")));
@@ -75,7 +75,7 @@ public class AdminServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/listUsers");
                     break;
 
-                // RESTORE USER
+                // Restoring User
                 case "/restoreUser":
                     adminService.restoreUser(
                             Integer.parseInt(request.getParameter("id")));

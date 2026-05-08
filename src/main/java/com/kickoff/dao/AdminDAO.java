@@ -13,7 +13,7 @@ import com.kickoff.util.DBUtil;
 
 public class AdminDAO {
 
-    // ===== USERS =====
+    // Users
     public List<Map<String, Object>> getUsers() throws SQLException {
         List<Map<String, Object>> list = new ArrayList<>();
         String sql = "SELECT user_id, first_name, last_name, email, " +
@@ -41,7 +41,7 @@ public class AdminDAO {
         return list;
     }
 
-    // ===== GROUNDS =====
+    // Grounds
     public List<Map<String, Object>> getGrounds() throws SQLException {
         List<Map<String, Object>> list = new ArrayList<>();
         String sql = "SELECT g.ground_id, g.name, g.location, g.city, " +
@@ -72,7 +72,7 @@ public class AdminDAO {
         return list;
     }
 
-    // ===== TEAMS =====
+    // Teams
     public List<Map<String, Object>> getTeams() throws SQLException {
         List<Map<String, Object>> list = new ArrayList<>();
         String sql = "SELECT t.team_id, t.name, t.sport_type, t.location, " +
@@ -102,7 +102,7 @@ public class AdminDAO {
         }
         return list;
     }
-    // ===== BOOKINGS =====
+    // Bookings
     public List<Map<String, Object>> getBookings() throws SQLException {
         List<Map<String, Object>> list = new ArrayList<>();
         String sql = "SELECT * FROM bookings";
@@ -121,7 +121,7 @@ public class AdminDAO {
         return list;
     }
 
-    // ===== INSERT GROUND =====
+    // Inserting the grounds
     public void insertGround(int ownerId, String name, String location,
                              String city, String sportTypes,
                              String price, String description) throws SQLException {
@@ -142,7 +142,7 @@ public class AdminDAO {
         }
     }
 
-    // ===== DELETE =====
+    // delete
     public void delete(String table, String column, int id) throws SQLException {
         String sql = "DELETE FROM " + table + " WHERE " + column + " = ?";
 
@@ -153,7 +153,7 @@ public class AdminDAO {
             ps.executeUpdate();
         }
     }
-    // ===== SOFT DELETE USER =====
+    // Soft deleting User
     public void softDeleteUser(int userId) throws SQLException {
         String sql = "UPDATE users SET is_deleted = true WHERE user_id = ?";
         try (Connection con = DBUtil.getConnection();
@@ -163,7 +163,7 @@ public class AdminDAO {
         }
     }
 
-    // ===== RESTORE USER =====
+    // Restore User
     public void restoreUser(int userId) throws SQLException {
         String sql = "UPDATE users SET is_deleted = false WHERE user_id = ?";
         try (Connection con = DBUtil.getConnection();
@@ -172,7 +172,7 @@ public class AdminDAO {
             ps.executeUpdate();
         }
     }
-    // ===== UPDATE BOOKING =====
+    // Update Booking
     public void updateBookingStatus(int id, String status) throws SQLException {
         String sql = "UPDATE bookings SET status=? WHERE booking_id=?";
 
@@ -185,7 +185,7 @@ public class AdminDAO {
         }
     }
 
-    // ===== COUNT =====
+    // Count
     public int getCount(String table) throws SQLException {
         String sql = "SELECT COUNT(*) FROM " + table;
 
@@ -197,7 +197,7 @@ public class AdminDAO {
         }
     }
 
-    // ===== RECENT DATA =====
+    // Recent Data
     public List<Map<String, Object>> getRecentUsers() throws SQLException {
         List<Map<String, Object>> list = new ArrayList<>();
         String sql = "SELECT user_id, first_name, last_name, email, sport, role " +
