@@ -16,8 +16,8 @@
     <ul class="navbar_links">
       <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
       <li><a href="${pageContext.request.contextPath}/grounds">Grounds</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/teams.jsp">Teams</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/about.jsp">About</a></li>
+      <li><a href="${pageContext.request.contextPath}/teams">Teams</a></li>
+      <li><a href="${pageContext.request.contextPath}/about">About</a></li>
     </ul>
     <div class="navbar_actions">
       <a href="${pageContext.request.contextPath}/login"    class="login_btn">Login</a>
@@ -36,13 +36,11 @@
 
       <hr class="auth_divider"/>
 
-      <%-- changed: sessionScope instead of requestScope, removed after display --%>
       <c:if test="${not empty sessionScope.errorMsg}">
         <div class="msg_error">${sessionScope.errorMsg}</div>
         <c:remove var="errorMsg" scope="session"/>
       </c:if>
 
-      <%-- success message after registration, uses param - no change needed --%>
       <c:if test="${param.registered eq 'true'}">
         <div class="msg_success">Account created successfully! Please log in.</div>
       </c:if>
@@ -51,7 +49,6 @@
 
         <div class="form_group">
           <label class="form_label" for="email">Email address</label>
-          <%-- changed: sessionScope instead of requestScope --%>
           <input class="form_input" type="email" id="email" name="email"
                  placeholder="you@example.com"
                  value="${sessionScope.savedEmail}"
@@ -67,7 +64,6 @@
 
         <div class="form_row">
           <label class="form_checkbox_label">
-            <%-- changed: sessionScope instead of requestScope --%>
             <input type="checkbox" name="rememberMe"
                    <c:if test="${sessionScope.remembered}">checked</c:if>/>
             Remember me
@@ -91,8 +87,8 @@
     <a href="${pageContext.request.contextPath}/home" class="footer_logo">Kick<span>Off</span></a>
     <ul class="footer_links">
       <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/about.jsp">About</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/contact.jsp">Contact</a></li>
+      <li><a href="${pageContext.request.contextPath}/about">About</a></li>
+      <li><a href="${pageContext.request.contextPath}/contact">Contact</a></li>
     </ul>
     <p class="footer_copy">© 2026 KickOff. All rights reserved.</p>
   </footer>

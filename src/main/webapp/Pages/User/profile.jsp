@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,15 +49,14 @@
 <body>
 
   <nav class="navbar">
-    <a href="${pageContext.request.contextPath}/Pages/Root/Homepage.jsp" class="navbar_logo">Kick<span>Off</span></a>
+    <a href="${pageContext.request.contextPath}/home" class="navbar_logo">Kick<span>Off</span></a>
     <ul class="navbar_links">
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/Homepage.jsp">Home</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/grounds.jsp">Grounds</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/teams.jsp">Teams</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/about.jsp">About</a></li>
+      <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
+      <li><a href="${pageContext.request.contextPath}/grounds">Grounds</a></li>
+      <li><a href="${pageContext.request.contextPath}/teams">Teams</a></li>
+      <li><a href="${pageContext.request.contextPath}/about">About</a></li>
     </ul>
     <div class="navbar_avatar">
-      <%-- changed: uses sessionScope.user instead of requestScope.user --%>
       <c:choose>
         <c:when test="${not empty sessionScope.user.image}">
           <img src="${pageContext.request.contextPath}/${sessionScope.user.image}"
@@ -73,15 +73,14 @@
   <div class="layout">
 
     <aside class="sidebar">
-      <a href="${pageContext.request.contextPath}/ProfileServlet"          class="sidebar_item active">My Profile</a>
-      <a href="${pageContext.request.contextPath}/Pages/User/myteam.jsp"   class="sidebar_item">My Team</a>
-      <a href="${pageContext.request.contextPath}/BookingServlet"          class="sidebar_item">My Bookings</a>
-      <a href="${pageContext.request.contextPath}/LogoutServlet"           class="sidebar_item">Logout</a>
+      <a href="${pageContext.request.contextPath}/profile"   class="sidebar_item active">My Profile</a>
+      <a href="${pageContext.request.contextPath}/myTeam"    class="sidebar_item">My Team</a>
+      <a href="${pageContext.request.contextPath}/myBookings" class="sidebar_item">My Bookings</a>
+      <a href="${pageContext.request.contextPath}/logout"    class="sidebar_item">Logout</a>
     </aside>
 
     <main class="main">
 
-      <%-- messages read from session, removed after display --%>
       <c:if test="${not empty sessionScope.successMsg}">
         <div class="msg_success">${sessionScope.successMsg}</div>
         <c:remove var="successMsg" scope="session"/>
@@ -91,11 +90,10 @@
         <c:remove var="errorMsg" scope="session"/>
       </c:if>
 
-      <%-- changed: requestScope.user replaced with sessionScope.user --%>
       <c:if test="${empty sessionScope.user}">
         <div class="msg_error">
           Could not load profile. Please
-          <a href="${pageContext.request.contextPath}/Pages/Auth/login.jsp">login again</a>.
+          <a href="${pageContext.request.contextPath}/login">login again</a>.
         </div>
       </c:if>
 
@@ -109,9 +107,8 @@
                   <img src="${pageContext.request.contextPath}/${sessionScope.user.image}"
                        class="profile_avatar_img" alt="Profile"/>
                 </c:when>
-                <%-- changed: scriptlet replaced with sessionScope.firstName --%>
                 <c:otherwise>
-                  ${sessionScope.firstName ne null ? fn:substring(sessionScope.firstName, 0, 1) : 'U'}
+                  ${not empty sessionScope.firstName ? fn:substring(sessionScope.firstName, 0, 1) : 'U'}
                 </c:otherwise>
               </c:choose>
             </div>
@@ -179,9 +176,9 @@
           <hr class="profile_divider"/>
 
           <div class="profile_actions">
-            <a href="${pageContext.request.contextPath}/EditProfileServlet"
+            <a href="${pageContext.request.contextPath}/editProfile"
                class="btn btn_primary">Edit Profile</a>
-            <a href="${pageContext.request.contextPath}/EditProfileServlet"
+            <a href="${pageContext.request.contextPath}/changePassword"
                class="btn btn_outline">Change Password</a>
           </div>
 

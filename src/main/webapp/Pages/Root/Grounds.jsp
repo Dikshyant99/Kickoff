@@ -17,8 +17,8 @@
     <ul class="navbar_links">
       <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
       <li><a href="${pageContext.request.contextPath}/grounds" class="active">Grounds</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/teams.jsp">Teams</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/about.jsp">About</a></li>
+      <li><a href="${pageContext.request.contextPath}/teams">Teams</a></li>
+      <li><a href="${pageContext.request.contextPath}/about">About</a></li>
     </ul>
     <div class="navbar_actions">
       <c:choose>
@@ -109,7 +109,7 @@
 
       <div class="grounds-top">
         <p class="grounds-count">
-          Showing ${empty requestScope.grounds ? '0' : requestScope.grounds.size()} grounds
+          Showing ${empty grounds ? '0' : grounds.size()} grounds
         </p>
         <div class="grounds-sort">
           Sort by
@@ -125,7 +125,7 @@
         <c:choose>
 
           <%-- No grounds found --%>
-          <c:when test="${empty requestScope.grounds}">
+          <c:when test="${empty grounds}">
             <div style="grid-column:1/-1; text-align:center; color:#888; padding:60px 0;">
               No grounds found. Try a different search or filter.
             </div>
@@ -133,7 +133,7 @@
 
           <%-- Dynamic grounds from database --%>
           <c:otherwise>
-            <c:forEach var="ground" items="${requestScope.grounds}">
+            <c:forEach var="ground" items="${grounds}">
               <div class="ground-card">
                 <div class="ground-card_image">
                   <c:choose>
@@ -179,7 +179,6 @@
                       </a>
                     </c:when>
                     <c:otherwise>
-                      <%-- Not logged in --%>
                       <a href="${pageContext.request.contextPath}/login"
                          class="btn btn--outline"
                          style="display:block; text-align:center; margin-top:12px; width:100%;">
@@ -202,7 +201,7 @@
   <footer class="footer">
     <a href="${pageContext.request.contextPath}/home" class="footer_logo">Kick<span>Off</span></a>
     <ul class="footer_links">
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/contact.jsp">Contact</a></li>
+      <li><a href="${pageContext.request.contextPath}/contact">Contact</a></li>
       <li><a href="#">Privacy</a></li>
     </ul>
     <p class="footer_copy">© 2026 KickOff. All rights reserved.</p>

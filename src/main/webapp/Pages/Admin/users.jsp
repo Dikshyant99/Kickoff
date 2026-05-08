@@ -11,30 +11,29 @@
 <body>
 
   <nav class="navbar">
-    <a href="${pageContext.request.contextPath}/Pages/Root/Homepage.jsp" class="navbar_logo">Kick<span>Off</span></a>
+    <a href="${pageContext.request.contextPath}/home" class="navbar_logo">Kick<span>Off</span></a>
     <ul class="navbar_links">
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/Homepage.jsp">Home</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/grounds.jsp">Grounds</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/teams.jsp">Teams</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/about.jsp">About</a></li>
+      <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
+      <li><a href="${pageContext.request.contextPath}/grounds">Grounds</a></li>
+      <li><a href="${pageContext.request.contextPath}/teams">Teams</a></li>
+      <li><a href="${pageContext.request.contextPath}/about">About</a></li>
     </ul>
     <span class="admin_badge">Admin</span>
   </nav>
 
   <div class="layout">
     <aside class="sidebar">
-      <a href="${pageContext.request.contextPath}/AdminServlet"                      class="sidebar_item">Overview</a>
-      <a href="${pageContext.request.contextPath}/AdminServlet?action=listUsers"     class="sidebar_item active">Users</a>
-      <a href="${pageContext.request.contextPath}/AdminServlet?action=listGrounds"   class="sidebar_item">Grounds</a>
-      <a href="${pageContext.request.contextPath}/AdminServlet?action=listTeams"     class="sidebar_item">Teams</a>
-      <a href="${pageContext.request.contextPath}/AdminServlet?action=listBookings"  class="sidebar_item">Booking Requests</a>
-      <a href="${pageContext.request.contextPath}/LogoutServlet"                     class="sidebar_item">Logout</a>
+      <a href="${pageContext.request.contextPath}/admin"                      class="sidebar_item">Overview</a>
+      <a href="${pageContext.request.contextPath}/admin?action=listUsers"     class="sidebar_item active">Users</a>
+      <a href="${pageContext.request.contextPath}/admin?action=listGrounds"   class="sidebar_item">Grounds</a>
+      <a href="${pageContext.request.contextPath}/admin?action=listTeams"     class="sidebar_item">Teams</a>
+      <a href="${pageContext.request.contextPath}/admin?action=listBookings"  class="sidebar_item">Booking Requests</a>
+      <a href="${pageContext.request.contextPath}/logout"                     class="sidebar_item">Logout</a>
     </aside>
 
     <main class="main">
       <p class="page_title">Users</p>
 
-      <%-- messages read from session, removed after display --%>
       <c:if test="${not empty sessionScope.successMsg}">
         <div class="msg_success">${sessionScope.successMsg}</div>
         <c:remove var="successMsg" scope="session"/>
@@ -64,15 +63,14 @@
             </tr>
           </thead>
           <tbody>
-            <%-- changed: static rows replaced with sessionScope.users --%>
             <c:choose>
-              <c:when test="${empty sessionScope.users}">
+              <c:when test="${empty users}">
                 <tr>
                   <td colspan="9">No users found.</td>
                 </tr>
               </c:when>
               <c:otherwise>
-                <c:forEach var="user" items="${sessionScope.users}" varStatus="loop">
+                <c:forEach var="user" items="${users}" varStatus="loop">
                   <tr>
                     <td>${loop.count}</td>
                     <td>${user.firstName} ${user.lastName}</td>
@@ -103,14 +101,12 @@
                     <td>
                       <c:choose>
                         <c:when test="${user.active}">
-                          <%-- soft delete action --%>
-                          <a href="${pageContext.request.contextPath}/AdminServlet?action=deleteUser&id=${user.userId}"
+                          <a href="${pageContext.request.contextPath}/admin?action=deleteUser&id=${user.userId}"
                              class="btn btn_red"
                              onclick="return confirm('Deactivate this user?')">Deactivate</a>
                         </c:when>
                         <c:otherwise>
-                          <%-- restore action --%>
-                          <a href="${pageContext.request.contextPath}/AdminServlet?action=restoreUser&id=${user.userId}"
+                          <a href="${pageContext.request.contextPath}/admin?action=restoreUser&id=${user.userId}"
                              class="btn btn_green"
                              onclick="return confirm('Restore this user?')">Restore</a>
                         </c:otherwise>

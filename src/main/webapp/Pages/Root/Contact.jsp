@@ -18,13 +18,29 @@
     <ul class="navbar_links">
       <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
       <li><a href="${pageContext.request.contextPath}/grounds">Grounds</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/teams.jsp">Teams</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/findPlayers.jsp">Find Players</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/contact.jsp">Contact</a></li>
+      <li><a href="${pageContext.request.contextPath}/teams">Teams</a></li>
+      <li><a href="${pageContext.request.contextPath}/findPlayers">Find Players</a></li>
+      <li><a href="${pageContext.request.contextPath}/contact" class="active">Contact</a></li>
     </ul>
     <div class="navbar_actions">
-      <a href="${pageContext.request.contextPath}/login"    class="login_btn">Login</a>
-      <a href="${pageContext.request.contextPath}/register" class="register_btn">Register</a>
+      <c:choose>
+        <c:when test="${sessionScope.loggedIn eq true}">
+          <span class="welcome_text">Hi, ${sessionScope.firstName}</span>
+          <c:choose>
+            <c:when test="${sessionScope.role eq 'admin'}">
+              <a href="${pageContext.request.contextPath}/admin" class="login_btn">Dashboard</a>
+            </c:when>
+            <c:otherwise>
+              <a href="${pageContext.request.contextPath}/profile" class="login_btn">Dashboard</a>
+            </c:otherwise>
+          </c:choose>
+          <a href="${pageContext.request.contextPath}/logout" class="register_btn">Logout</a>
+        </c:when>
+        <c:otherwise>
+          <a href="${pageContext.request.contextPath}/login"    class="login_btn">Login</a>
+          <a href="${pageContext.request.contextPath}/register" class="register_btn">Register</a>
+        </c:otherwise>
+      </c:choose>
     </div>
   </nav>
 
@@ -129,8 +145,8 @@
     <a href="${pageContext.request.contextPath}/home" class="footer_logo">Kick<span>Off</span></a>
     <ul class="footer_links">
       <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/about.jsp">About</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/contact.jsp">Contact</a></li>
+      <li><a href="${pageContext.request.contextPath}/about">About</a></li>
+      <li><a href="${pageContext.request.contextPath}/contact">Contact</a></li>
     </ul>
     <p class="footer_copy">© 2026 KickOff. All rights reserved.</p>
   </footer>

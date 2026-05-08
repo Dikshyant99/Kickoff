@@ -55,11 +55,9 @@ public class UpdateProfileServlet extends HttpServlet {
         String sport      = request.getParameter("sport");
         String skillLevel = request.getParameter("skillLevel");
 
-        // validation
         if (firstName == null || firstName.trim().isEmpty() ||
                 newEmail == null || newEmail.trim().isEmpty()) {
 
-            // changed: session instead of requestScope, redirect instead of forward
             session.setAttribute("errorMsg", "First name and email are required.");
             User user = userDAO.getUserByEmail(sessionEmail);
             session.setAttribute("user", user);
@@ -73,7 +71,6 @@ public class UpdateProfileServlet extends HttpServlet {
             return;
         }
 
-        // apply updates
         user.setFirstName(firstName.trim());
         user.setLastName(lastName     != null ? lastName.trim()   : "");
         user.setEmail(newEmail.trim());
@@ -87,11 +84,9 @@ public class UpdateProfileServlet extends HttpServlet {
             if (!sessionEmail.equals(newEmail.trim())) {
                 session.setAttribute("email", newEmail.trim());
             }
-            // no change needed, already uses session and redirect
             session.setAttribute("successMsg", "Profile updated successfully.");
             response.sendRedirect(request.getContextPath() + "/profile");
         } else {
-            // changed: session instead of requestScope, redirect instead of forward
             session.setAttribute("errorMsg", "Failed to update. Please try again.");
             session.setAttribute("user", user);
             response.sendRedirect(request.getContextPath() + "/editProfile");
@@ -111,7 +106,11 @@ public class UpdateProfileServlet extends HttpServlet {
 
         User user = userDAO.getUserByEmail(sessionEmail);
 
-        // validation - changed: session instead of requestScope, redirect instead of forward
+        if (user == null) {
+            response.sendRedirect(request.getContextPath() + "/login");
+            return;
+        }
+
         if (currentPassword == null || currentPassword.trim().isEmpty() ||
                 newPassword     == null || newPassword.trim().isEmpty()     ||
                 confirmPassword == null || confirmPassword.trim().isEmpty()) {
@@ -136,23 +135,21 @@ public class UpdateProfileServlet extends HttpServlet {
             return;
         }
 
-        if (user == null || !user.getPassword().equals(currentPassword)) {
+        //  call getPassword()
+        if (!user.getPassword().equals(currentPassword)) {
             session.setAttribute("errorMsg", "Current password is incorrect.");
             session.setAttribute("user", user);
             response.sendRedirect(request.getContextPath() + "/editProfile");
             return;
         }
 
-        // update password
         user.setPassword(newPassword);
         boolean updated = userDAO.updateUser(user);
 
         if (updated) {
-            // no change needed, already uses session and redirect
             session.setAttribute("successMsg", "Password changed successfully.");
             response.sendRedirect(request.getContextPath() + "/profile");
         } else {
-            // changed: session instead of requestScope, redirect instead of forward
             session.setAttribute("errorMsg", "Failed to update password. Please try again.");
             session.setAttribute("user", user);
             response.sendRedirect(request.getContextPath() + "/editProfile");
@@ -162,7 +159,6 @@ public class UpdateProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // no change needed, already redirects
         response.sendRedirect(request.getContextPath() + "/profile");
     }
 }

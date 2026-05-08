@@ -10,13 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet(asyncSupported = true, urlPatterns = {
-        "/admin",
-        "/listUsers", "/deleteUser", "/restoreUser",
-        "/listGrounds", "/addGround", "/deleteGround",
-        "/listTeams", "/deleteTeam",
-        "/listBookings", "/approveBooking", "/rejectBooking"
-})
+@WebServlet(asyncSupported = true, urlPatterns = {"/admin"})
 public class AdminServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -33,87 +27,86 @@ public class AdminServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String path = request.getServletPath();
+        String action = request.getParameter("action");
+        if (action == null) action = "dashboard";
 
         try {
-            switch (path) {
+            switch (action) {
 
-                case "/admin":
+                case "dashboard":
                     loadDashboard(request, response);
                     break;
 
-                case "/listUsers":
+                case "listUsers":
                     request.setAttribute("users", adminService.getAllUsers());
                     request.getRequestDispatcher("/Pages/Admin/users.jsp")
                             .forward(request, response);
                     break;
 
-                case "/listGrounds":
+                case "listGrounds":
                     request.setAttribute("grounds", adminService.getAllGrounds());
                     request.getRequestDispatcher("/Pages/Admin/grounds.jsp")
                             .forward(request, response);
                     break;
 
-                case "/listTeams":
+                case "listTeams":
                     request.setAttribute("teams", adminService.getAllTeams());
                     request.getRequestDispatcher("/Pages/Admin/teams.jsp")
                             .forward(request, response);
                     break;
 
-                case "/listBookings":
+                case "listBookings":
                     request.setAttribute("bookings", bookingService.getAllBookings());
                     request.getRequestDispatcher("/Pages/Admin/bookings.jsp")
                             .forward(request, response);
                     break;
 
-                // Soft deleting user
-                case "/deleteUser":
+                case "deleteUser":
                     adminService.softDeleteUser(
                             Integer.parseInt(request.getParameter("id")));
                     request.getSession().setAttribute("successMsg",
                             "User deactivated successfully.");
-                    response.sendRedirect(request.getContextPath() + "/listUsers");
+                    response.sendRedirect(request.getContextPath() + "/admin?action=listUsers");
                     break;
 
-                // Restoring User
-                case "/restoreUser":
+                case "restoreUser":
                     adminService.restoreUser(
                             Integer.parseInt(request.getParameter("id")));
                     request.getSession().setAttribute("successMsg",
                             "User restored successfully.");
-                    response.sendRedirect(request.getContextPath() + "/listUsers");
+                    response.sendRedirect(request.getContextPath() + "/admin?action=listUsers");
                     break;
 
-                case "/deleteGround":
+                case "deleteGround":
                     adminService.deleteGround(
                             Integer.parseInt(request.getParameter("id")));
                     request.getSession().setAttribute("successMsg",
                             "Ground deleted successfully.");
-                    response.sendRedirect(request.getContextPath() + "/listGrounds");
+                    response.sendRedirect(request.getContextPath() + "/admin?action=listGrounds");
                     break;
 
-                case "/deleteTeam":
+                case "deleteTeam":
                     adminService.deleteTeam(
                             Integer.parseInt(request.getParameter("id")));
                     request.getSession().setAttribute("successMsg",
                             "Team deleted successfully.");
-                    response.sendRedirect(request.getContextPath() + "/listTeams");
+                    response.sendRedirect(request.getContextPath() + "/admin?action=listTeams");
                     break;
 
-                case "/approveBooking":
+                case "approveBooking":
                     bookingService.approveBooking(
                             Integer.parseInt(request.getParameter("id")));
                     request.getSession().setAttribute("successMsg",
                             "Booking approved successfully.");
-                    response.sendRedirect(request.getContextPath() + "/listBookings");
+                    response.sendRedirect(request.getContextPath() + "/admin?action=listBookings");
                     break;
 
-                case "/rejectBooking":
+                case "rejectBooking":
                     bookingService.rejectBooking(
                             Integer.parseInt(request.getParameter("id")));
                     request.getSession().setAttribute("successMsg",
                             "Booking rejected successfully.");
-                    response.sendRedirect(request.getContextPath() + "/listBookings");
+                    response.sendRedirect(request.getContextPath() + "/admin?action=listBookings");
                     break;
 
                 default:
@@ -131,12 +124,13 @@ public class AdminServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String path = request.getServletPath();
+        String action = request.getParameter("action");
+        if (action == null) action = "";
 
         try {
-            switch (path) {
+            switch (action) {
 
-                case "/addGround":
+                case "addGround":
                     Object userIdObj = request.getSession().getAttribute("userId");
                     if (userIdObj == null) {
                         response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
@@ -157,7 +151,7 @@ public class AdminServlet extends HttpServlet {
 
                     request.getSession().setAttribute("successMsg",
                             "Ground added successfully.");
-                    response.sendRedirect(request.getContextPath() + "/listGrounds");
+                    response.sendRedirect(request.getContextPath() + "/admin?action=listGrounds");
                     break;
 
                 default:
@@ -171,7 +165,6 @@ public class AdminServlet extends HttpServlet {
         }
     }
 
-    // Loading the dashboard
     private void loadDashboard(HttpServletRequest request,
                                HttpServletResponse response)
             throws ServletException, IOException, SQLException {

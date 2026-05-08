@@ -35,9 +35,10 @@ public class ProfileServlet extends HttpServlet {
             return;
         }
 
-        // changed: session instead of requestScope, redirect instead of forward
-        request.getSession().setAttribute("user", user);
-        response.sendRedirect(request.getContextPath() + "/Pages/User/profile.jsp");
+        //request attribute + forward
+        request.setAttribute("user", user);
+        request.getRequestDispatcher("/Pages/User/profile.jsp")
+                .forward(request, response);
     }
 
     @Override

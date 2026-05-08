@@ -11,36 +11,32 @@
 </head>
 <body>
 
-  <!-- NAVBAR -->
   <nav class="navbar">
-    <a href="${pageContext.request.contextPath}/Pages/Root/Homepage.jsp" class="navbar_logo">Kick<span>Off</span></a>
+    <a href="${pageContext.request.contextPath}/home" class="navbar_logo">Kick<span>Off</span></a>
     <ul class="navbar_links">
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/Homepage.jsp">Home</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/grounds.jsp">Grounds</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/teams.jsp">Teams</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/about.jsp">About</a></li>
+      <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
+      <li><a href="${pageContext.request.contextPath}/grounds">Grounds</a></li>
+      <li><a href="${pageContext.request.contextPath}/teams">Teams</a></li>
+      <li><a href="${pageContext.request.contextPath}/about">About</a></li>
     </ul>
     <span class="admin_badge">Admin</span>
   </nav>
 
   <div class="layout">
 
-    <!-- SIDEBAR -->
     <aside class="sidebar">
-      <a href="${pageContext.request.contextPath}/AdminServlet"                       class="sidebar_item active">Overview</a>
-      <a href="${pageContext.request.contextPath}/AdminServlet?action=listUsers"      class="sidebar_item">Users</a>
-      <a href="${pageContext.request.contextPath}/AdminServlet?action=listGrounds"    class="sidebar_item">Grounds</a>
-      <a href="${pageContext.request.contextPath}/AdminServlet?action=listTeams"      class="sidebar_item">Teams</a>
-      <a href="${pageContext.request.contextPath}/AdminServlet?action=listBookings"   class="sidebar_item">Booking Requests</a>
-      <a href="${pageContext.request.contextPath}/LogoutServlet"                      class="sidebar_item">Logout</a>
+      <a href="${pageContext.request.contextPath}/admin"                        class="sidebar_item active">Overview</a>
+      <a href="${pageContext.request.contextPath}/admin?action=listUsers"       class="sidebar_item">Users</a>
+      <a href="${pageContext.request.contextPath}/admin?action=listGrounds"     class="sidebar_item">Grounds</a>
+      <a href="${pageContext.request.contextPath}/admin?action=listTeams"       class="sidebar_item">Teams</a>
+      <a href="${pageContext.request.contextPath}/admin?action=listBookings"    class="sidebar_item">Booking Requests</a>
+      <a href="${pageContext.request.contextPath}/logout"                       class="sidebar_item">Logout</a>
     </aside>
 
-    <!-- MAIN -->
     <main class="main">
 
       <p class="page_title">Overview</p>
 
-      <!-- messages read from session, removed after display -->
       <c:if test="${not empty sessionScope.successMsg}">
         <div class="msg_success">${sessionScope.successMsg}</div>
         <c:remove var="successMsg" scope="session"/>
@@ -51,56 +47,34 @@
       </c:if>
 
       <!-- STAT CARDS -->
-      <!-- changed: sessionScope instead of requestScope -->
       <div class="stats_grid">
         <div class="stat_card">
           <div class="stat_label">Total Teams</div>
-          <div class="stat_value">
-            <c:choose>
-              <c:when test="${not empty sessionScope.totalTeams}">${sessionScope.totalTeams}</c:when>
-              <c:otherwise>0</c:otherwise>
-            </c:choose>
-          </div>
+          <div class="stat_value">${not empty totalTeams ? totalTeams : 0}</div>
         </div>
         <div class="stat_card">
           <div class="stat_label">Total Users</div>
-          <div class="stat_value">
-            <c:choose>
-              <c:when test="${not empty sessionScope.totalUsers}">${sessionScope.totalUsers}</c:when>
-              <c:otherwise>0</c:otherwise>
-            </c:choose>
-          </div>
+          <div class="stat_value">${not empty totalUsers ? totalUsers : 0}</div>
         </div>
         <div class="stat_card">
           <div class="stat_label">Grounds</div>
-          <div class="stat_value">
-            <c:choose>
-              <c:when test="${not empty sessionScope.totalGrounds}">${sessionScope.totalGrounds}</c:when>
-              <c:otherwise>0</c:otherwise>
-            </c:choose>
-          </div>
+          <div class="stat_value">${not empty totalGrounds ? totalGrounds : 0}</div>
         </div>
         <div class="stat_card">
           <div class="stat_label">Bookings</div>
-          <div class="stat_value">
-            <c:choose>
-              <c:when test="${not empty sessionScope.totalBookings}">${sessionScope.totalBookings}</c:when>
-              <c:otherwise>0</c:otherwise>
-            </c:choose>
-          </div>
+          <div class="stat_value">${not empty totalBookings ? totalBookings : 0}</div>
         </div>
       </div>
 
       <!-- RECENT USERS -->
-      <!-- changed: sessionScope instead of requestScope -->
       <div class="section">
         <div class="section_title">Recent Users</div>
         <c:choose>
-          <c:when test="${empty sessionScope.recentUsers}">
+          <c:when test="${empty recentUsers}">
             <div class="empty">No users registered yet.</div>
           </c:when>
           <c:otherwise>
-            <c:forEach var="user" items="${sessionScope.recentUsers}">
+            <c:forEach var="user" items="${recentUsers}">
               <div class="list_item">
                 <div>
                   <div class="list_item_name">${user.firstName} ${user.lastName}</div>
@@ -108,7 +82,7 @@
                 </div>
                 <div class="list_item_right">
                   <span class="badge badge_blue">${user.role}</span>
-                  <a href="${pageContext.request.contextPath}/AdminServlet?action=deleteUser&id=${user.userId}"
+                  <a href="${pageContext.request.contextPath}/admin?action=deleteUser&id=${user.userId}"
                      class="btn btn_red"
                      onclick="return confirm('Delete this user?')">Delete</a>
                 </div>
@@ -119,15 +93,14 @@
       </div>
 
       <!-- RECENT BOOKINGS -->
-      <!-- changed: sessionScope instead of requestScope -->
       <div class="section">
         <div class="section_title">Recent Booking Requests</div>
         <c:choose>
-          <c:when test="${empty sessionScope.recentBookings}">
+          <c:when test="${empty recentBookings}">
             <div class="empty">No booking requests yet.</div>
           </c:when>
           <c:otherwise>
-            <c:forEach var="booking" items="${sessionScope.recentBookings}">
+            <c:forEach var="booking" items="${recentBookings}">
               <div class="list_item">
                 <div>
                   <div class="list_item_name">${booking.groundName}</div>
@@ -139,14 +112,14 @@
                 </div>
                 <div class="list_item_right">
                   <c:choose>
-                    <c:when test="${booking.status == 'confirmed'}">
+                    <c:when test="${booking.status eq 'confirmed'}">
                       <span class="badge badge_green">Approved</span>
                     </c:when>
-                    <c:when test="${booking.status == 'pending'}">
+                    <c:when test="${booking.status eq 'pending'}">
                       <span class="badge badge_yellow">Pending</span>
-                      <a href="${pageContext.request.contextPath}/AdminServlet?action=approveBooking&id=${booking.bookingId}"
+                      <a href="${pageContext.request.contextPath}/admin?action=approveBooking&id=${booking.bookingId}"
                          class="btn btn_green">Approve</a>
-                      <a href="${pageContext.request.contextPath}/AdminServlet?action=rejectBooking&id=${booking.bookingId}"
+                      <a href="${pageContext.request.contextPath}/admin?action=rejectBooking&id=${booking.bookingId}"
                          class="btn btn_red">Reject</a>
                     </c:when>
                     <c:otherwise>
@@ -161,15 +134,14 @@
       </div>
 
       <!-- RECENT TEAMS -->
-      <!-- changed: sessionScope instead of requestScope -->
       <div class="section">
         <div class="section_title">Recent Teams</div>
         <c:choose>
-          <c:when test="${empty sessionScope.recentTeams}">
+          <c:when test="${empty recentTeams}">
             <div class="empty">No teams created yet.</div>
           </c:when>
           <c:otherwise>
-            <c:forEach var="team" items="${sessionScope.recentTeams}">
+            <c:forEach var="team" items="${recentTeams}">
               <div class="list_item">
                 <div>
                   <div class="list_item_name">${team.name}</div>
@@ -181,14 +153,14 @@
                 </div>
                 <div class="list_item_right">
                   <c:choose>
-                    <c:when test="${team.recruitmentStatus == 'open'}">
+                    <c:when test="${team.recruitmentStatus eq 'open'}">
                       <span class="badge badge_green">Open</span>
                     </c:when>
                     <c:otherwise>
                       <span class="badge badge_red">Closed</span>
                     </c:otherwise>
                   </c:choose>
-                  <a href="${pageContext.request.contextPath}/AdminServlet?action=deleteTeam&id=${team.teamId}"
+                  <a href="${pageContext.request.contextPath}/admin?action=deleteTeam&id=${team.teamId}"
                      class="btn btn_red"
                      onclick="return confirm('Delete this team?')">Delete</a>
                 </div>

@@ -16,8 +16,8 @@
     <ul class="navbar_links">
       <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
       <li><a href="${pageContext.request.contextPath}/grounds">Grounds</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/teams.jsp">Teams</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/about.jsp">About</a></li>
+      <li><a href="${pageContext.request.contextPath}/teams">Teams</a></li>
+      <li><a href="${pageContext.request.contextPath}/about">About</a></li>
     </ul>
     <div class="navbar_actions">
       <span class="welcome_text">Hi, ${sessionScope.firstName}</span>
@@ -29,10 +29,10 @@
   <div class="layout">
 
     <aside class="sidebar">
-      <a href="${pageContext.request.contextPath}/profile"                 class="sidebar_item">My Profile</a>
-      <a href="${pageContext.request.contextPath}/Pages/User/myteam.jsp"   class="sidebar_item">My Team</a>
-      <a href="${pageContext.request.contextPath}/myBookings"              class="sidebar_item active">My Bookings</a>
-      <a href="${pageContext.request.contextPath}/logout"                  class="sidebar_item">Logout</a>
+      <a href="${pageContext.request.contextPath}/profile"    class="sidebar_item">My Profile</a>
+      <a href="${pageContext.request.contextPath}/myTeam"     class="sidebar_item">My Team</a>
+      <a href="${pageContext.request.contextPath}/myBookings" class="sidebar_item active">My Bookings</a>
+      <a href="${pageContext.request.contextPath}/logout"     class="sidebar_item">Logout</a>
     </aside>
 
     <main class="main">
@@ -42,7 +42,6 @@
         <a href="${pageContext.request.contextPath}/grounds" class="btn btn_outline">+ Book a Ground</a>
       </div>
 
-      <%-- messages read from session, removed after display --%>
       <c:if test="${not empty sessionScope.successMsg}">
         <div class="msg_success">${sessionScope.successMsg}</div>
         <c:remove var="successMsg" scope="session"/>
@@ -52,9 +51,8 @@
         <c:remove var="errorMsg" scope="session"/>
       </c:if>
 
-      <%-- changed: requestScope.bookings replaced with sessionScope.bookings --%>
       <c:choose>
-        <c:when test="${empty sessionScope.bookings}">
+        <c:when test="${empty bookings}">
           <div class="empty">
             You have no bookings yet.
             <a href="${pageContext.request.contextPath}/grounds" style="color:#2a6fdb;">
@@ -63,7 +61,7 @@
           </div>
         </c:when>
         <c:otherwise>
-          <c:forEach var="booking" items="${sessionScope.bookings}">
+          <c:forEach var="booking" items="${bookings}">
             <div class="list_item">
               <div>
                 <div class="list_item_name">${booking.groundName}</div>

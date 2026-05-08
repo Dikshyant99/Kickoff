@@ -22,7 +22,6 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // read remember me cookies and store in session for JSP to read
         String savedEmail = "";
         boolean remembered = false;
 
@@ -36,12 +35,11 @@ public class LoginServlet extends HttpServlet {
             remembered = true;
         }
 
-        // changed: session instead of requestScope
-        request.getSession().setAttribute("savedEmail", savedEmail);
-        request.getSession().setAttribute("remembered", remembered);
-
-        // changed: redirect instead of forward
-        response.sendRedirect(request.getContextPath() + "/Pages/Auth/login.jsp");
+        // request attributes + forward
+        request.setAttribute("savedEmail", savedEmail);
+        request.setAttribute("remembered", remembered);
+        request.getRequestDispatcher("/Pages/Auth/login.jsp")
+                .forward(request, response);
     }
 
     @Override
@@ -60,7 +58,6 @@ public class LoginServlet extends HttpServlet {
 
             User user = userService.getUserByEmail(email);
 
-            // store all user details in session
             SessionUtil.setAttribute(request, "loggedIn",   true);
             SessionUtil.setAttribute(request, "userId",     user.getUserId());
             SessionUtil.setAttribute(request, "firstName",  user.getFirstName());
@@ -88,7 +85,6 @@ public class LoginServlet extends HttpServlet {
             }
 
         } else {
-            // changed: session instead of requestScope, redirect instead of forward
             if (result.equals("wrong_password")) {
                 request.getSession().setAttribute("errorMsg", "Wrong password. Please try again.");
             } else if (result.equals("user_not_found")) {
@@ -102,7 +98,8 @@ public class LoginServlet extends HttpServlet {
             } else {
                 request.getSession().setAttribute("errorMsg", "Something went wrong. Please try again.");
             }
-            response.sendRedirect(request.getContextPath() + "/Pages/Auth/login.jsp");
+            // FIX: redirect to servlet, not JSP
+            response.sendRedirect(request.getContextPath() + "/login");
         }
     }
 }

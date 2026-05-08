@@ -23,7 +23,7 @@ public class EditProfileServlet extends HttpServlet {
 
         // if not logged in, redirect to login
         if (email == null) {
-            response.sendRedirect(request.getContextPath() + "/Pages/Auth/login.jsp");
+            response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
 
@@ -31,12 +31,13 @@ public class EditProfileServlet extends HttpServlet {
 
         // if user not found, redirect to login
         if (user == null) {
-            response.sendRedirect(request.getContextPath() + "/Pages/Auth/login.jsp");
+            response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
 
-        // changed: session instead of requestScope, redirect instead of forward
-        request.getSession().setAttribute("user", user);
-        response.sendRedirect(request.getContextPath() + "/Pages/User/editprofile.jsp");
+        //request attribute + forward
+        request.setAttribute("user", user);
+        request.getRequestDispatcher("/Pages/User/editprofile.jsp")
+                .forward(request, response);
     }
 }

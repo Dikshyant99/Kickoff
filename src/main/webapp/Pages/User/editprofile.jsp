@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -119,15 +120,14 @@
 <body>
 
   <nav class="navbar">
-    <a href="${pageContext.request.contextPath}/Pages/Root/Homepage.jsp" class="navbar_logo">Kick<span>Off</span></a>
+    <a href="${pageContext.request.contextPath}/home" class="navbar_logo">Kick<span>Off</span></a>
     <ul class="navbar_links">
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/Homepage.jsp">Home</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/grounds.jsp">Grounds</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/teams.jsp">Teams</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/about.jsp">About</a></li>
+      <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
+      <li><a href="${pageContext.request.contextPath}/grounds">Grounds</a></li>
+      <li><a href="${pageContext.request.contextPath}/teams">Teams</a></li>
+      <li><a href="${pageContext.request.contextPath}/about">About</a></li>
     </ul>
     <div class="navbar_avatar">
-      <%-- changed: uses sessionScope.user instead of plain user --%>
       <c:choose>
         <c:when test="${not empty sessionScope.user.image}">
           <img src="${pageContext.request.contextPath}/${sessionScope.user.image}"
@@ -144,10 +144,10 @@
   <div class="layout">
 
     <aside class="sidebar">
-      <a href="${pageContext.request.contextPath}/ProfileServlet"          class="sidebar_item active">My Profile</a>
-      <a href="${pageContext.request.contextPath}/Pages/User/myteam.jsp"   class="sidebar_item">My Team</a>
-      <a href="${pageContext.request.contextPath}/BookingServlet"          class="sidebar_item">My Bookings</a>
-      <a href="${pageContext.request.contextPath}/LogoutServlet"           class="sidebar_item">Logout</a>
+      <a href="${pageContext.request.contextPath}/profile"    class="sidebar_item active">My Profile</a>
+      <a href="${pageContext.request.contextPath}/myTeam"     class="sidebar_item">My Team</a>
+      <a href="${pageContext.request.contextPath}/myBookings" class="sidebar_item">My Bookings</a>
+      <a href="${pageContext.request.contextPath}/logout"     class="sidebar_item">Logout</a>
     </aside>
 
     <main class="main">
@@ -157,12 +157,10 @@
           <%-- avatar row --%>
           <div class="edit_avatar_row">
             <div class="edit_avatar">
-              <%-- changed: uses sessionScope.user.image --%>
               <c:choose>
                 <c:when test="${not empty sessionScope.user.image}">
                   <img src="${pageContext.request.contextPath}/${sessionScope.user.image}" alt="Profile"/>
                 </c:when>
-                <%-- changed: scriptlet removed, uses sessionScope.firstName first letter --%>
                 <c:otherwise>
                   ${not empty sessionScope.firstName ? fn:substring(sessionScope.firstName, 0, 1) : 'U'}
                 </c:otherwise>
@@ -174,7 +172,7 @@
             </div>
           </div>
 
-          <%-- messages read from session, removed after display --%>
+          <%-- messages --%>
           <c:if test="${not empty sessionScope.successMsg}">
             <div class="msg_success">${sessionScope.successMsg}</div>
             <c:remove var="successMsg" scope="session"/>
@@ -185,7 +183,7 @@
           </c:if>
 
           <%-- form 1 - edit profile --%>
-          <form action="${pageContext.request.contextPath}/UpdateProfileServlet" method="post">
+          <form action="${pageContext.request.contextPath}/updateProfile" method="post">
             <input type="hidden" name="action" value="updateProfile"/>
 
             <p class="edit_section_title">Personal Information</p>
@@ -193,7 +191,6 @@
             <div class="form_row">
               <div class="form_group">
                 <label>First Name</label>
-                <%-- changed: uses sessionScope.user instead of plain user --%>
                 <input type="text" name="firstName"
                        value="${sessionScope.user.firstName}" required/>
               </div>
@@ -246,7 +243,7 @@
             </div>
 
             <div class="form_actions">
-              <a href="${pageContext.request.contextPath}/ProfileServlet"
+              <a href="${pageContext.request.contextPath}/profile"
                  class="btn btn_outline">Cancel</a>
               <button type="submit" class="btn btn_primary">Save Changes</button>
             </div>
@@ -255,8 +252,8 @@
 
           <hr class="edit_divider"/>
 
-          <%-- form 2 - change password, no data binding needed here --%>
-          <form action="${pageContext.request.contextPath}/UpdateProfileServlet" method="post">
+          <%-- form 2 - change password --%>
+          <form action="${pageContext.request.contextPath}/changePassword" method="post">
             <input type="hidden" name="action" value="changePassword"/>
 
             <p class="edit_section_title">Change Password</p>
@@ -278,7 +275,7 @@
             </div>
 
             <div class="form_actions">
-              <a href="${pageContext.request.contextPath}/ProfileServlet"
+              <a href="${pageContext.request.contextPath}/profile"
                  class="btn btn_outline">Cancel</a>
               <button type="submit" class="btn btn_primary">Update Password</button>
             </div>

@@ -8,7 +8,7 @@ import java.util.*;
 
 public class GroundDAO {
 
-    // ===== GET ALL ACTIVE GROUNDS =====
+    //GET ALL ACTIVE GROUNDS
     public List<ground> getAllGrounds() throws SQLException {
         List<ground> list = new ArrayList<>();
         String sql = "SELECT * FROM grounds WHERE is_active = true ORDER BY created_at DESC";
@@ -29,7 +29,7 @@ public class GroundDAO {
         return list;
     }
 
-    // ===== GET GROUND BY ID =====
+    //  GET GROUND BY ID
     public ground getGroundById(int groundId) throws SQLException {
         String sql = "SELECT * FROM grounds WHERE ground_id = ?";
 
@@ -49,7 +49,7 @@ public class GroundDAO {
         return null;
     }
 
-    // ===== GET AVAILABLE SLOTS FOR GROUND =====
+    // GET AVAILABLE SLOTS FOR GROUND
     public List<groundslot> getAvailableSlots(int groundId) throws SQLException {
         List<groundslot> list = new ArrayList<>();
         String sql = "SELECT * FROM ground_slots " +
@@ -75,7 +75,7 @@ public class GroundDAO {
         return list;
     }
 
-    // ===== MAP ResultSet TO Ground =====
+    //  MAP ResultSet TO Ground
     private ground mapGround(ResultSet rs) throws SQLException {
         ground g = new ground();
         g.setGroundId(rs.getInt("ground_id"));
@@ -92,7 +92,7 @@ public class GroundDAO {
         return g;
     }
 
-    // ===== MAP ResultSet TO GroundSlot =====
+    // MAP ResultSet TO GroundSlot
     private groundslot mapSlot(ResultSet rs) throws SQLException {
         groundslot s = new groundslot();
         s.setSlotId(rs.getInt("slot_id"));

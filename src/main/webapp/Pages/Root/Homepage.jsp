@@ -17,9 +17,9 @@
     <ul class="navbar_links">
         <li><a href="${pageContext.request.contextPath}/home" class="active">Home</a></li>
         <li><a href="${pageContext.request.contextPath}/grounds">Grounds</a></li>
-        <li><a href="${pageContext.request.contextPath}/Pages/Root/teams.jsp">Teams</a></li>
-        <li><a href="${pageContext.request.contextPath}/Pages/Root/findPlayers.jsp">Find Players</a></li>
-        <li><a href="${pageContext.request.contextPath}/Pages/Root/about.jsp">About</a></li>
+        <li><a href="${pageContext.request.contextPath}/teams">Teams</a></li>
+        <li><a href="${pageContext.request.contextPath}/findPlayers">Find Players</a></li>
+        <li><a href="${pageContext.request.contextPath}/about">About</a></li>
     </ul>
     <div class="navbar_actions">
         <c:choose>
@@ -27,7 +27,7 @@
                 <span class="welcome_text">Hi, ${sessionScope.firstName}</span>
                 <c:choose>
                     <c:when test="${sessionScope.role eq 'admin'}">
-                        <a href="${pageContext.request.contextPath}/admin"   class="login_btn">Dashboard</a>
+                        <a href="${pageContext.request.contextPath}/admin" class="login_btn">Dashboard</a>
                     </c:when>
                     <c:otherwise>
                         <a href="${pageContext.request.contextPath}/profile" class="login_btn">Dashboard</a>
@@ -85,8 +85,8 @@
     </div>
     <div class="card_grid">
         <c:choose>
-            <c:when test="${empty requestScope.grounds}">
-                <%-- Static --%>
+            <c:when test="${empty grounds}">
+                <%-- Static fallback --%>
                 <a href="${pageContext.request.contextPath}/grounds" class="ground_card">
                     <div class="ground_card_image">
                         <img src="${pageContext.request.contextPath}/Assets/oldtrff.jpg"
@@ -134,7 +134,7 @@
                 </a>
             </c:when>
             <c:otherwise>
-                <c:forEach var="ground" items="${requestScope.grounds}">
+                <c:forEach var="ground" items="${grounds}">
                     <a href="${pageContext.request.contextPath}/grounds?id=${ground.groundId}"
                        class="ground_card">
                         <div class="ground_card_image">
@@ -179,13 +179,13 @@
 <div class="section">
     <div class="section_header">
         <h2 class="section_title">Open Teams Recruiting</h2>
-        <a href="${pageContext.request.contextPath}/Pages/Root/teams.jsp" class="section_link">View all →</a>
+        <a href="${pageContext.request.contextPath}/teams" class="section_link">View all →</a>
     </div>
     <div class="card_grid">
         <c:choose>
-            <c:when test="${empty requestScope.teams}">
-                <%-- Static --%>
-                <a href="${pageContext.request.contextPath}/Pages/Root/teams.jsp" class="team_card">
+            <c:when test="${empty teams}">
+                <%-- Static fallback --%>
+                <a href="${pageContext.request.contextPath}/teams" class="team_card">
                     <div class="team_card_name">Thunder FC</div>
                     <div class="team_card_meta">
                         Football · Needs 3 players<br/>
@@ -193,7 +193,7 @@
                     </div>
                     <span class="badge badge_blue">Recruiting</span>
                 </a>
-                <a href="${pageContext.request.contextPath}/Pages/Root/teams.jsp" class="team_card">
+                <a href="${pageContext.request.contextPath}/teams" class="team_card">
                     <div class="team_card_name">Storm Cricket XI</div>
                     <div class="team_card_meta">
                         Cricket · Needs 2 players<br/>
@@ -201,7 +201,7 @@
                     </div>
                     <span class="badge badge_blue">Recruiting</span>
                 </a>
-                <a href="${pageContext.request.contextPath}/Pages/Root/teams.jsp" class="team_card">
+                <a href="${pageContext.request.contextPath}/teams" class="team_card">
                     <div class="team_card_name">Hoops KTM</div>
                     <div class="team_card_meta">
                         Basketball · Full team<br/>
@@ -211,8 +211,8 @@
                 </a>
             </c:when>
             <c:otherwise>
-                <c:forEach var="team" items="${requestScope.teams}">
-                    <a href="${pageContext.request.contextPath}/Pages/Root/teams.jsp?id=${team.teamId}"
+                <c:forEach var="team" items="${teams}">
+                    <a href="${pageContext.request.contextPath}/teams?id=${team.teamId}"
                        class="team_card">
                         <div class="team_card_name">${team.name}</div>
                         <div class="team_card_meta">
@@ -242,8 +242,8 @@
     <a href="${pageContext.request.contextPath}/home" class="footer_logo">Kick<span>Off</span></a>
     <ul class="footer_links">
         <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
-        <li><a href="${pageContext.request.contextPath}/Pages/Root/about.jsp">About</a></li>
-        <li><a href="${pageContext.request.contextPath}/Pages/Root/contact.jsp">Contact</a></li>
+        <li><a href="${pageContext.request.contextPath}/about">About</a></li>
+        <li><a href="${pageContext.request.contextPath}/contact">Contact</a></li>
     </ul>
     <p class="footer_copy">© 2026 KickOff. All rights reserved.</p>
 </footer>

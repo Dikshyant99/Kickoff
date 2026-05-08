@@ -1,8 +1,5 @@
 package com.kickoff.model;
 
-
-
-
 public class ground {
     private int groundId;
     private int ownerId;

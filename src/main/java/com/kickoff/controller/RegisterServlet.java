@@ -20,8 +20,9 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // changed: redirect instead of forward
-        response.sendRedirect(request.getContextPath() + "/Pages/Auth/Register.jsp");
+        // forward
+        request.getRequestDispatcher("/Pages/Auth/Register.jsp")
+                .forward(request, response);
     }
 
     @Override
@@ -60,18 +61,17 @@ public class RegisterServlet extends HttpServlet {
         );
 
         if (result.equals("success")) {
-            // registration worked, redirect to login with success param
             response.sendRedirect(request.getContextPath() + "/login?registered=true");
         } else {
-            // changed: session instead of requestScope, redirect instead of forward
-            request.getSession().setAttribute("errorMsg", result);
+            request.getSession().setAttribute("errorMsg",   result);
             request.getSession().setAttribute("firstName",  firstName);
             request.getSession().setAttribute("lastName",   lastName);
             request.getSession().setAttribute("email",      email);
             request.getSession().setAttribute("phone",      phone);
             request.getSession().setAttribute("sport",      sport);
             request.getSession().setAttribute("skillLevel", skillLevel);
-            response.sendRedirect(request.getContextPath() + "/Pages/Auth/Register.jsp");
+            //redirect to servlet, not JSP
+            response.sendRedirect(request.getContextPath() + "/register");
         }
     }
 }

@@ -16,9 +16,9 @@
     <ul class="navbar_links">
       <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
       <li><a href="${pageContext.request.contextPath}/grounds">Grounds</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/teams.jsp">Teams</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/findPlayers.jsp">Find Players</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/about.jsp">About</a></li>
+      <li><a href="${pageContext.request.contextPath}/teams">Teams</a></li>
+      <li><a href="${pageContext.request.contextPath}/findPlayers">Find Players</a></li>
+      <li><a href="${pageContext.request.contextPath}/about">About</a></li>
     </ul>
     <div class="navbar_actions">
       <a href="${pageContext.request.contextPath}/login"    class="login_btn">Login</a>
@@ -39,7 +39,6 @@
 
       <form action="${pageContext.request.contextPath}/register" method="post" enctype="multipart/form-data">
 
-        <%-- changed: sessionScope instead of requestScope, removed after display --%>
         <c:if test="${not empty sessionScope.errorMsg}">
           <div class="msg_error">${sessionScope.errorMsg}</div>
           <c:remove var="errorMsg" scope="session"/>
@@ -55,7 +54,6 @@
         <div class="form_row_2col">
           <div class="form_group">
             <label class="form_label" for="firstName">First name</label>
-            <%-- changed: sessionScope instead of requestScope --%>
             <input class="form_input" type="text" id="firstName" name="firstName"
                    placeholder="Dikshyant"
                    value="${not empty sessionScope.firstName ? sessionScope.firstName : ''}"
@@ -96,7 +94,6 @@
         <div class="form_row_2col">
           <div class="form_group">
             <label class="form_label" for="sport">Favourite sport</label>
-            <%-- changed: sessionScope instead of requestScope --%>
             <select class="form_select" id="sport" name="sport">
               <option value="" disabled
                 <c:if test="${empty sessionScope.sport}">selected</c:if>>
@@ -191,8 +188,8 @@
     <a href="${pageContext.request.contextPath}/home" class="footer_logo">Kick<span>Off</span></a>
     <ul class="footer_links">
       <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/about.jsp">About</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/contact.jsp">Contact</a></li>
+      <li><a href="${pageContext.request.contextPath}/about">About</a></li>
+      <li><a href="${pageContext.request.contextPath}/contact">Contact</a></li>
     </ul>
     <p class="footer_copy">© 2026 KickOff. All rights reserved.</p>
   </footer>

@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet(asyncSupported = true, urlPatterns = {"/BookingServlet"})
+@WebServlet(asyncSupported = true, urlPatterns = {"/myBookings", "/bookingForm", "/cancelBooking"})
 public class BookingServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -32,20 +32,17 @@ public class BookingServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String action = request.getParameter("action");
+        String path = request.getServletPath();
 
         try {
-            if (action == null) {
-                showMyBookings(request, response);
-                return;
-            }
-            switch (action) {
-                case "showForm":
+            switch (path) {
+                case "/bookingForm":
                     showBookingForm(request, response);
                     break;
-                case "cancel":
+                case "/cancelBooking":
                     cancelBooking(request, response);
                     break;
+                case "/myBookings":
                 default:
                     showMyBookings(request, response);
             }
@@ -69,29 +66,28 @@ public class BookingServlet extends HttpServlet {
         }
     }
 
-
+    // SHOW BOOKING FORM
     private void showBookingForm(HttpServletRequest request,
                                  HttpServletResponse response)
             throws ServletException, IOException, SQLException {
 
         String groundId = request.getParameter("groundId");
         if (groundId == null) {
-            response.sendRedirect(request.getContextPath() + "/GroundServlet");
+            response.sendRedirect(request.getContextPath() + "/grounds");
             return;
         }
 
         ground ground = groundService.getGroundById(Integer.parseInt(groundId));
         List<groundslot> slots = groundService.getAvailableSlots(Integer.parseInt(groundId));
 
-
-        HttpSession session = request.getSession();
-        session.setAttribute("ground", ground);
-        session.setAttribute("slots", slots);
-
-        response.sendRedirect(request.getContextPath() + "/Pages/User/booking-form.jsp");
+        // request attributes + forward
+        request.setAttribute("ground", ground);
+        request.setAttribute("slots", slots);
+        request.getRequestDispatcher("/Pages/User/booking-form.jsp")
+                .forward(request, response);
     }
 
-    //MAKE BOOKING
+    // MAKE BOOKING
     private void makeBooking(HttpServletRequest request,
                              HttpServletResponse response)
             throws ServletException, IOException, SQLException {
@@ -110,7 +106,8 @@ public class BookingServlet extends HttpServlet {
             session.setAttribute("errorMsg", result);
         }
 
-        response.sendRedirect(request.getContextPath() + "/BookingServlet");
+        // redirect to clean URL
+        response.sendRedirect(request.getContextPath() + "/myBookings");
     }
 
     // SHOW MY BOOKINGS
@@ -123,12 +120,13 @@ public class BookingServlet extends HttpServlet {
 
         List<Booking> bookings = bookingService.getBookingsByUser(userId);
 
-
-        session.setAttribute("bookings", bookings);
-        response.sendRedirect(request.getContextPath() + "/Pages/User/bookings.jsp");
+        // request attribute + forward
+        request.setAttribute("bookings", bookings);
+        request.getRequestDispatcher("/Pages/User/bookings.jsp")
+                .forward(request, response);
     }
 
-    //  CANCEL BOOKING
+    // CANCEL BOOKING
     private void cancelBooking(HttpServletRequest request,
                                HttpServletResponse response)
             throws ServletException, IOException, SQLException {
@@ -145,6 +143,7 @@ public class BookingServlet extends HttpServlet {
             session.setAttribute("errorMsg", result);
         }
 
-        response.sendRedirect(request.getContextPath() + "/BookingServlet");
+        // FIX: redirect to clean URL
+        response.sendRedirect(request.getContextPath() + "/myBookings");
     }
 }

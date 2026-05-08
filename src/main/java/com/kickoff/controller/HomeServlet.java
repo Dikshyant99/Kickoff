@@ -74,19 +74,18 @@ public class HomeServlet extends HttpServlet {
                 }
             }
 
-            // changed: session instead of requestScope
-            request.getSession().setAttribute("grounds", grounds);
-            request.getSession().setAttribute("teams",   teams);
+            // request attributes instead of session
+            request.setAttribute("grounds", grounds);
+            request.setAttribute("teams",   teams);
 
         } catch (SQLException e) {
             e.printStackTrace();
-            // changed: session instead of requestScope
-            request.getSession().setAttribute("errorMsg",
-                    "Failed to load data: " + e.getMessage());
+            request.setAttribute("errorMsg", "Failed to load data: " + e.getMessage());
         }
 
-        // changed: redirect instead of forward
-        response.sendRedirect(request.getContextPath() + "/Pages/Root/Homepage.jsp");
+        //forward instead of redirect
+        request.getRequestDispatcher("/Pages/Root/Homepage.jsp")
+                .forward(request, response);
     }
 
     @Override

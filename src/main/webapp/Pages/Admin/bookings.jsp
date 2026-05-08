@@ -11,31 +11,30 @@
 <body>
 
   <nav class="navbar">
-    <a href="${pageContext.request.contextPath}/HomeServlet" class="navbar_logo">Kick<span>Off</span></a>
+    <a href="${pageContext.request.contextPath}/home" class="navbar_logo">Kick<span>Off</span></a>
     <ul class="navbar_links">
-      <li><a href="${pageContext.request.contextPath}/HomeServlet">Home</a></li>
-      <li><a href="${pageContext.request.contextPath}/GroundServlet">Grounds</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/teams.jsp">Teams</a></li>
-      <li><a href="${pageContext.request.contextPath}/Pages/Root/about.jsp">About</a></li>
+      <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
+      <li><a href="${pageContext.request.contextPath}/grounds">Grounds</a></li>
+      <li><a href="${pageContext.request.contextPath}/teams">Teams</a></li>
+      <li><a href="${pageContext.request.contextPath}/about">About</a></li>
     </ul>
     <span class="admin_badge">Admin</span>
   </nav>
 
   <div class="layout">
     <aside class="sidebar">
-      <a href="${pageContext.request.contextPath}/AdminServlet"                      class="sidebar_item">Overview</a>
-      <a href="${pageContext.request.contextPath}/AdminServlet?action=listUsers"     class="sidebar_item">Users</a>
-      <a href="${pageContext.request.contextPath}/AdminServlet?action=listGrounds"   class="sidebar_item">Grounds</a>
-      <a href="${pageContext.request.contextPath}/AdminServlet?action=listTeams"     class="sidebar_item">Teams</a>
-      <a href="${pageContext.request.contextPath}/AdminServlet?action=listBookings"  class="sidebar_item active">Booking Requests</a>
-      <a href="${pageContext.request.contextPath}/LogoutServlet"                     class="sidebar_item">Logout</a>
+      <a href="${pageContext.request.contextPath}/admin"                          class="sidebar_item">Overview</a>
+      <a href="${pageContext.request.contextPath}/admin?action=listUsers"         class="sidebar_item">Users</a>
+      <a href="${pageContext.request.contextPath}/admin?action=listGrounds"       class="sidebar_item">Grounds</a>
+      <a href="${pageContext.request.contextPath}/admin?action=listTeams"         class="sidebar_item">Teams</a>
+      <a href="${pageContext.request.contextPath}/admin?action=listBookings"      class="sidebar_item active">Booking Requests</a>
+      <a href="${pageContext.request.contextPath}/logout"                         class="sidebar_item">Logout</a>
     </aside>
 
     <main class="main">
 
       <p class="page_title">Booking Requests</p>
 
-      <%-- messages read from session, removed after display --%>
       <c:if test="${not empty sessionScope.successMsg}">
         <div class="msg_success">${sessionScope.successMsg}</div>
         <c:remove var="successMsg" scope="session"/>
@@ -52,14 +51,13 @@
         <button class="btn btn_red"     onclick="filterBookings('cancelled')">Cancelled</button>
       </div>
 
-      <%-- changed: requestScope.bookings replaced with sessionScope.bookings --%>
       <div id="bookingsList">
         <c:choose>
-          <c:when test="${empty sessionScope.bookings}">
+          <c:when test="${empty bookings}">
             <div class="empty">No booking requests yet.</div>
           </c:when>
           <c:otherwise>
-            <c:forEach var="booking" items="${sessionScope.bookings}">
+            <c:forEach var="booking" items="${bookings}">
               <div class="list_item" data-status="${booking.status}">
                 <div>
                   <div class="list_item_name">${booking.groundName}</div>
@@ -77,9 +75,9 @@
                     </c:when>
                     <c:when test="${booking.status eq 'pending'}">
                       <span class="badge badge_yellow">Pending</span>
-                      <a href="${pageContext.request.contextPath}/AdminServlet?action=approveBooking&id=${booking.bookingId}"
+                      <a href="${pageContext.request.contextPath}/admin?action=approveBooking&id=${booking.bookingId}"
                          class="btn btn_green">Approve</a>
-                      <a href="${pageContext.request.contextPath}/AdminServlet?action=rejectBooking&id=${booking.bookingId}"
+                      <a href="${pageContext.request.contextPath}/admin?action=rejectBooking&id=${booking.bookingId}"
                          class="btn btn_red">Reject</a>
                     </c:when>
                     <c:otherwise>
