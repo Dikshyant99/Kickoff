@@ -41,7 +41,7 @@ public class UpdateProfileServlet extends HttpServlet {
         }
     }
 
-    // ===== HANDLE PROFILE UPDATE =====
+    // Handling the profile update
     private void handleUpdateProfile(HttpServletRequest request,
                                      HttpServletResponse response,
                                      HttpSession session,
@@ -82,7 +82,7 @@ public class UpdateProfileServlet extends HttpServlet {
         user.setSport(sport           != null ? sport.trim()      : "");
         user.setSkillLevel(skillLevel != null ? skillLevel.trim() : "");
 
-        // Save updated data
+        // Saving updated data
         boolean updated = userDAO.updateUser(user);
 
         if (updated) {
@@ -99,7 +99,7 @@ public class UpdateProfileServlet extends HttpServlet {
         }
     }
 
-    // ===== HANDLE CHANGE PASSWORD =====
+    // handling the changed password
     private void handleChangePassword(HttpServletRequest request,
                                       HttpServletResponse response,
                                       HttpSession session,

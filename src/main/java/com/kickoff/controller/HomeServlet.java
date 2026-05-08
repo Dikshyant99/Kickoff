@@ -21,8 +21,8 @@ public class HomeServlet extends HttpServlet {
 
         try (Connection con = DBUtil.getConnection()) {
 
-            // FEATURED GROUNDS
-            // Fetch 3 active grounds for homepage cards
+            // For grounds that are used
+            // Fetching 3 grounds for the homepage grid
             List<Map<String, Object>> grounds = new ArrayList<>();
             String groundSql = "SELECT ground_id, name, location, city, " +
                     "sport_types, price_per_hour, image_url, is_active " +
@@ -46,8 +46,8 @@ public class HomeServlet extends HttpServlet {
                 }
             }
 
-            // FEATURED TEAMS
-            // Fetch 3 open recruiting teams for homepage cards
+            // Teams that are to be shown
+            // Fetching 3 teams for the homepage grid
             List<Map<String, Object>> teams = new ArrayList<>();
             String teamSql = "SELECT t.team_id, t.name, t.sport_type, " +
                     "t.location, t.skill_level, t.max_players, " +

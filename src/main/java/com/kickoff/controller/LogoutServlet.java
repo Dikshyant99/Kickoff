@@ -18,7 +18,7 @@ public class LogoutServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Destroy session
+        // Destroying the session
         SessionUtil.invalidateSession(request);
         // Delete rememberMe cookies
         CookiesUtil.deleteCookie(response, "userEmail");

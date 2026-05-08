@@ -82,7 +82,7 @@ public class BookingServlet extends HttpServlet {
         }
     }
 
-    // ===== SHOW BOOKING FORM =====
+    // Booking form will be shown
     private void showBookingForm(HttpServletRequest request,
                                  HttpServletResponse response)
             throws ServletException, IOException, SQLException {
@@ -102,7 +102,7 @@ public class BookingServlet extends HttpServlet {
                 .forward(request, response);
     }
 
-    // ===== MAKE NEW BOOKING =====
+    // this is where booking is made
     private void makeBooking(HttpServletRequest request,
                              HttpServletResponse response)
             throws ServletException, IOException, SQLException {
@@ -124,7 +124,7 @@ public class BookingServlet extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/myBookings");
     }
 
-    // ===== SHOW MY BOOKINGS =====
+    // Showing my bookings
     private void showMyBookings(HttpServletRequest request,
                                 HttpServletResponse response)
             throws ServletException, IOException, SQLException {
@@ -138,7 +138,7 @@ public class BookingServlet extends HttpServlet {
                 .forward(request, response);
     }
 
-    // ===== CANCEL BOOKING =====
+    // For cancelling the bookings
     private void cancelBooking(HttpServletRequest request,
                                HttpServletResponse response)
             throws ServletException, IOException, SQLException {

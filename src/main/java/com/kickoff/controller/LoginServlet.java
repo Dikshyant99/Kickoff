@@ -48,12 +48,12 @@ public class LoginServlet extends HttpServlet {
 
         request.setCharacterEncoding("UTF-8");
 
-        // Read form fields
+        // Reading the form fields
         String email      = request.getParameter("email");
         String password   = request.getParameter("password");
         String rememberMe = request.getParameter("rememberMe");
 
-        // Get specific result from service
+        // Get the required result from service
         String result = userService.checkLogin(email, password);
 
         if (result.equals("success")) {
@@ -61,7 +61,7 @@ public class LoginServlet extends HttpServlet {
             // Get full User object from database
             User user = userService.getUserByEmail(email);
 
-            // SET SESSION
+            // Setting the session
             // Store all user details in session
             SessionUtil.setAttribute(request, "loggedIn",   true);
             SessionUtil.setAttribute(request, "userId",     user.getUserId());
@@ -75,7 +75,7 @@ public class LoginServlet extends HttpServlet {
             SessionUtil.setAttribute(request, "image",      user.getImage());
             SessionUtil.setAttribute(request, "createdAt",  user.getCreatedAt());
 
-            // SET COOKIES
+            // Setting the cookies
             if ("on".equals(rememberMe)) {
                 // Remember me ticked — save for 7 days
                 CookiesUtil.addCookie(response, "userEmail",  email,  7 * 24 * 60 * 60);

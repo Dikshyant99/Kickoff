@@ -23,7 +23,7 @@ public class ProfileServlet extends HttpServlet {
         String email = (String) request.getSession().getAttribute("email");
 
         if (email == null) {
-            // Not logged in - redirect to login
+            // If not logged in redirect user to login
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }

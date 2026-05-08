@@ -171,7 +171,7 @@ public class AdminServlet extends HttpServlet {
         }
     }
 
-    // ===== LOAD DASHBOARD =====
+    // Loading the dashboard
     private void loadDashboard(HttpServletRequest request,
                                HttpServletResponse response)
             throws ServletException, IOException, SQLException {

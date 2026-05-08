@@ -29,7 +29,7 @@ public class RegisterServlet extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
 
-        // IMAGE upload
+        // Uploading the image
         Part filePart = request.getPart("image");
         String fileName = (filePart != null) ? filePart.getSubmittedFileName() : null;
 
@@ -44,7 +44,7 @@ public class RegisterServlet extends HttpServlet {
             imagePath = "uploads/default.png"; // fallback
         }
 
-        // Read all form fields
+        // Reading all the form fields
         String firstName       = request.getParameter("firstName");
         String lastName        = request.getParameter("lastName");
         String email           = request.getParameter("email");
@@ -62,10 +62,10 @@ public class RegisterServlet extends HttpServlet {
         );
 
         if (result.equals("success")) {
-            // Registration worked - go to login with success message
+            // if registration worked send to login page with success message
             response.sendRedirect(request.getContextPath() + "/login?registered=true");
         } else {
-            // Validation failed: send error back to register page
+            // if validation failed send to login page with error message
             request.setAttribute("errorMsg", result);
 
             // Send form values back so fields stay filled
