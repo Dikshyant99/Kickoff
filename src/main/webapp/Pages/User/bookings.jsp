@@ -5,7 +5,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Bookings – KickOff</title>
+  <title>My Bookings - KickOff</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/userdashboard.css"/>
 </head>
@@ -29,10 +29,10 @@
   <div class="layout">
 
     <aside class="sidebar">
-      <a href="${pageContext.request.contextPath}/profile"    class="sidebar_item">My Profile</a>
-      <a href="${pageContext.request.contextPath}/Pages/User/myteam.jsp" class="sidebar_item">My Team</a>
-      <a href="${pageContext.request.contextPath}/myBookings" class="sidebar_item active">My Bookings</a>
-      <a href="${pageContext.request.contextPath}/logout"     class="sidebar_item">Logout</a>
+      <a href="${pageContext.request.contextPath}/profile"                 class="sidebar_item">My Profile</a>
+      <a href="${pageContext.request.contextPath}/Pages/User/myteam.jsp"   class="sidebar_item">My Team</a>
+      <a href="${pageContext.request.contextPath}/myBookings"              class="sidebar_item active">My Bookings</a>
+      <a href="${pageContext.request.contextPath}/logout"                  class="sidebar_item">Logout</a>
     </aside>
 
     <main class="main">
@@ -42,7 +42,7 @@
         <a href="${pageContext.request.contextPath}/grounds" class="btn btn_outline">+ Book a Ground</a>
       </div>
 
-      <%-- Success / Error messages --%>
+      <%-- messages read from session, removed after display --%>
       <c:if test="${not empty sessionScope.successMsg}">
         <div class="msg_success">${sessionScope.successMsg}</div>
         <c:remove var="successMsg" scope="session"/>
@@ -52,8 +52,9 @@
         <c:remove var="errorMsg" scope="session"/>
       </c:if>
 
+      <%-- changed: requestScope.bookings replaced with sessionScope.bookings --%>
       <c:choose>
-        <c:when test="${empty requestScope.bookings}">
+        <c:when test="${empty sessionScope.bookings}">
           <div class="empty">
             You have no bookings yet.
             <a href="${pageContext.request.contextPath}/grounds" style="color:#2a6fdb;">
@@ -62,13 +63,13 @@
           </div>
         </c:when>
         <c:otherwise>
-          <c:forEach var="booking" items="${requestScope.bookings}">
+          <c:forEach var="booking" items="${sessionScope.bookings}">
             <div class="list_item">
               <div>
                 <div class="list_item_name">${booking.groundName}</div>
                 <div class="list_item_meta">
                   ${booking.slotDate} &nbsp;·&nbsp;
-                  ${booking.startTime} – ${booking.endTime} &nbsp;·&nbsp;
+                  ${booking.startTime} - ${booking.endTime} &nbsp;·&nbsp;
                   Rs ${booking.totalPrice}
                 </div>
               </div>

@@ -28,18 +28,21 @@ public class GroundServlet extends HttpServlet {
 
         try {
             List<ground> grounds = groundService.getAllGrounds();
-            request.setAttribute("grounds", grounds);
+            // changed: session instead of requestScope
+            request.getSession().setAttribute("grounds", grounds);
         } catch (SQLException e) {
             e.printStackTrace();
-            request.setAttribute("errorMsg", "Database error: " + e.getMessage());
+            // changed: session instead of requestScope
+            request.getSession().setAttribute("errorMsg", "Database error: " + e.getMessage());
             throw new ServletException("Database error", e);
         } catch (Exception e) {
             e.printStackTrace();
-            request.setAttribute("errorMsg", "Error: " + e.getMessage());
+            // changed: session instead of requestScope
+            request.getSession().setAttribute("errorMsg", "Error: " + e.getMessage());
             throw new ServletException("Unexpected error", e);
         }
 
-        request.getRequestDispatcher("/Pages/Root/Grounds.jsp")
-                .forward(request, response);
+        // changed: redirect instead of forward
+        response.sendRedirect(request.getContextPath() + "/Pages/Root/Grounds.jsp");
     }
 }

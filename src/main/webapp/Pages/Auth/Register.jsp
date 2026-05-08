@@ -2,18 +2,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Register – KickOff</title>
+  <title>Register - KickOff</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/register.css"/>
 </head>
-
 <body>
 
-  <!-- ===== NAVBAR ===== -->
   <nav class="navbar">
     <a href="${pageContext.request.contextPath}/home" class="navbar_logo">Kick<span>Off</span></a>
     <ul class="navbar_links">
@@ -29,7 +26,6 @@
     </div>
   </nav>
 
-  <!-- ===== AUTH WRAPPER ===== -->
   <div class="auth_wrapper">
     <div class="auth_card">
 
@@ -43,32 +39,33 @@
 
       <form action="${pageContext.request.contextPath}/register" method="post" enctype="multipart/form-data">
 
-        <%-- Error message --%>
-        <c:if test="${not empty requestScope.errorMsg}">
-          <div class="msg_error">${requestScope.errorMsg}</div>
+        <%-- changed: sessionScope instead of requestScope, removed after display --%>
+        <c:if test="${not empty sessionScope.errorMsg}">
+          <div class="msg_error">${sessionScope.errorMsg}</div>
+          <c:remove var="errorMsg" scope="session"/>
         </c:if>
 
-        <%-- Success message --%>
-        <c:if test="${not empty requestScope.successMsg}">
-          <div class="msg_success">${requestScope.successMsg}</div>
+        <c:if test="${not empty sessionScope.successMsg}">
+          <div class="msg_success">${sessionScope.successMsg}</div>
+          <c:remove var="successMsg" scope="session"/>
         </c:if>
 
-        <!-- Personal Info -->
         <p class="section_tag">Personal Info</p>
 
         <div class="form_row_2col">
           <div class="form_group">
             <label class="form_label" for="firstName">First name</label>
+            <%-- changed: sessionScope instead of requestScope --%>
             <input class="form_input" type="text" id="firstName" name="firstName"
                    placeholder="Dikshyant"
-                   value="${not empty requestScope.firstName ? requestScope.firstName : ''}"
+                   value="${not empty sessionScope.firstName ? sessionScope.firstName : ''}"
                    required/>
           </div>
           <div class="form_group">
             <label class="form_label" for="lastName">Last name</label>
             <input class="form_input" type="text" id="lastName" name="lastName"
                    placeholder="Karki"
-                   value="${not empty requestScope.lastName ? requestScope.lastName : ''}"
+                   value="${not empty sessionScope.lastName ? sessionScope.lastName : ''}"
                    required/>
           </div>
         </div>
@@ -77,7 +74,7 @@
           <label class="form_label" for="email">Email address</label>
           <input class="form_input" type="email" id="email" name="email"
                  placeholder="dikshyant67@gmail.com"
-                 value="${not empty requestScope.email ? requestScope.email : ''}"
+                 value="${not empty sessionScope.email ? sessionScope.email : ''}"
                  required/>
         </div>
 
@@ -85,41 +82,40 @@
           <label class="form_label" for="phone">Phone number</label>
           <input class="form_input" type="tel" id="phone" name="phone"
                  placeholder="98XXXXXXXX"
-                 value="${not empty requestScope.phone ? requestScope.phone : ''}"/>
+                 value="${not empty sessionScope.phone ? sessionScope.phone : ''}"/>
         </div>
 
-        <!-- IMAGE UPLOAD -->
         <div class="form_group">
           <label class="form_label" for="image">Profile Image</label>
           <input class="form_input" type="file" id="image" name="image"
                  accept="image/*"/>
         </div>
 
-        <!-- Sports Profile -->
         <p class="section_tag">Sports Profile</p>
 
         <div class="form_row_2col">
           <div class="form_group">
             <label class="form_label" for="sport">Favourite sport</label>
+            <%-- changed: sessionScope instead of requestScope --%>
             <select class="form_select" id="sport" name="sport">
               <option value="" disabled
-                <c:if test="${empty requestScope.sport}">selected</c:if>>
+                <c:if test="${empty sessionScope.sport}">selected</c:if>>
                 Select sport
               </option>
               <option value="football"
-                <c:if test="${requestScope.sport eq 'football'}">selected</c:if>>
+                <c:if test="${sessionScope.sport eq 'football'}">selected</c:if>>
                 Football
               </option>
               <option value="cricket"
-                <c:if test="${requestScope.sport eq 'cricket'}">selected</c:if>>
+                <c:if test="${sessionScope.sport eq 'cricket'}">selected</c:if>>
                 Cricket
               </option>
               <option value="basketball"
-                <c:if test="${requestScope.sport eq 'basketball'}">selected</c:if>>
+                <c:if test="${sessionScope.sport eq 'basketball'}">selected</c:if>>
                 Basketball
               </option>
               <option value="tennis"
-                <c:if test="${requestScope.sport eq 'tennis'}">selected</c:if>>
+                <c:if test="${sessionScope.sport eq 'tennis'}">selected</c:if>>
                 Tennis
               </option>
             </select>
@@ -128,26 +124,25 @@
             <label class="form_label" for="skill">Skill level</label>
             <select class="form_select" id="skill" name="skillLevel">
               <option value="" disabled
-                <c:if test="${empty requestScope.skillLevel}">selected</c:if>>
+                <c:if test="${empty sessionScope.skillLevel}">selected</c:if>>
                 Select level
               </option>
               <option value="beginner"
-                <c:if test="${requestScope.skillLevel eq 'beginner'}">selected</c:if>>
+                <c:if test="${sessionScope.skillLevel eq 'beginner'}">selected</c:if>>
                 Beginner
               </option>
               <option value="intermediate"
-                <c:if test="${requestScope.skillLevel eq 'intermediate'}">selected</c:if>>
+                <c:if test="${sessionScope.skillLevel eq 'intermediate'}">selected</c:if>>
                 Intermediate
               </option>
               <option value="advanced"
-                <c:if test="${requestScope.skillLevel eq 'advanced'}">selected</c:if>>
+                <c:if test="${sessionScope.skillLevel eq 'advanced'}">selected</c:if>>
                 Advanced
               </option>
             </select>
           </div>
         </div>
 
-        <!-- Security -->
         <p class="section_tag">Security</p>
 
         <div class="form_group">
@@ -192,7 +187,6 @@
     </div>
   </div>
 
-  <!-- ===== FOOTER ===== -->
   <footer class="footer">
     <a href="${pageContext.request.contextPath}/home" class="footer_logo">Kick<span>Off</span></a>
     <ul class="footer_links">

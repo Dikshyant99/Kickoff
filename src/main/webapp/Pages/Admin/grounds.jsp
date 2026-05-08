@@ -4,17 +4,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Grounds – KickOff Admin</title>
+  <title>Grounds - KickOff Admin</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/admindashboard.css"/>
 </head>
 <body>
 
   <nav class="navbar">
-    <a href="${pageContext.request.contextPath}/home" class="navbar_logo">Kick<span>Off</span></a>
+    <a href="${pageContext.request.contextPath}/HomeServlet" class="navbar_logo">Kick<span>Off</span></a>
     <ul class="navbar_links">
-      <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
-      <li><a href="${pageContext.request.contextPath}/grounds">Grounds</a></li>
+      <li><a href="${pageContext.request.contextPath}/HomeServlet">Home</a></li>
+      <li><a href="${pageContext.request.contextPath}/GroundServlet">Grounds</a></li>
       <li><a href="${pageContext.request.contextPath}/Pages/Root/teams.jsp">Teams</a></li>
       <li><a href="${pageContext.request.contextPath}/Pages/Root/about.jsp">About</a></li>
     </ul>
@@ -23,17 +23,17 @@
 
   <div class="layout">
     <aside class="sidebar">
-      <a href="${pageContext.request.contextPath}/admin"        class="sidebar_item">Overview</a>
-      <a href="${pageContext.request.contextPath}/listUsers"    class="sidebar_item">Users</a>
-      <a href="${pageContext.request.contextPath}/listGrounds"  class="sidebar_item active">Grounds</a>
-      <a href="${pageContext.request.contextPath}/listTeams"    class="sidebar_item">Teams</a>
-      <a href="${pageContext.request.contextPath}/listBookings" class="sidebar_item">Booking Requests</a>
-      <a href="${pageContext.request.contextPath}/logout"       class="sidebar_item">Logout</a>
+      <a href="${pageContext.request.contextPath}/AdminServlet"                      class="sidebar_item">Overview</a>
+      <a href="${pageContext.request.contextPath}/AdminServlet?action=listUsers"     class="sidebar_item">Users</a>
+      <a href="${pageContext.request.contextPath}/AdminServlet?action=listGrounds"   class="sidebar_item active">Grounds</a>
+      <a href="${pageContext.request.contextPath}/AdminServlet?action=listTeams"     class="sidebar_item">Teams</a>
+      <a href="${pageContext.request.contextPath}/AdminServlet?action=listBookings"  class="sidebar_item">Booking Requests</a>
+      <a href="${pageContext.request.contextPath}/LogoutServlet"                     class="sidebar_item">Logout</a>
     </aside>
 
     <main class="main">
 
-      <%-- Success / Error messages --%>
+      <%-- messages read from session, removed after display --%>
       <c:if test="${not empty sessionScope.successMsg}">
         <div class="msg_success">${sessionScope.successMsg}</div>
         <c:remove var="successMsg" scope="session"/>
@@ -49,13 +49,14 @@
                 class="btn btn_primary">+ Add Ground</button>
       </div>
 
-      <%-- Add Ground Form (hidden by default) --%>
+      <%-- add ground form, hidden by default, no change needed here --%>
       <div id="addGroundForm" style="display:none; background:#1a1a1a;
            border-radius:14px; padding:24px; margin-bottom:24px;">
         <p style="font-size:1rem; font-weight:600; color:#f0f0f0; margin-bottom:16px;">
           Add New Ground
         </p>
-        <form action="${pageContext.request.contextPath}/addGround" method="post">
+        <form action="${pageContext.request.contextPath}/AdminServlet?action=addGround"
+              method="post">
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
             <div>
               <label style="font-size:12px; color:#888; display:block; margin-bottom:6px;">Ground Name</label>
@@ -92,19 +93,18 @@
         </form>
       </div>
 
-      <%-- Search --%>
       <input type="text" id="groundSearch" class="search_input"
              placeholder="Search grounds..."
              onkeyup="filterGrounds()"/>
 
-      <%-- Grounds List --%>
+      <%-- changed: requestScope.grounds replaced with sessionScope.grounds --%>
       <div id="groundsList">
         <c:choose>
-          <c:when test="${empty requestScope.grounds}">
+          <c:when test="${empty sessionScope.grounds}">
             <div class="empty">No grounds found.</div>
           </c:when>
           <c:otherwise>
-            <c:forEach var="ground" items="${requestScope.grounds}">
+            <c:forEach var="ground" items="${sessionScope.grounds}">
               <div class="list_item">
                 <div>
                   <div class="list_item_name">${ground.name}</div>
@@ -124,7 +124,7 @@
                       <span class="badge badge_yellow">Inactive</span>
                     </c:otherwise>
                   </c:choose>
-                  <a href="${pageContext.request.contextPath}/deleteGround?id=${ground.groundId}"
+                  <a href="${pageContext.request.contextPath}/AdminServlet?action=deleteGround&id=${ground.groundId}"
                      class="btn btn_red"
                      onclick="return confirm('Delete this ground?')">Delete</a>
                 </div>

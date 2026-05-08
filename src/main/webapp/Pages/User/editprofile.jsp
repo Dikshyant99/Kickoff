@@ -5,7 +5,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Edit Profile – KickOff</title>
+  <title>Edit Profile - KickOff</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/userdashboard.css"/>
   <style>
@@ -91,77 +91,51 @@
       border-color: #2a6fdb;
     }
     .form_group select option { background: #1a1a2e; }
-    .form_hint {
-      font-size: 12px;
-      color: #666;
-      margin-top: 5px;
-    }
-    .form_row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-    .edit_divider {
-      border: none;
-      border-top: 1px solid #2a2a4a;
-      margin: 28px 0;
-    }
-    .form_actions {
-      display: flex;
-      gap: 12px;
-      margin-top: 28px;
-    }
+    .form_hint { font-size: 12px; color: #666; margin-top: 5px; }
+    .form_row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .edit_divider { border: none; border-top: 1px solid #2a2a4a; margin: 28px 0; }
+    .form_actions { display: flex; gap: 12px; margin-top: 28px; }
     .form_actions .btn {
-      flex: 1;
-      text-align: center;
-      padding: 12px;
-      border: none;
-      cursor: pointer;
-      font-size: 14px;
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 600;
-      border-radius: 8px;
-      text-decoration: none;
-      display: inline-block;
+      flex: 1; text-align: center; padding: 12px;
+      border: none; cursor: pointer;
+      font-size: 14px; font-family: 'DM Sans', sans-serif;
+      font-weight: 600; border-radius: 8px;
+      text-decoration: none; display: inline-block;
     }
     .msg_success {
       background: rgba(39,174,96,0.15);
-      border: 1px solid #27ae60;
-      color: #27ae60;
-      padding: 12px 16px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      font-size: 14px;
+      border: 1px solid #27ae60; color: #27ae60;
+      padding: 12px 16px; border-radius: 8px;
+      margin-bottom: 20px; font-size: 14px;
     }
     .msg_error {
       background: rgba(231,76,60,0.15);
-      border: 1px solid #e74c3c;
-      color: #e74c3c;
-      padding: 12px 16px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      font-size: 14px;
+      border: 1px solid #e74c3c; color: #e74c3c;
+      padding: 12px 16px; border-radius: 8px;
+      margin-bottom: 20px; font-size: 14px;
     }
   </style>
 </head>
 <body>
 
-  <!-- ===== NAVBAR ===== -->
   <nav class="navbar">
-    <a href="${pageContext.request.contextPath}/home" class="navbar_logo">Kick<span>Off</span></a>
+    <a href="${pageContext.request.contextPath}/Pages/Root/Homepage.jsp" class="navbar_logo">Kick<span>Off</span></a>
     <ul class="navbar_links">
-      <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
-      <li><a href="${pageContext.request.contextPath}/grounds">Grounds</a></li>
+      <li><a href="${pageContext.request.contextPath}/Pages/Root/Homepage.jsp">Home</a></li>
+      <li><a href="${pageContext.request.contextPath}/Pages/Root/grounds.jsp">Grounds</a></li>
       <li><a href="${pageContext.request.contextPath}/Pages/Root/teams.jsp">Teams</a></li>
       <li><a href="${pageContext.request.contextPath}/Pages/Root/about.jsp">About</a></li>
     </ul>
     <div class="navbar_avatar">
+      <%-- changed: uses sessionScope.user instead of plain user --%>
       <c:choose>
-        <c:when test="${not empty user.image}">
-          <img src="${pageContext.request.contextPath}/${user.image}" class="avatar_img" alt="Profile"/>
+        <c:when test="${not empty sessionScope.user.image}">
+          <img src="${pageContext.request.contextPath}/${sessionScope.user.image}"
+               class="avatar_img" alt="Profile"/>
         </c:when>
         <c:otherwise>
-          <img src="${pageContext.request.contextPath}/Assets/default-avatar.png" class="avatar_img" alt="Profile"/>
+          <img src="${pageContext.request.contextPath}/Assets/default-avatar.png"
+               class="avatar_img" alt="Profile"/>
         </c:otherwise>
       </c:choose>
     </div>
@@ -169,71 +143,77 @@
 
   <div class="layout">
 
-    <!-- ===== SIDEBAR ===== -->
     <aside class="sidebar">
-      <a href="${pageContext.request.contextPath}/profile"    class="sidebar_item active">My Profile</a>
-      <a href="${pageContext.request.contextPath}/Pages/User/myteam.jsp" class="sidebar_item">My Team</a>
-      <a href="${pageContext.request.contextPath}/myBookings" class="sidebar_item">My Bookings</a>
-      <a href="${pageContext.request.contextPath}/logout"     class="sidebar_item">Logout</a>
+      <a href="${pageContext.request.contextPath}/ProfileServlet"          class="sidebar_item active">My Profile</a>
+      <a href="${pageContext.request.contextPath}/Pages/User/myteam.jsp"   class="sidebar_item">My Team</a>
+      <a href="${pageContext.request.contextPath}/BookingServlet"          class="sidebar_item">My Bookings</a>
+      <a href="${pageContext.request.contextPath}/LogoutServlet"           class="sidebar_item">Logout</a>
     </aside>
 
-    <!-- ===== MAIN ===== -->
     <main class="main">
       <div class="edit_wrapper">
         <div class="edit_card">
 
-          <!-- Avatar row -->
+          <%-- avatar row --%>
           <div class="edit_avatar_row">
             <div class="edit_avatar">
+              <%-- changed: uses sessionScope.user.image --%>
               <c:choose>
-                <c:when test="${not empty user.image}">
-                  <img src="${pageContext.request.contextPath}/${user.image}" alt="Profile"/>
+                <c:when test="${not empty sessionScope.user.image}">
+                  <img src="${pageContext.request.contextPath}/${sessionScope.user.image}" alt="Profile"/>
                 </c:when>
+                <%-- changed: scriptlet removed, uses sessionScope.firstName first letter --%>
                 <c:otherwise>
-                  <%-- Show first letter of first name using EL --%>
-                  <c:out value="${fn:substring(sessionScope.firstName, 0, 1)}"/>
+                  ${not empty sessionScope.firstName ? fn:substring(sessionScope.firstName, 0, 1) : 'U'}
                 </c:otherwise>
               </c:choose>
             </div>
             <div class="edit_avatar_info">
-              <h3>${user.firstName} ${user.lastName}</h3>
+              <h3>${sessionScope.user.firstName} ${sessionScope.user.lastName}</h3>
               <p>Update your profile information below</p>
             </div>
           </div>
 
-          <!-- Messages -->
+          <%-- messages read from session, removed after display --%>
           <c:if test="${not empty sessionScope.successMsg}">
             <div class="msg_success">${sessionScope.successMsg}</div>
             <c:remove var="successMsg" scope="session"/>
           </c:if>
-          <c:if test="${not empty error}">
-            <div class="msg_error">${error}</div>
+          <c:if test="${not empty sessionScope.errorMsg}">
+            <div class="msg_error">${sessionScope.errorMsg}</div>
+            <c:remove var="errorMsg" scope="session"/>
           </c:if>
 
-          <!-- FORM 1 — EDIT PROFILE -->
-          <form action="${pageContext.request.contextPath}/updateProfile" method="post">
+          <%-- form 1 - edit profile --%>
+          <form action="${pageContext.request.contextPath}/UpdateProfileServlet" method="post">
+            <input type="hidden" name="action" value="updateProfile"/>
 
             <p class="edit_section_title">Personal Information</p>
 
             <div class="form_row">
               <div class="form_group">
                 <label>First Name</label>
-                <input type="text" name="firstName" value="${user.firstName}" required/>
+                <%-- changed: uses sessionScope.user instead of plain user --%>
+                <input type="text" name="firstName"
+                       value="${sessionScope.user.firstName}" required/>
               </div>
               <div class="form_group">
                 <label>Last Name</label>
-                <input type="text" name="lastName" value="${user.lastName}"/>
+                <input type="text" name="lastName"
+                       value="${sessionScope.user.lastName}"/>
               </div>
             </div>
 
             <div class="form_group">
               <label>Email</label>
-              <input type="email" name="email" value="${user.email}" required/>
+              <input type="email" name="email"
+                     value="${sessionScope.user.email}" required/>
             </div>
 
             <div class="form_group">
               <label>Phone</label>
-              <input type="text" name="phone" value="${user.phone}" placeholder="Enter phone number"/>
+              <input type="text" name="phone"
+                     value="${sessionScope.user.phone}" placeholder="Enter phone number"/>
             </div>
 
             <hr class="edit_divider"/>
@@ -243,20 +223,31 @@
             <div class="form_row">
               <div class="form_group">
                 <label>Favourite Sport</label>
-                <input type="text" name="sport" value="${user.sport}" placeholder="e.g. Football"/>
+                <input type="text" name="sport"
+                       value="${sessionScope.user.sport}" placeholder="e.g. Football"/>
               </div>
               <div class="form_group">
                 <label>Skill Level</label>
                 <select name="skillLevel">
-                  <option value="beginner"     ${user.skillLevel == 'beginner'     ? 'selected' : ''}>Beginner</option>
-                  <option value="intermediate" ${user.skillLevel == 'intermediate' ? 'selected' : ''}>Intermediate</option>
-                  <option value="advanced"     ${user.skillLevel == 'advanced'     ? 'selected' : ''}>Advanced</option>
+                  <option value="beginner"
+                    <c:if test="${sessionScope.user.skillLevel eq 'beginner'}">selected</c:if>>
+                    Beginner
+                  </option>
+                  <option value="intermediate"
+                    <c:if test="${sessionScope.user.skillLevel eq 'intermediate'}">selected</c:if>>
+                    Intermediate
+                  </option>
+                  <option value="advanced"
+                    <c:if test="${sessionScope.user.skillLevel eq 'advanced'}">selected</c:if>>
+                    Advanced
+                  </option>
                 </select>
               </div>
             </div>
 
             <div class="form_actions">
-              <a href="${pageContext.request.contextPath}/profile" class="btn btn_outline">Cancel</a>
+              <a href="${pageContext.request.contextPath}/ProfileServlet"
+                 class="btn btn_outline">Cancel</a>
               <button type="submit" class="btn btn_primary">Save Changes</button>
             </div>
 
@@ -264,8 +255,9 @@
 
           <hr class="edit_divider"/>
 
-          <!-- FORM 2 — CHANGE PASSWORD -->
-          <form action="${pageContext.request.contextPath}/changePassword" method="post">
+          <%-- form 2 - change password, no data binding needed here --%>
+          <form action="${pageContext.request.contextPath}/UpdateProfileServlet" method="post">
+            <input type="hidden" name="action" value="changePassword"/>
 
             <p class="edit_section_title">Change Password</p>
 
@@ -286,7 +278,8 @@
             </div>
 
             <div class="form_actions">
-              <a href="${pageContext.request.contextPath}/profile" class="btn btn_outline">Cancel</a>
+              <a href="${pageContext.request.contextPath}/ProfileServlet"
+                 class="btn btn_outline">Cancel</a>
               <button type="submit" class="btn btn_primary">Update Password</button>
             </div>
 

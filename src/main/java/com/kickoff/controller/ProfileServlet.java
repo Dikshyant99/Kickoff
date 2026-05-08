@@ -19,30 +19,25 @@ public class ProfileServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Get logged in user's email from session
         String email = (String) request.getSession().getAttribute("email");
 
+        // if not logged in redirect to login
         if (email == null) {
-            // If not logged in redirect user to login
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
 
-        // Fetch fresh user data from database
         User user = userDAO.getUserByEmail(email);
 
+        // if user not found redirect to login
         if (user == null) {
-            // User not found in database
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
 
-        // Pass user object to JSP
-        request.setAttribute("user", user);
-
-        // Forward to profile page
-        request.getRequestDispatcher("/Pages/User/profile.jsp")
-                .forward(request, response);
+        // changed: session instead of requestScope, redirect instead of forward
+        request.getSession().setAttribute("user", user);
+        response.sendRedirect(request.getContextPath() + "/Pages/User/profile.jsp");
     }
 
     @Override

@@ -22,7 +22,7 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Read remember me cookies and pass to JSP
+        // read remember me cookies and store in session for JSP to read
         String savedEmail = "";
         boolean remembered = false;
 
@@ -36,33 +36,31 @@ public class LoginServlet extends HttpServlet {
             remembered = true;
         }
 
-        request.setAttribute("savedEmail", savedEmail);
-        request.setAttribute("remembered", remembered);
+        // changed: session instead of requestScope
+        request.getSession().setAttribute("savedEmail", savedEmail);
+        request.getSession().setAttribute("remembered", remembered);
 
-        request.getRequestDispatcher("/Pages/Auth/login.jsp")
-                .forward(request, response);
+        // changed: redirect instead of forward
+        response.sendRedirect(request.getContextPath() + "/Pages/Auth/login.jsp");
     }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
 
-        // Reading the form fields
         String email      = request.getParameter("email");
         String password   = request.getParameter("password");
         String rememberMe = request.getParameter("rememberMe");
 
-        // Get the required result from service
         String result = userService.checkLogin(email, password);
 
         if (result.equals("success")) {
 
-            // Get full User object from database
             User user = userService.getUserByEmail(email);
 
-            // Setting the session
-            // Store all user details in session
+            // store all user details in session
             SessionUtil.setAttribute(request, "loggedIn",   true);
             SessionUtil.setAttribute(request, "userId",     user.getUserId());
             SessionUtil.setAttribute(request, "firstName",  user.getFirstName());
@@ -75,54 +73,36 @@ public class LoginServlet extends HttpServlet {
             SessionUtil.setAttribute(request, "image",      user.getImage());
             SessionUtil.setAttribute(request, "createdAt",  user.getCreatedAt());
 
-            // Setting the cookies
             if ("on".equals(rememberMe)) {
-                // Remember me ticked — save for 7 days
                 CookiesUtil.addCookie(response, "userEmail",  email,  7 * 24 * 60 * 60);
                 CookiesUtil.addCookie(response, "rememberMe", "true", 7 * 24 * 60 * 60);
             } else {
-                // Delete cookies
                 CookiesUtil.deleteCookie(response, "userEmail");
                 CookiesUtil.deleteCookie(response, "rememberMe");
             }
 
-            // Redirect to admin or user
             if (user.getRole().equals("admin")) {
                 response.sendRedirect(request.getContextPath() + "/admin");
             } else {
                 response.sendRedirect(request.getContextPath() + "/profile");
             }
 
-        } else if (result.equals("wrong_password")) {
-            request.setAttribute("errorMsg", "Wrong password. Please try again.");
-            request.getRequestDispatcher("/Pages/Auth/login.jsp")
-                    .forward(request, response);
-
-        } else if (result.equals("user_not_found")) {
-            request.setAttribute("errorMsg",
-                    "No account found with this email. Please register.");
-            request.getRequestDispatcher("/Pages/Auth/login.jsp")
-                    .forward(request, response);
-
-        } else if (result.equals("email_empty")) {
-            request.setAttribute("errorMsg", "Please enter your email address.");
-            request.getRequestDispatcher("/Pages/Auth/login.jsp")
-                    .forward(request, response);
-
-        } else if (result.equals("password_empty")) {
-            request.setAttribute("errorMsg", "Please enter your password.");
-            request.getRequestDispatcher("/Pages/Auth/login.jsp")
-                    .forward(request, response);
-
-        } else if (result.equals("invalid_email")) {
-            request.setAttribute("errorMsg", "Please enter a valid email address.");
-            request.getRequestDispatcher("/Pages/Auth/login.jsp")
-                    .forward(request, response);
-
         } else {
-            request.setAttribute("errorMsg", "Something went wrong. Please try again.");
-            request.getRequestDispatcher("/Pages/Auth/login.jsp")
-                    .forward(request, response);
+            // changed: session instead of requestScope, redirect instead of forward
+            if (result.equals("wrong_password")) {
+                request.getSession().setAttribute("errorMsg", "Wrong password. Please try again.");
+            } else if (result.equals("user_not_found")) {
+                request.getSession().setAttribute("errorMsg", "No account found with this email. Please register.");
+            } else if (result.equals("email_empty")) {
+                request.getSession().setAttribute("errorMsg", "Please enter your email address.");
+            } else if (result.equals("password_empty")) {
+                request.getSession().setAttribute("errorMsg", "Please enter your password.");
+            } else if (result.equals("invalid_email")) {
+                request.getSession().setAttribute("errorMsg", "Please enter a valid email address.");
+            } else {
+                request.getSession().setAttribute("errorMsg", "Something went wrong. Please try again.");
+            }
+            response.sendRedirect(request.getContextPath() + "/Pages/Auth/login.jsp");
         }
     }
 }

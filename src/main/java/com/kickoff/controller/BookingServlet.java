@@ -15,12 +15,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet(asyncSupported = true, urlPatterns = {
-        "/myBookings",
-        "/bookingForm",
-        "/makeBooking",
-        "/cancelBooking"
-})
+@WebServlet(asyncSupported = true, urlPatterns = {"/BookingServlet"})
 public class BookingServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -37,23 +32,22 @@ public class BookingServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String path = request.getServletPath();
+        String action = request.getParameter("action");
 
         try {
-            switch (path) {
-
-                case "/bookingForm":
+            if (action == null) {
+                showMyBookings(request, response);
+                return;
+            }
+            switch (action) {
+                case "showForm":
                     showBookingForm(request, response);
                     break;
-
-                case "/cancelBooking":
+                case "cancel":
                     cancelBooking(request, response);
                     break;
-
-                case "/myBookings":
                 default:
                     showMyBookings(request, response);
-                    break;
             }
         } catch (SQLException e) {
             throw new ServletException("Database error: " + e.getMessage(), e);
@@ -64,45 +58,40 @@ public class BookingServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String path = request.getServletPath();
-
         try {
-            switch (path) {
-
-                case "/makeBooking":
-                    makeBooking(request, response);
-                    break;
-
-                default:
-                    showMyBookings(request, response);
-                    break;
+            if ("book".equals(request.getParameter("action"))) {
+                makeBooking(request, response);
+            } else {
+                showMyBookings(request, response);
             }
         } catch (SQLException e) {
             throw new ServletException("Database error: " + e.getMessage(), e);
         }
     }
 
-    // Booking form will be shown
+
     private void showBookingForm(HttpServletRequest request,
                                  HttpServletResponse response)
             throws ServletException, IOException, SQLException {
 
         String groundId = request.getParameter("groundId");
         if (groundId == null) {
-            response.sendRedirect(request.getContextPath() + "/listGrounds");
+            response.sendRedirect(request.getContextPath() + "/GroundServlet");
             return;
         }
 
         ground ground = groundService.getGroundById(Integer.parseInt(groundId));
         List<groundslot> slots = groundService.getAvailableSlots(Integer.parseInt(groundId));
 
-        request.setAttribute("ground", ground);
-        request.setAttribute("slots", slots);
-        request.getRequestDispatcher("/Pages/User/booking-form.jsp")
-                .forward(request, response);
+
+        HttpSession session = request.getSession();
+        session.setAttribute("ground", ground);
+        session.setAttribute("slots", slots);
+
+        response.sendRedirect(request.getContextPath() + "/Pages/User/booking-form.jsp");
     }
 
-    // this is where booking is made
+    //MAKE BOOKING
     private void makeBooking(HttpServletRequest request,
                              HttpServletResponse response)
             throws ServletException, IOException, SQLException {
@@ -121,10 +110,10 @@ public class BookingServlet extends HttpServlet {
             session.setAttribute("errorMsg", result);
         }
 
-        response.sendRedirect(request.getContextPath() + "/myBookings");
+        response.sendRedirect(request.getContextPath() + "/BookingServlet");
     }
 
-    // Showing my bookings
+    // SHOW MY BOOKINGS
     private void showMyBookings(HttpServletRequest request,
                                 HttpServletResponse response)
             throws ServletException, IOException, SQLException {
@@ -133,12 +122,13 @@ public class BookingServlet extends HttpServlet {
         int userId = (int) session.getAttribute("userId");
 
         List<Booking> bookings = bookingService.getBookingsByUser(userId);
-        request.setAttribute("bookings", bookings);
-        request.getRequestDispatcher("/Pages/User/bookings.jsp")
-                .forward(request, response);
+
+
+        session.setAttribute("bookings", bookings);
+        response.sendRedirect(request.getContextPath() + "/Pages/User/bookings.jsp");
     }
 
-    // For cancelling the bookings
+    //  CANCEL BOOKING
     private void cancelBooking(HttpServletRequest request,
                                HttpServletResponse response)
             throws ServletException, IOException, SQLException {
@@ -155,6 +145,6 @@ public class BookingServlet extends HttpServlet {
             session.setAttribute("errorMsg", result);
         }
 
-        response.sendRedirect(request.getContextPath() + "/myBookings");
+        response.sendRedirect(request.getContextPath() + "/BookingServlet");
     }
 }

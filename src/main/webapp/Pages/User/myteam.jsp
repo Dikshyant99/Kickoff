@@ -5,24 +5,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Team – KickOff</title>
+  <title>My Team - KickOff</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <%-- changed: scriptlet replaced with pageContext.request.contextPath --%>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/userdashboard.css"/>
 </head>
 <body>
 
   <nav class="navbar">
-    <a href="${pageContext.request.contextPath}/home" class="navbar_logo">Kick<span>Off</span></a>
+    <%-- changed: all scriptlets replaced with pageContext.request.contextPath --%>
+    <a href="${pageContext.request.contextPath}/Pages/Root/Homepage.jsp" class="navbar_logo">Kick<span>Off</span></a>
     <ul class="navbar_links">
-      <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
-      <li><a href="${pageContext.request.contextPath}/grounds">Grounds</a></li>
+      <li><a href="${pageContext.request.contextPath}/Pages/Root/Homepage.jsp">Home</a></li>
+      <li><a href="${pageContext.request.contextPath}/Pages/Root/grounds.jsp">Grounds</a></li>
       <li><a href="${pageContext.request.contextPath}/Pages/Root/teams.jsp">Teams</a></li>
       <li><a href="${pageContext.request.contextPath}/Pages/Root/about.jsp">About</a></li>
     </ul>
     <div class="navbar_avatar">
+      <%-- changed: uses sessionScope.user.image --%>
       <c:choose>
-        <c:when test="${not empty sessionScope.image}">
-          <img src="${pageContext.request.contextPath}/${sessionScope.image}"
+        <c:when test="${not empty sessionScope.user.image}">
+          <img src="${pageContext.request.contextPath}/${sessionScope.user.image}"
                class="avatar_img" alt="Profile"/>
         </c:when>
         <c:otherwise>
@@ -36,14 +39,16 @@
   <div class="layout">
 
     <aside class="sidebar">
-      <a href="${pageContext.request.contextPath}/profile"    class="sidebar_item">My Profile</a>
+      <%-- changed: scriptlets replaced with pageContext.request.contextPath --%>
+      <a href="${pageContext.request.contextPath}/ProfileServlet"        class="sidebar_item">My Profile</a>
       <a href="${pageContext.request.contextPath}/Pages/User/myteam.jsp" class="sidebar_item active">My Team</a>
-      <a href="${pageContext.request.contextPath}/myBookings" class="sidebar_item">My Bookings</a>
-      <a href="${pageContext.request.contextPath}/logout"     class="sidebar_item">Logout</a>
+      <a href="${pageContext.request.contextPath}/BookingServlet"        class="sidebar_item">My Bookings</a>
+      <a href="${pageContext.request.contextPath}/LogoutServlet"         class="sidebar_item">Logout</a>
     </aside>
 
     <main class="main">
 
+      <%-- note: this page still uses static data, wire to servlet when team feature is ready --%>
       <div class="team_section">
 
         <div class="team_info">

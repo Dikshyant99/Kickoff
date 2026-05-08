@@ -5,17 +5,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login – KickOff</title>
+  <title>Login - KickOff</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/login.css"/>
 </head>
 <body>
 
-  <!-- ===== NAVBAR ===== -->
   <nav class="navbar">
-    <a href="${pageContext.request.contextPath}/home" class="navbar_logo">
-      Kick<span>Off</span>
-    </a>
+    <a href="${pageContext.request.contextPath}/home" class="navbar_logo">Kick<span>Off</span></a>
     <ul class="navbar_links">
       <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
       <li><a href="${pageContext.request.contextPath}/grounds">Grounds</a></li>
@@ -28,26 +25,24 @@
     </div>
   </nav>
 
-  <!-- ===== AUTH WRAPPER ===== -->
   <div class="auth_wrapper">
     <div class="auth_card">
 
       <div class="auth_brand">
-        <a href="${pageContext.request.contextPath}/home">
-          Kick<span>Off</span>
-        </a>
+        <a href="${pageContext.request.contextPath}/home">Kick<span>Off</span></a>
       </div>
       <p class="auth_heading">Welcome back</p>
       <p class="auth_subheading">Log in to book grounds and manage your teams</p>
 
       <hr class="auth_divider"/>
 
-      <%-- Error message from failed login --%>
-      <c:if test="${not empty requestScope.errorMsg}">
-        <div class="msg_error">${requestScope.errorMsg}</div>
+      <%-- changed: sessionScope instead of requestScope, removed after display --%>
+      <c:if test="${not empty sessionScope.errorMsg}">
+        <div class="msg_error">${sessionScope.errorMsg}</div>
+        <c:remove var="errorMsg" scope="session"/>
       </c:if>
 
-      <%-- Success message after registration --%>
+      <%-- success message after registration, uses param - no change needed --%>
       <c:if test="${param.registered eq 'true'}">
         <div class="msg_success">Account created successfully! Please log in.</div>
       </c:if>
@@ -56,9 +51,10 @@
 
         <div class="form_group">
           <label class="form_label" for="email">Email address</label>
+          <%-- changed: sessionScope instead of requestScope --%>
           <input class="form_input" type="email" id="email" name="email"
                  placeholder="you@example.com"
-                 value="${requestScope.savedEmail}"
+                 value="${sessionScope.savedEmail}"
                  required/>
         </div>
 
@@ -71,8 +67,9 @@
 
         <div class="form_row">
           <label class="form_checkbox_label">
+            <%-- changed: sessionScope instead of requestScope --%>
             <input type="checkbox" name="rememberMe"
-                   <c:if test="${requestScope.remembered}">checked</c:if>/>
+                   <c:if test="${sessionScope.remembered}">checked</c:if>/>
             Remember me
           </label>
           <a href="#" class="form_forgot">Forgot password?</a>
@@ -90,11 +87,8 @@
     </div>
   </div>
 
-  <!-- ===== FOOTER ===== -->
   <footer class="footer">
-    <a href="${pageContext.request.contextPath}/home" class="footer_logo">
-      Kick<span>Off</span>
-    </a>
+    <a href="${pageContext.request.contextPath}/home" class="footer_logo">Kick<span>Off</span></a>
     <ul class="footer_links">
       <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
       <li><a href="${pageContext.request.contextPath}/Pages/Root/about.jsp">About</a></li>

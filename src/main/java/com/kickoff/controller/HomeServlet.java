@@ -21,8 +21,7 @@ public class HomeServlet extends HttpServlet {
 
         try (Connection con = DBUtil.getConnection()) {
 
-            // For grounds that are used
-            // Fetching 3 grounds for the homepage grid
+            // fetching 3 grounds for the homepage grid
             List<Map<String, Object>> grounds = new ArrayList<>();
             String groundSql = "SELECT ground_id, name, location, city, " +
                     "sport_types, price_per_hour, image_url, is_active " +
@@ -46,8 +45,7 @@ public class HomeServlet extends HttpServlet {
                 }
             }
 
-            // Teams that are to be shown
-            // Fetching 3 teams for the homepage grid
+            // fetching 3 teams for the homepage grid
             List<Map<String, Object>> teams = new ArrayList<>();
             String teamSql = "SELECT t.team_id, t.name, t.sport_type, " +
                     "t.location, t.skill_level, t.max_players, " +
@@ -76,18 +74,19 @@ public class HomeServlet extends HttpServlet {
                 }
             }
 
-            // Pass data to JSP
-            request.setAttribute("grounds", grounds);
-            request.setAttribute("teams",   teams);
+            // changed: session instead of requestScope
+            request.getSession().setAttribute("grounds", grounds);
+            request.getSession().setAttribute("teams",   teams);
 
         } catch (SQLException e) {
             e.printStackTrace();
-            request.setAttribute("errorMsg", "Failed to load data: " + e.getMessage());
+            // changed: session instead of requestScope
+            request.getSession().setAttribute("errorMsg",
+                    "Failed to load data: " + e.getMessage());
         }
 
-        // Forward to Homepage.jsp
-        request.getRequestDispatcher("/Pages/Root/Homepage.jsp")
-                .forward(request, response);
+        // changed: redirect instead of forward
+        response.sendRedirect(request.getContextPath() + "/Pages/Root/Homepage.jsp");
     }
 
     @Override

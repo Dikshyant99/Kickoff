@@ -20,8 +20,8 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/Pages/Auth/Register.jsp")
-                .forward(request, response);
+        // changed: redirect instead of forward
+        response.sendRedirect(request.getContextPath() + "/Pages/Auth/Register.jsp");
     }
 
     @Override
@@ -29,7 +29,7 @@ public class RegisterServlet extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
 
-        // Uploading the image
+        // uploading the image
         Part filePart = request.getPart("image");
         String fileName = (filePart != null) ? filePart.getSubmittedFileName() : null;
 
@@ -41,10 +41,9 @@ public class RegisterServlet extends HttpServlet {
             if (!dir.exists()) dir.mkdirs();
             filePart.write(uploadDir + fileName);
         } else {
-            imagePath = "uploads/default.png"; // fallback
+            imagePath = "uploads/default.png";
         }
 
-        // Reading all the form fields
         String firstName       = request.getParameter("firstName");
         String lastName        = request.getParameter("lastName");
         String email           = request.getParameter("email");
@@ -54,7 +53,6 @@ public class RegisterServlet extends HttpServlet {
         String password        = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
 
-        // Send to service for validation and saving
         String result = userService.registerUser(
                 firstName, lastName, email, phone,
                 sport, skillLevel, password, confirmPassword,
@@ -62,21 +60,18 @@ public class RegisterServlet extends HttpServlet {
         );
 
         if (result.equals("success")) {
-            // if registration worked send to login page with success message
+            // registration worked, redirect to login with success param
             response.sendRedirect(request.getContextPath() + "/login?registered=true");
         } else {
-            // if validation failed send to login page with error message
-            request.setAttribute("errorMsg", result);
-
-            // Send form values back so fields stay filled
-            request.setAttribute("firstName",  firstName);
-            request.setAttribute("lastName",   lastName);
-            request.setAttribute("email",      email);
-            request.setAttribute("phone",      phone);
-            request.setAttribute("sport",      sport);
-            request.setAttribute("skillLevel", skillLevel);
-            request.getRequestDispatcher("/Pages/Auth/Register.jsp")
-                    .forward(request, response);
+            // changed: session instead of requestScope, redirect instead of forward
+            request.getSession().setAttribute("errorMsg", result);
+            request.getSession().setAttribute("firstName",  firstName);
+            request.getSession().setAttribute("lastName",   lastName);
+            request.getSession().setAttribute("email",      email);
+            request.getSession().setAttribute("phone",      phone);
+            request.getSession().setAttribute("sport",      sport);
+            request.getSession().setAttribute("skillLevel", skillLevel);
+            response.sendRedirect(request.getContextPath() + "/Pages/Auth/Register.jsp");
         }
     }
 }

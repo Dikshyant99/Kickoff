@@ -21,19 +21,22 @@ public class EditProfileServlet extends HttpServlet {
 
         String email = (String) request.getSession().getAttribute("email");
 
+        // if not logged in, redirect to login
         if (email == null) {
             response.sendRedirect(request.getContextPath() + "/Pages/Auth/login.jsp");
             return;
         }
 
         User user = userDAO.getUserByEmail(email);
+
+        // if user not found, redirect to login
         if (user == null) {
             response.sendRedirect(request.getContextPath() + "/Pages/Auth/login.jsp");
             return;
         }
 
-        request.setAttribute("user", user);
-        request.getRequestDispatcher("/Pages/User/editprofile.jsp")
-                .forward(request, response);
+        // changed: session instead of requestScope, redirect instead of forward
+        request.getSession().setAttribute("user", user);
+        response.sendRedirect(request.getContextPath() + "/Pages/User/editprofile.jsp");
     }
 }

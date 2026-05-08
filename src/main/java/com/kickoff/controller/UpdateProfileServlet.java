@@ -41,7 +41,7 @@ public class UpdateProfileServlet extends HttpServlet {
         }
     }
 
-    // Handling the profile update
+    // handling the profile update
     private void handleUpdateProfile(HttpServletRequest request,
                                      HttpServletResponse response,
                                      HttpSession session,
@@ -55,26 +55,25 @@ public class UpdateProfileServlet extends HttpServlet {
         String sport      = request.getParameter("sport");
         String skillLevel = request.getParameter("skillLevel");
 
-        // Validation
+        // validation
         if (firstName == null || firstName.trim().isEmpty() ||
                 newEmail == null || newEmail.trim().isEmpty()) {
 
-            request.setAttribute("error", "First name and email are required.");
+            // changed: session instead of requestScope, redirect instead of forward
+            session.setAttribute("errorMsg", "First name and email are required.");
             User user = userDAO.getUserByEmail(sessionEmail);
-            request.setAttribute("user", user);
-            request.getRequestDispatcher("/Pages/User/editprofile.jsp")
-                    .forward(request, response);
+            session.setAttribute("user", user);
+            response.sendRedirect(request.getContextPath() + "/editProfile");
             return;
         }
 
-        // Fetch existing user
         User user = userDAO.getUserByEmail(sessionEmail);
         if (user == null) {
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
 
-        // Apply updates
+        // apply updates
         user.setFirstName(firstName.trim());
         user.setLastName(lastName     != null ? lastName.trim()   : "");
         user.setEmail(newEmail.trim());
@@ -82,24 +81,24 @@ public class UpdateProfileServlet extends HttpServlet {
         user.setSport(sport           != null ? sport.trim()      : "");
         user.setSkillLevel(skillLevel != null ? skillLevel.trim() : "");
 
-        // Saving updated data
         boolean updated = userDAO.updateUser(user);
 
         if (updated) {
             if (!sessionEmail.equals(newEmail.trim())) {
                 session.setAttribute("email", newEmail.trim());
             }
+            // no change needed, already uses session and redirect
             session.setAttribute("successMsg", "Profile updated successfully.");
             response.sendRedirect(request.getContextPath() + "/profile");
         } else {
-            request.setAttribute("error", "Failed to update. Please try again.");
-            request.setAttribute("user", user);
-            request.getRequestDispatcher("/Pages/User/editprofile.jsp")
-                    .forward(request, response);
+            // changed: session instead of requestScope, redirect instead of forward
+            session.setAttribute("errorMsg", "Failed to update. Please try again.");
+            session.setAttribute("user", user);
+            response.sendRedirect(request.getContextPath() + "/editProfile");
         }
     }
 
-    // handling the changed password
+    // handling the password change
     private void handleChangePassword(HttpServletRequest request,
                                       HttpServletResponse response,
                                       HttpSession session,
@@ -110,63 +109,60 @@ public class UpdateProfileServlet extends HttpServlet {
         String newPassword     = request.getParameter("newPassword");
         String confirmPassword = request.getParameter("confirmPassword");
 
-        // Fetch user first so we can pass back to form on error
         User user = userDAO.getUserByEmail(sessionEmail);
 
-        // Validation
+        // validation - changed: session instead of requestScope, redirect instead of forward
         if (currentPassword == null || currentPassword.trim().isEmpty() ||
                 newPassword     == null || newPassword.trim().isEmpty()     ||
                 confirmPassword == null || confirmPassword.trim().isEmpty()) {
 
-            request.setAttribute("error", "All password fields are required.");
-            request.setAttribute("user", user);
-            request.getRequestDispatcher("/Pages/User/editprofile.jsp")
-                    .forward(request, response);
+            session.setAttribute("errorMsg", "All password fields are required.");
+            session.setAttribute("user", user);
+            response.sendRedirect(request.getContextPath() + "/editProfile");
             return;
         }
 
         if (!newPassword.equals(confirmPassword)) {
-            request.setAttribute("error", "New passwords do not match.");
-            request.setAttribute("user", user);
-            request.getRequestDispatcher("/Pages/User/editprofile.jsp")
-                    .forward(request, response);
+            session.setAttribute("errorMsg", "New passwords do not match.");
+            session.setAttribute("user", user);
+            response.sendRedirect(request.getContextPath() + "/editProfile");
             return;
         }
 
         if (newPassword.length() < 6) {
-            request.setAttribute("error", "Password must be at least 6 characters.");
-            request.setAttribute("user", user);
-            request.getRequestDispatcher("/Pages/User/editprofile.jsp")
-                    .forward(request, response);
+            session.setAttribute("errorMsg", "Password must be at least 6 characters.");
+            session.setAttribute("user", user);
+            response.sendRedirect(request.getContextPath() + "/editProfile");
             return;
         }
 
         if (user == null || !user.getPassword().equals(currentPassword)) {
-            request.setAttribute("error", "Current password is incorrect.");
-            request.setAttribute("user", user);
-            request.getRequestDispatcher("/Pages/User/editprofile.jsp")
-                    .forward(request, response);
+            session.setAttribute("errorMsg", "Current password is incorrect.");
+            session.setAttribute("user", user);
+            response.sendRedirect(request.getContextPath() + "/editProfile");
             return;
         }
 
-        // Update password
+        // update password
         user.setPassword(newPassword);
         boolean updated = userDAO.updateUser(user);
 
         if (updated) {
+            // no change needed, already uses session and redirect
             session.setAttribute("successMsg", "Password changed successfully.");
             response.sendRedirect(request.getContextPath() + "/profile");
         } else {
-            request.setAttribute("error", "Failed to update password. Please try again.");
-            request.setAttribute("user", user);
-            request.getRequestDispatcher("/Pages/User/editprofile.jsp")
-                    .forward(request, response);
+            // changed: session instead of requestScope, redirect instead of forward
+            session.setAttribute("errorMsg", "Failed to update password. Please try again.");
+            session.setAttribute("user", user);
+            response.sendRedirect(request.getContextPath() + "/editProfile");
         }
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // no change needed, already redirects
         response.sendRedirect(request.getContextPath() + "/profile");
     }
 }
