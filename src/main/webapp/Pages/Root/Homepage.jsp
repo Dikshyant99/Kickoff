@@ -18,7 +18,6 @@
         <li><a href="${pageContext.request.contextPath}/home" class="active">Home</a></li>
         <li><a href="${pageContext.request.contextPath}/grounds">Grounds</a></li>
         <li><a href="${pageContext.request.contextPath}/teams">Teams</a></li>
-        <li><a href="${pageContext.request.contextPath}/findPlayers">Find Players</a></li>
         <li><a href="${pageContext.request.contextPath}/about">About</a></li>
     </ul>
     <div class="navbar_actions">
@@ -86,12 +85,12 @@
     <div class="card_grid">
         <c:choose>
             <c:when test="${empty grounds}">
-                <%Static images%>
+                <%-- Static fallback --%>
                 <a href="${pageContext.request.contextPath}/grounds" class="ground_card">
                     <div class="ground_card_image">
-                        <img src="${pageContext.request.contextPath}/Assets/basketball.jsp"
+                        <img src="${pageContext.request.contextPath}/Assets/oldtrff.jpg"
                              style="width:100%; height:100%; object-fit:cover; object-position:bottom;"
-                             alt="Bhaktapur BasketballCourt"/>
+                             alt="City Football Arena"/>
                     </div>
                     <div class="ground_card_body">
                         <div class="ground_card_name">City Football Arena</div>
