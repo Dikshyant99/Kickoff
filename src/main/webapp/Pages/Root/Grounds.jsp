@@ -126,8 +126,8 @@
                            alt="${ground.name}"/>
                     </c:when>
                     <c:otherwise>
-                      <img src="${pageContext.request.contextPath}/Assets/oldtrff.jpg"
-                           alt="${ground.name}"/>
+                        <img src="${pageContext.request.contextPath}/Assets/KICKOFF.jpg"
+                             alt="${ground.name}"/>
                     </c:otherwise>
                   </c:choose>
                 </div>
