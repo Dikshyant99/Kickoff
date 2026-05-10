@@ -1,0 +1,264 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Main page styling */
+body {
+    font-family: 'DM Sans', sans-serif;
+    background: linear-gradient(135deg, #0f0f0f, #1b1b1b);
+    color: #f1f1f1;
+}
+
+/* ===== NAVBAR ===== */
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 60px;
+    background: #0b0b0b;
+    border-bottom: 1px solid #1f1f1f;
+}
+
+.navbar_logo {
+    font-size: 32px;
+    font-family: 'Bebas Neue', sans-serif;
+    text-decoration: none;
+    color: #ffffff;
+    letter-spacing: 1px;
+}
+
+.navbar_logo span {
+    color: #3b82f6;
+}
+
+.navbar_links {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+}
+
+.navbar_links a {
+    text-decoration: none;
+    color: #bdbdbd;
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+.navbar_links a:hover,
+.navbar_links .active {
+    color: #ffffff;
+}
+
+/* Right side buttons */
+.navbar_actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.welcome_text {
+    color: #d5d5d5;
+    font-size: 14px;
+}
+
+.login_btn,
+.register_btn {
+    padding: 10px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.login_btn {
+    background: #1f1f1f;
+    color: #ffffff;
+}
+
+.login_btn:hover {
+    background: #2a2a2a;
+}
+
+.register_btn {
+    background: #3b82f6;
+    color: white;
+}
+
+.register_btn:hover {
+    background: #2563eb;
+}
+
+/* ===== ABOUT SECTION ===== */
+
+.about_section {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 70px 40px;
+}
+
+/* Left content area */
+.about_content {
+    width: 700px;
+}
+
+.about_content h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.highlight {
+    color: #3b82f6;
+}
+
+/* Intro paragraph */
+.intro_text {
+    color: #bdbdbd;
+    margin-bottom: 30px;
+    line-height: 1.7;
+}
+
+/* Individual information box */
+.about_box {
+    background: #161616;
+    padding: 24px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #242424;
+}
+
+.about_box h3 {
+    margin-bottom: 12px;
+    color: #ffffff;
+}
+
+.about_box p {
+    color: #b5b5b5;
+    line-height: 1.7;
+}
+
+/* Feature list */
+.features_list {
+    padding-left: 20px;
+    color: #cfcfcf;
+}
+
+.features_list li {
+    margin-bottom: 10px;
+}
+
+/* ===== SIDE CARD ===== */
+
+.about_card {
+    width: 320px;
+    background: #161616;
+    padding: 30px;
+    border-radius: 14px;
+    height: fit-content;
+    border: 1px solid #242424;
+}
+
+.about_card h2 {
+    font-size: 38px;
+    margin-bottom: 10px;
+    font-family: 'Bebas Neue', sans-serif;
+}
+
+.about_card span {
+    color: #3b82f6;
+}
+
+.about_card p {
+    color: #b5b5b5;
+    margin-bottom: 25px;
+}
+
+/* Card details */
+.card_info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.info_item h4 {
+    margin-bottom: 6px;
+    color: #ffffff;
+}
+
+.info_item p {
+    margin: 0;
+    color: #b5b5b5;
+    font-size: 14px;
+}
+
+/* ===== FOOTER ===== */
+
+.footer {
+    padding: 30px 20px;
+    text-align: center;
+    border-top: 1px solid #1f1f1f;
+    background: #0b0b0b;
+}
+
+.footer_logo {
+    text-decoration: none;
+    font-size: 30px;
+    font-family: 'Bebas Neue', sans-serif;
+    color: #ffffff;
+}
+
+.footer_logo span {
+    color: #3b82f6;
+}
+
+.footer_links {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    list-style: none;
+    margin: 20px 0;
+}
+
+.footer_links a {
+    text-decoration: none;
+    color: #bdbdbd;
+    transition: 0.3s;
+}
+
+.footer_links a:hover {
+    color: #ffffff;
+}
+
+.footer_copy {
+    color: #777;
+    font-size: 13px;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+@media (max-width: 900px) {
+
+    .about_section {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .about_content {
+        width: 100%;
+    }
+
+    .about_card {
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .navbar {
+        flex-direction: column;
+        gap: 15px;
+        padding: 20px;
+    }
+
+}
