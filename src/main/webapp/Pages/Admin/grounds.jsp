@@ -15,7 +15,6 @@
     <ul class="navbar_links">
       <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
       <li><a href="${pageContext.request.contextPath}/grounds">Grounds</a></li>
-      <li><a href="${pageContext.request.contextPath}/teams">Teams</a></li>
       <li><a href="${pageContext.request.contextPath}/about">About</a></li>
     </ul>
     <span class="admin_badge">Admin</span>
@@ -26,7 +25,6 @@
       <a href="${pageContext.request.contextPath}/admin"                       class="sidebar_item">Overview</a>
       <a href="${pageContext.request.contextPath}/admin?action=listUsers"      class="sidebar_item">Users</a>
       <a href="${pageContext.request.contextPath}/admin?action=listGrounds"    class="sidebar_item active">Grounds</a>
-      <a href="${pageContext.request.contextPath}/admin?action=listTeams"      class="sidebar_item">Teams</a>
       <a href="${pageContext.request.contextPath}/admin?action=listBookings"   class="sidebar_item">Booking Requests</a>
       <a href="${pageContext.request.contextPath}/logout"                      class="sidebar_item">Logout</a>
     </aside>
@@ -48,7 +46,7 @@
                 class="btn btn_primary">+ Add Ground</button>
       </div>
 
-      <%-- add ground form, hidden by default --%>
+      <%-- add ground form--%>
       <div id="addGroundForm" style="display:none; background:#1a1a1a;
            border-radius:14px; padding:24px; margin-bottom:24px;">
         <p style="font-size:1rem; font-weight:600; color:#f0f0f0; margin-bottom:16px;">

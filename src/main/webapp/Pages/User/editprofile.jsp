@@ -124,7 +124,6 @@
     <ul class="navbar_links">
       <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
       <li><a href="${pageContext.request.contextPath}/grounds">Grounds</a></li>
-      <li><a href="${pageContext.request.contextPath}/teams">Teams</a></li>
       <li><a href="${pageContext.request.contextPath}/about">About</a></li>
     </ul>
     <div class="navbar_avatar">

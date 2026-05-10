@@ -17,7 +17,6 @@
     <ul class="navbar_links">
       <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
       <li><a href="${pageContext.request.contextPath}/grounds" class="active">Grounds</a></li>
-      <li><a href="${pageContext.request.contextPath}/teams">Teams</a></li>
       <li><a href="${pageContext.request.contextPath}/about">About</a></li>
     </ul>
     <div class="navbar_actions">
@@ -44,16 +43,9 @@
 
   <!-- ===== PAGE HEADER ===== -->
   <div class="page-header">
-    <h1 class="page-header_title">Browse <span>Grounds</span></h1>
+    <h1 class="page-header_title">Browse<span>Grounds</span></h1>
+
     <p class="page-header_sub">Find and book sports grounds near you</p>
-    <div class="page-header_search">
-      <form action="${pageContext.request.contextPath}/grounds" method="get"
-            style="display:flex; gap:10px; width:100%;">
-        <input type="text" name="q" placeholder="Search grounds, sports, location..."
-               value="${param.q}"/>
-        <button type="submit">Search</button>
-      </form>
-    </div>
   </div>
 
   <!-- ===== MAIN LAYOUT ===== -->
@@ -111,14 +103,6 @@
         <p class="grounds-count">
           Showing ${empty grounds ? '0' : grounds.size()} grounds
         </p>
-        <div class="grounds-sort">
-          Sort by
-          <select>
-            <option>Price: Low to High</option>
-            <option>Price: High to Low</option>
-            <option>Availability</option>
-          </select>
-        </div>
       </div>
 
       <div class="cards-grid">

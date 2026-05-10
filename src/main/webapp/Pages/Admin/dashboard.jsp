@@ -16,7 +16,6 @@
     <ul class="navbar_links">
       <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
       <li><a href="${pageContext.request.contextPath}/grounds">Grounds</a></li>
-      <li><a href="${pageContext.request.contextPath}/teams">Teams</a></li>
       <li><a href="${pageContext.request.contextPath}/about">About</a></li>
     </ul>
     <span class="admin_badge">Admin</span>
@@ -28,7 +27,6 @@
       <a href="${pageContext.request.contextPath}/admin"                        class="sidebar_item active">Overview</a>
       <a href="${pageContext.request.contextPath}/admin?action=listUsers"       class="sidebar_item">Users</a>
       <a href="${pageContext.request.contextPath}/admin?action=listGrounds"     class="sidebar_item">Grounds</a>
-      <a href="${pageContext.request.contextPath}/admin?action=listTeams"       class="sidebar_item">Teams</a>
       <a href="${pageContext.request.contextPath}/admin?action=listBookings"    class="sidebar_item">Booking Requests</a>
       <a href="${pageContext.request.contextPath}/logout"                       class="sidebar_item">Logout</a>
     </aside>
