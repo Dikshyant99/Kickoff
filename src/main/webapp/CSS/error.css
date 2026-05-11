@@ -96,7 +96,7 @@ body {
   transition: all 0.2s;
   display: inline-block;
 }
-.btn_primary { background: #2a6fdb; color: #fff; }
+.btn_primary { background: #2a6fdb; color: #fff; }git
 .btn_primary:hover { background: #1a5fc8; }
 .btn_outline {
   background: transparent;

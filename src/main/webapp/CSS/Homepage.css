@@ -1,48 +1,49 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap');
 
-body{
-    background:#0f0f0f ;
-    color: f0f0f0;
-    font-family: 'DM Sans', sans-serif;
-    margin:0;
-    padding:0;
-
-}
-*{
+* {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
-.navbar{
+
+body {
+    background: #0f0f0f;
+    color: #f0f0f0;
+    font-family: 'DM Sans', sans-serif;
+}
+
+.navbar {
     height: 68px;
     background: #1a1a1a;
     border-bottom: 3px solid #2a6fdb;
-    display:flex;
+    display: flex;
     align-items: center;
     justify-content: space-between;
-    padding:  48px;
-    position:sticky;
+    padding: 0 48px;
+    position: sticky;
     top: 0;
     z-index: 100;
-
-
 }
-.navbar_logo{
+
+.navbar_logo {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 28px;
     letter-spacing: 1px;
     color: #f0f0f0;
     text-decoration: none;
 }
-.navbar_logo span{
+
+.navbar_logo span {
     color: #2a6fdb;
 }
-.navbar_links{
+
+.navbar_links {
     display: flex;
     align-items: center;
-    gap:36px;
+    gap: 36px;
     list-style: none;
 }
+
 .navbar_links a {
     font-size: 15px;
     font-weight: 500;
@@ -51,6 +52,7 @@ body{
     position: relative;
     transition: color 0.2s;
 }
+
 .navbar_links a::after {
     content: '';
     position: absolute;
@@ -61,41 +63,42 @@ body{
     background: #2a6fdb;
     transition: width 0.25s ease;
 }
+
 .navbar_links a:hover {
     color: #2a6fdb;
 }
-.navbar_links a:hover::after {
-    width: 100%;
-}
-.navbar_links a.active {
-    color: #2a6fdb;
-}
+
+.navbar_links a:hover::after,
 .navbar_links a.active::after {
     width: 100%;
 }
 
-.navbar_actions{
-    display: flex;
-    gap:12px;
+.navbar_links a.active {
+    color: #2a6fdb;
 }
-.login_btn{
+
+.navbar_actions {
+    display: flex;
+    gap: 12px;
+}
+
+.login_btn {
     font-size: 14px;
     font-weight: 600;
-    padding:9px 24px;
+    padding: 9px 24px;
     border-radius: 8px;
-    text-decoration:none;
+    text-decoration: none;
     color: #2a6fdb;
     border: 2px solid #2a6fdb;
     background: transparent;
     transition: all 0.2s;
-
-
-
 }
-.login_btn:hover{
+
+.login_btn:hover {
     background: #2a6fdb;
-    color: #ffffff;
+    color: #fff;
 }
+
 .register_btn {
     font-size: 14px;
     font-weight: 600;
@@ -103,20 +106,29 @@ body{
     border-radius: 8px;
     text-decoration: none;
     background: #2a6fdb;
-    color: #ffffff;
+    color: #fff;
     transition: all 0.2s;
 }
+
 .register_btn:hover {
     background: #1a5fc8;
 }
-.hero{
+
+.welcome_text {
+    color: #f0f0f0;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+.hero {
     text-align: center;
     padding: 8% 5%;
     max-width: 60%;
     margin: 0 auto;
-
-
 }
+
 .hero_title {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 5rem;
@@ -125,107 +137,123 @@ body{
     line-height: 1;
     margin-bottom: 1rem;
 }
+
 .hero_title span {
     color: #2a6fdb;
 }
-.hero_subtitle{
-    Font-size: 1.1rem;
-    color: #888888;
+
+.hero_subtitle {
+    font-size: 1.1rem;
+    color: #888;
     margin-bottom: 2rem;
     line-height: 1.6;
-
-
 }
-.hero_search_bar{
+
+.hero_welcome {
+    background: #1adb5e;
+    color: #0a3d1f;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-top: 1rem;
+    display: inline-block;
+}
+
+.hero_search_bar {
     display: flex;
     gap: 10px;
     max-width: 80%;
     margin: 0 auto 1.5rem;
-
 }
+
 .hero_search_bar input {
     flex: 1;
     font-family: 'DM Sans', sans-serif;
     font-size: 1rem;
     padding: 12px 20px;
     border: 2px solid #2a2a2a;
-    border-radius: 50px;
+    border-radius: 8px;
     background: #1a1a1a;
     color: #f0f0f0;
     outline: none;
     transition: border-color 0.2s;
 }
+
 .hero_search_bar input:focus {
     border-color: #2a6fdb;
 }
+
 .hero_search_bar input::placeholder {
-    color: #888888;
+    color: #888;
 }
+
 .search_btn {
     font-family: 'DM Sans', sans-serif;
     font-size: 1rem;
     font-weight: 600;
     padding: 12px 28px;
-    border-radius: 50px;
+    border-radius: 8px;
     border: none;
     background: #2a6fdb;
-    color: #ffffff;
+    color: #fff;
     cursor: pointer;
-    transition:  0.2s;
+    transition: background 0.2s;
 }
+
 .search_btn:hover {
     background: #1a5fc8;
 }
-.hero_tags{
+
+.hero_tags {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap:8px;
-
+    gap: 8px;
 }
+
 .tag {
     font-size: 0.85rem;
     font-weight: 500;
     padding: 6px 16px;
-    border-radius: 50px;
+    border-radius: 8px;
     border: 2px solid #2a2a2a;
-    color: #888888;
+    color: #888;
     cursor: pointer;
     transition: all 0.2s;
     background: #1a1a1a;
+    text-decoration: none;
 }
+
 .tag:hover {
     border-color: #2a6fdb;
     color: #2a6fdb;
-    background: rgba(42, 111, 219, 0.1);
+    background: rgba(42, 111, 219, 0.08);
 }
-.section_divider{
+
+.section_divider {
     border: none;
     border-top: 1px solid #2a2a2a;
     margin: 0;
 }
+
 .section {
     padding: 3% 5%;
 }
+
 .section_header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 1.5rem;
 }
+
 .section_title {
     font-size: 1.3rem;
     font-weight: 600;
     color: #f0f0f0;
+}
 
-}
-/*Images*/
-.card_grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-}
-/* ===== SECTION LINK ===== */
 .section_link {
     font-size: 0.9rem;
     font-weight: 500;
@@ -238,30 +266,37 @@ body{
     opacity: 0.7;
 }
 
-/* ===== GROUND CARD ===== */
-.ground_card {
+.card_grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
 
-    background: #1f3857;
-    border-radius: 14px;
+.ground_card {
+    background: #1a1a1a;
+    border-radius: 12px;
     overflow: hidden;
     text-decoration: none;
     display: block;
-    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid #2a2a2a;
+    transition: transform 0.2s, border-color 0.2s;
 }
 
 .ground_card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+    border-color: #2a6fdb;
 }
 
 .ground_card_image {
     height: 180px;
-    background: rgba(255, 255, 255, 0.05);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2.5rem;
+    background: #2a2a2a;
     overflow: hidden;
+}
+
+.ground_card_image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .ground_card_body {
@@ -277,7 +312,7 @@ body{
 
 .ground_card_meta {
     font-size: 0.85rem;
-    color: #888888;
+    color: #888;
     margin-bottom: 12px;
 }
 
@@ -290,22 +325,22 @@ body{
 .ground_card_price {
     font-size: 0.85rem;
     font-weight: 500;
-    color: #aaaaaa;
+    color: #aaa;
 }
 
-/* ===== TEAM CARD ===== */
 .team_card {
-    background: #1e2a3a;
-    border-radius: 14px;
+    background: #1a1a1a;
+    border-radius: 12px;
     padding: 20px;
     text-decoration: none;
     display: block;
-    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid #2a2a2a;
+    transition: transform 0.2s, border-color 0.2s;
 }
 
 .team_card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+    border-color: #2a6fdb;
 }
 
 .team_card_name {
@@ -317,41 +352,76 @@ body{
 
 .team_card_meta {
     font-size: 0.85rem;
-    color: #888888;
+    color: #888;
     margin-bottom: 12px;
     line-height: 1.5;
 }
 
-/* ===== BADGES ===== */
 .badge {
     display: inline-block;
     font-size: 0.75rem;
     font-weight: 600;
     padding: 4px 12px;
-    border-radius: 100px;
+    border-radius: 6px;
 }
 
-.badge_green {
-    background: #1adb5e;
-    color: #0a3d1f;
+.badge_green  { background: #1adb5e; color: #0a3d1f; }
+.badge_yellow { background: #f5a623; color: #5a3800; }
+.badge_red    { background: #e53e3e; color: #fff; }
+.badge_blue   { background: #2a6fdb; color: #fff; }
+
+.sports_section {
+    padding: 3% 5%;
 }
 
-.badge_yellow {
-    background: #f5a623;
-    color: #5a3800;
+.sports_grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 16px;
 }
 
-.badge_red {
-    background: #e53e3e;
-    color: #ffffff;
+.sport_card {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    text-decoration: none;
+    border: 1px solid #2a2a2a;
+    background: #1a1a1a;
+    aspect-ratio: 3 / 4;
+    display: flex;
+    align-items: flex-end;
+    transition: transform 0.2s, border-color 0.2s;
 }
 
-.badge_blue {
-    background: #2a6fdb;
-    color: #ffffff;
+.sport_card:hover {
+    transform: translateY(-4px);
+    border-color: #2a6fdb;
 }
 
-/* ===== FOOTER ===== */
+.sport_card img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.82), rgba(0,0,0,0.1), transparent);
+}
+
+.sport_card h3 {
+    position: relative;
+    z-index: 2;
+    color: #f0f0f0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 12px;
+    margin: 0;
+}
+
 .footer {
     border-top: 1px solid #2a2a2a;
     background: #1a1a1a;
@@ -383,7 +453,7 @@ body{
 
 .footer_links a {
     font-size: 14px;
-    color: #888888;
+    color: #888;
     text-decoration: none;
     transition: color 0.2s;
 }
@@ -394,21 +464,28 @@ body{
 
 .footer_copy {
     font-size: 13px;
-    color: #555555;
-}
-.welcome_text {
-    color: #f0f0f0;
-    font-size: 14px;
-    font-weight: 500;
+    color: #555;
 }
 
-.hero_welcome {
-    background: #1adb5e;
-    color: #0a3d1f;
-    padding: 10px 24px;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 500;
-    margin-top: 1rem;
-    display: inline-block;
+@media (max-width: 1100px) {
+    .sports_grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .navbar { padding: 0 20px; }
+    .navbar_links { display: none; }
+    .card_grid { grid-template-columns: repeat(2, 1fr); }
+    .sports_grid { grid-template-columns: repeat(2, 1fr); }
+    .hero { max-width: 90%; }
+    .hero_title { font-size: 3.5rem; }
+}
+
+@media (max-width: 600px) {
+    .card_grid { grid-template-columns: 1fr; }
+    .sports_grid { grid-template-columns: repeat(2, 1fr); }
+    .hero_title { font-size: 2.5rem; }
+    .hero_search_bar { max-width: 100%; }
+    .footer { flex-direction: column; align-items: flex-start; }
 }

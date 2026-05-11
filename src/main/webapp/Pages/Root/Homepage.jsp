@@ -17,6 +17,7 @@
     <ul class="navbar_links">
         <li><a href="${pageContext.request.contextPath}/home" class="active">Home</a></li>
         <li><a href="${pageContext.request.contextPath}/grounds">Grounds</a></li>
+        <li><a href="${pageContext.request.contextPath}/teams">Teams</a></li>
         <li><a href="${pageContext.request.contextPath}/about">About</a></li>
     </ul>
     <div class="navbar_actions">
@@ -173,63 +174,50 @@
 
 <hr class="section_divider"/>
 
-<!-- ===== OPEN TEAMS RECRUITING ===== -->
-<div class="section">
+<!-- Popular Sports -->
+<div class="sports_section">
     <div class="section_header">
-        <h2 class="section_title">Open Teams Recruiting</h2>
-        <a href="${pageContext.request.contextPath}/teams" class="section_link">View all →</a>
+        <h2 class="section_title">Popular Sports</h2>
     </div>
-    <div class="card_grid">
-        <c:choose>
-            <c:when test="${empty teams}">
-                <%-- Static fallback --%>
-                <a href="${pageContext.request.contextPath}/teams" class="team_card">
-                    <div class="team_card_name">Thunder FC</div>
-                    <div class="team_card_meta">
-                        Football · Needs 3 players<br/>
-                        Kathmandu · Intermediate
-                    </div>
-                    <span class="badge badge_blue">Recruiting</span>
-                </a>
-                <a href="${pageContext.request.contextPath}/teams" class="team_card">
-                    <div class="team_card_name">Storm Cricket XI</div>
-                    <div class="team_card_meta">
-                        Cricket · Needs 2 players<br/>
-                        Lalitpur · Advanced
-                    </div>
-                    <span class="badge badge_blue">Recruiting</span>
-                </a>
-                <a href="${pageContext.request.contextPath}/teams" class="team_card">
-                    <div class="team_card_name">Hoops KTM</div>
-                    <div class="team_card_meta">
-                        Basketball · Full team<br/>
-                        Kathmandu · Beginner
-                    </div>
-                    <span class="badge badge_red">Closed</span>
-                </a>
-            </c:when>
-            <c:otherwise>
-                <c:forEach var="team" items="${teams}">
-                    <a href="${pageContext.request.contextPath}/teams?id=${team.teamId}"
-                       class="team_card">
-                        <div class="team_card_name">${team.name}</div>
-                        <div class="team_card_meta">
-                            ${team.sportType} · Needs
-                            ${team.maxPlayers - team.currentPlayers} players<br/>
-                            ${team.location} · ${team.skillLevel}
-                        </div>
-                        <c:choose>
-                            <c:when test="${team.recruitmentStatus eq 'open'}">
-                                <span class="badge badge_blue">Recruiting</span>
-                            </c:when>
-                            <c:otherwise>
-                                <span class="badge badge_red">Closed</span>
-                            </c:otherwise>
-                        </c:choose>
-                    </a>
-                </c:forEach>
-            </c:otherwise>
-        </c:choose>
+
+    <div class="sports_grid">
+
+        <a href="${pageContext.request.contextPath}/grounds?sport=badminton" class="sport_card">
+            <img src="Assets/badminton.jpg" alt="Badminton">
+            <div class="overlay"></div>
+            <h3>Badminton</h3>
+        </a>
+
+        <a href="${pageContext.request.contextPath}/grounds?sport=football" class="sport_card">
+            <img src="Assets/football.jpg" alt="Football">
+            <div class="overlay"></div>
+            <h3>Football</h3>
+        </a>
+
+        <a href="${pageContext.request.contextPath}/grounds?sport=cricket" class="sport_card">
+            <img src="Assets/cricket.jpg" alt="Cricket">
+            <div class="overlay"></div>
+            <h3>Cricket</h3>
+        </a>
+
+        <a href="${pageContext.request.contextPath}/grounds?sport=swimming" class="sport_card">
+            <img src="Assets/swimming.jpg" alt="Swimming">
+            <div class="overlay"></div>
+            <h3>Swimming</h3>
+        </a>
+
+        <a href="${pageContext.request.contextPath}/grounds?sport=tennis" class="sport_card">
+            <img src="Assets/tennis.jpg" alt="Tennis">
+            <div class="overlay"></div>
+            <h3>Tennis</h3>
+        </a>
+
+        <a href="${pageContext.request.contextPath}/grounds?sport=table-tennis" class="sport_card">
+            <img src="Assets/table-tennis.jpg" alt="Table Tennis">
+            <div class="overlay"></div>
+            <h3>Table Tennis</h3>
+        </a>
+
     </div>
 </div>
 
