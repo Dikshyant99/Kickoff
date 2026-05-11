@@ -17,7 +17,6 @@
     <ul class="navbar_links">
         <li><a href="${pageContext.request.contextPath}/home" class="active">Home</a></li>
         <li><a href="${pageContext.request.contextPath}/grounds">Grounds</a></li>
-        <li><a href="${pageContext.request.contextPath}/teams">Teams</a></li>
         <li><a href="${pageContext.request.contextPath}/about">About</a></li>
     </ul>
     <div class="navbar_actions">
@@ -48,7 +47,7 @@
         BOOK &nbsp;·&nbsp; PLAY &nbsp;·&nbsp; <span>Connect</span>
     </h1>
     <p class="hero_subtitle">
-        Find sports grounds, build your team, and challenge others to a match.
+        Find sports grounds and challenge others to a match.
     </p>
 
     <c:if test="${sessionScope.loggedIn eq true}">

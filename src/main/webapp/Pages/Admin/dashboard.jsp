@@ -47,10 +47,6 @@
       <!-- STAT CARDS -->
       <div class="stats_grid">
         <div class="stat_card">
-          <div class="stat_label">Total Teams</div>
-          <div class="stat_value">${not empty totalTeams ? totalTeams : 0}</div>
-        </div>
-        <div class="stat_card">
           <div class="stat_label">Total Users</div>
           <div class="stat_value">${not empty totalUsers ? totalUsers : 0}</div>
         </div>

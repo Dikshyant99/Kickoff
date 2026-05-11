@@ -145,7 +145,6 @@
 
     <aside class="sidebar">
       <a href="${pageContext.request.contextPath}/profile"    class="sidebar_item active">My Profile</a>
-      <a href="${pageContext.request.contextPath}/myTeam"     class="sidebar_item">My Team</a>
       <a href="${pageContext.request.contextPath}/myBookings" class="sidebar_item">My Bookings</a>
       <a href="${pageContext.request.contextPath}/logout"     class="sidebar_item">Logout</a>
     </aside>
