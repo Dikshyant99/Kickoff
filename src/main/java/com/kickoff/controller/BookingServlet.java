@@ -106,7 +106,7 @@ public class BookingServlet extends HttpServlet {
             session.setAttribute("errorMsg", result);
         }
 
-        // redirect to clean URL
+        // redirect to mybookings
         response.sendRedirect(request.getContextPath() + "/myBookings");
     }
 
@@ -143,7 +143,7 @@ public class BookingServlet extends HttpServlet {
             session.setAttribute("errorMsg", result);
         }
 
-        // FIX: redirect to clean URL
+        //  redirect to mybookings
         response.sendRedirect(request.getContextPath() + "/myBookings");
     }
 }

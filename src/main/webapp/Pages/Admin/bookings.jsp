@@ -25,7 +25,6 @@
       <a href="${pageContext.request.contextPath}/admin"                          class="sidebar_item">Overview</a>
       <a href="${pageContext.request.contextPath}/admin?action=listUsers"         class="sidebar_item">Users</a>
       <a href="${pageContext.request.contextPath}/admin?action=listGrounds"       class="sidebar_item">Grounds</a>
-      <a href="${pageContext.request.contextPath}/admin?action=listTeams"         class="sidebar_item">Teams</a>
       <a href="${pageContext.request.contextPath}/admin?action=listBookings"      class="sidebar_item active">Booking Requests</a>
       <a href="${pageContext.request.contextPath}/logout"                         class="sidebar_item">Logout</a>
     </aside>
