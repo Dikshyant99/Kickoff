@@ -21,7 +21,6 @@ public class EditProfileServlet extends HttpServlet {
 
         String email = (String) request.getSession().getAttribute("email");
 
-        // if not logged in, redirect to login
         if (email == null) {
             response.sendRedirect(request.getContextPath() + "/login");
             return;
@@ -29,15 +28,19 @@ public class EditProfileServlet extends HttpServlet {
 
         User user = userDAO.getUserByEmail(email);
 
-        // if user not found, redirect to login
         if (user == null) {
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
 
-        //request attribute + forward
         request.setAttribute("user", user);
         request.getRequestDispatcher("/Pages/User/editprofile.jsp")
                 .forward(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        doGet(request, response);
     }
 }

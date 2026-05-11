@@ -10,9 +10,7 @@ message.txt
     box-sizing: border-box;
 }
 
-message.txt
-3 KB
-Dikshyant — 5/7/2026 12:55 PM
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -22,9 +20,7 @@ Dikshyant — 5/7/2026 12:55 PM
 
 message.txt
 4 KB
-KaluDaDa — 5/9/2026 5:31 PM
-software ma kk sodxa
-Dikshyant — 10:05 AM
+
 ...
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&display=swap');
 
@@ -33,9 +29,6 @@ Dikshyant — 10:05 AM
     margin: 0;
     padding: 0;
 
-message.txt
-11 KB
-....
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -43,11 +36,6 @@ message.txt
 <html lang="en">
 <head>
 
-message.txt
-10 KB
-﻿
-KaluDaDa
-ujjain0457
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -198,7 +186,6 @@ ujjain0457
 
     <aside class="sidebar">
       <a href="${pageContext.request.contextPath}/profile"    class="sidebar_item active">My Profile</a>
-      <a href="${pageContext.request.contextPath}/myTeam"     class="sidebar_item">My Team</a>
       <a href="${pageContext.request.contextPath}/myBookings" class="sidebar_item">My Bookings</a>
       <a href="${pageContext.request.contextPath}/logout"     class="sidebar_item">Logout</a>
     </aside>

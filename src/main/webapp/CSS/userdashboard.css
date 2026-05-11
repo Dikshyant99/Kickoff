@@ -501,7 +501,20 @@ body {
         color: #fff;
     }
     .team_actions { flex-direction: column; }
-    .profile_actions { flex-direction: column; }
+
     .profile_grid { grid-template-columns: 1fr; }
     .page_title { font-size: 22px; }
+}
+.profile_actions {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #1e1e1e;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
+}
+
+.profile_actions .btn {
+    padding: 9px 24px;
+    flex: none;
 }
