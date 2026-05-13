@@ -21,6 +21,17 @@ public class GroundService {
         }
     }
 
+    // Get grounds by filter (sport and/or city)
+    public List<ground> getGroundsByFilter(String sport, String city) throws SQLException {
+        try {
+            return groundDAO.getGroundsByFilter(sport, city);
+        } catch (SQLException e) {
+            System.err.println("Error fetching grounds by filter: " + e.getMessage());
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
     // Get ground by ID
     public ground getGroundById(int groundId) throws SQLException {
         try {

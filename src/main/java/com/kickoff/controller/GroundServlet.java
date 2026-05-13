@@ -26,9 +26,18 @@ public class GroundServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        String sport = request.getParameter("sport");
+        String city = request.getParameter("city");
+
         try {
-            List<ground> grounds = groundService.getAllGrounds();
-            // request attribute instead of session
+            List<ground> grounds;
+
+            if ((sport != null && !sport.isEmpty()) || (city != null && !city.isEmpty())) {
+                grounds = groundService.getGroundsByFilter(sport, city);
+            } else {
+                grounds = groundService.getAllGrounds();
+            }
+
             request.setAttribute("grounds", grounds);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -38,7 +47,6 @@ public class GroundServlet extends HttpServlet {
             request.setAttribute("errorMsg", "Error: " + e.getMessage());
         }
 
-        // forward instead of redirect
         request.getRequestDispatcher("/Pages/Root/Grounds.jsp")
                 .forward(request, response);
     }

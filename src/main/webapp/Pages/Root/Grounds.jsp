@@ -146,30 +146,11 @@
                     </c:choose>
                   </div>
 
-                  <%-- Book Now button - only for logged in users --%>
-                  <c:choose>
-                    <c:when test="${sessionScope.loggedIn eq true and sessionScope.role ne 'admin'}">
-                      <a href="${pageContext.request.contextPath}/bookingForm?groundId=${ground.groundId}"
-                         class="btn btn--primary"
-                         style="display:block; text-align:center; margin-top:12px; width:100%;">
-                        Book Now
-                      </a>
-                    </c:when>
-                    <c:when test="${sessionScope.role eq 'admin'}">
-                      <a href="${pageContext.request.contextPath}/listGrounds"
-                         class="btn btn--outline"
-                         style="display:block; text-align:center; margin-top:12px; width:100%;">
-                        Manage
-                      </a>
-                    </c:when>
-                    <c:otherwise>
-                      <a href="${pageContext.request.contextPath}/login"
-                         class="btn btn--outline"
-                         style="display:block; text-align:center; margin-top:12px; width:100%;">
-                        Login to Book
-                      </a>
-                    </c:otherwise>
-                  </c:choose>
+                  <a href="${pageContext.request.contextPath}/ground?id=${ground.groundId}"
+                     class="btn btn--outline"
+                     style="display:block; text-align:center; margin-top:12px; width:100%;">
+                    View Details
+                  </a>
 
                 </div>
               </div>

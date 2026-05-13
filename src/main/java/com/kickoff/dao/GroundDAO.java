@@ -10,18 +10,42 @@ public class GroundDAO {
 
     //GET ALL ACTIVE GROUNDS
     public List<ground> getAllGrounds() throws SQLException {
+        return getGroundsByFilter(null, null);
+    }
+
+    //GET GROUNDS BY FILTER (sport and/or city)
+    public List<ground> getGroundsByFilter(String sport, String city) throws SQLException {
         List<ground> list = new ArrayList<>();
-        String sql = "SELECT * FROM grounds WHERE is_active = true ORDER BY created_at DESC";
+
+        StringBuilder sql = new StringBuilder("SELECT * FROM grounds WHERE is_active = true");
+        List<Object> params = new ArrayList<>();
+
+        if (sport != null && !sport.isEmpty()) {
+            sql.append(" AND sport_types LIKE ?");
+            params.add("%" + sport + "%");
+        }
+
+        if (city != null && !city.isEmpty()) {
+            sql.append(" AND city = ?");
+            params.add(city);
+        }
+
+        sql.append(" ORDER BY created_at DESC");
 
         try (Connection con = DBUtil.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+             PreparedStatement ps = con.prepareStatement(sql.toString())) {
 
-            while (rs.next()) {
-                list.add(mapGround(rs));
+            for (int i = 0; i < params.size(); i++) {
+                ps.setObject(i + 1, params.get(i));
+            }
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    list.add(mapGround(rs));
+                }
             }
         } catch (SQLException e) {
-            System.err.println("Error fetching all grounds from database");
+            System.err.println("Error fetching grounds by filter");
             System.err.println("SQL: " + sql);
             e.printStackTrace();
             throw e;

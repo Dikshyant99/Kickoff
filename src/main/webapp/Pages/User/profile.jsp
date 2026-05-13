@@ -110,7 +110,7 @@
         </div>
 
         <div class="profile_actions">
-          <a href="${pageContext.request.contextPath}/editProfile" class="btn btn_primary">Edit Profile</a>
+          <a href="${pageContext.request.contextPath}/User/editProfile" class="btn btn_primary">Edit Profile</a>
         </div>
 
       </div>

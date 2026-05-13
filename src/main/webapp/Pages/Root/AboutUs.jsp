@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
 
     <!-- External CSS -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/AboutUs.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/Aboutus.css"/>
 </head>
 
 <body>
