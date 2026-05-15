@@ -88,7 +88,7 @@
                 <%-- Static fallback --%>
                 <a href="${pageContext.request.contextPath}/grounds" class="ground_card">
                     <div class="ground_card_image">
-                        <img src="${pageContext.request.contextPath}/Assets/oldtrff.jpg"
+                        <img src="${pageContext.request.contextPath}/Assets/oldtraff.jpg"
                              style="width:100%; height:100%; object-fit:cover; object-position:bottom;"
                              alt="City Football Arena"/>
                     </div>
@@ -144,7 +144,7 @@
                                          alt="${ground.name}"/>
                                 </c:when>
                                 <c:otherwise>
-                                    <img src="${pageContext.request.contextPath}/Assets/oldtrff.jpg"
+                                    <img src="${pageContext.request.contextPath}/Assets/oldtraff.jpg"
                                          style="width:100%; height:100%; object-fit:cover;"
                                          alt="${ground.name}"/>
                                 </c:otherwise>
@@ -189,7 +189,7 @@
         </a>
 
         <a href="${pageContext.request.contextPath}/grounds?sport=football" class="sport_card">
-            <img src="Assets/football.jpg" alt="Football">
+            <img src="Assets/oldtrff.jpg" alt="Football">
             <div class="overlay"></div>
             <h3>Football</h3>
         </a>
