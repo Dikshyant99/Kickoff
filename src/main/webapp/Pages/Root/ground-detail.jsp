@@ -7,187 +7,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>KickOff — ${ground.name}</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/ground-detail.css"/>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/grounds.css"/>
-  <style>
-    .detail-header {
-      padding: 36px 48px;
-      background: #1a1a2e;
-      border-bottom: 1px solid #2a2a2a;
-    }
 
-    .back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      color: #8a8a8a;
-      font-size: 0.875rem;
-      text-decoration: none;
-      margin-bottom: 16px;
-    }
 
-    .back-link:hover { color: #2979ff; }
-
-    .detail-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.8rem;
-      color: #fff;
-      letter-spacing: 2px;
-      margin-bottom: 10px;
-    }
-
-    .detail-meta {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      color: #8a8a8a;
-      font-size: 0.9rem;
-    }
-
-    .detail-meta span {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .detail-badge {
-      padding: 4px 10px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      border-radius: 4px;
-    }
-
-    .detail-badge.available {
-      background: rgba(34, 197, 94, 0.12);
-      color: #22c55e;
-      border: 1px solid rgba(34, 197, 94, 0.3);
-    }
-
-    .detail-badge.unavailable {
-      background: rgba(239, 68, 68, 0.12);
-      color: #ef4444;
-      border: 1px solid rgba(239, 68, 68, 0.3);
-    }
-
-    .detail-content {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 28px;
-      padding: 36px 48px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .detail-image {
-      width: 100%;
-      height: 380px;
-      border-radius: 8px;
-      overflow: hidden;
-      margin-bottom: 20px;
-    }
-
-    .detail-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .detail-section {
-      background: #181818;
-      border: 1px solid #2a2a2a;
-      border-radius: 8px;
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-
-    .detail-section h3 {
-      font-size: 1rem;
-      font-weight: 600;
-      color: #fff;
-      margin-bottom: 14px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid #2a2a2a;
-    }
-
-    .detail-section p {
-      color: #8a8a8a;
-      line-height: 1.7;
-      font-size: 0.9rem;
-    }
-
-    .info-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-
-    .info-item {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-
-    .info-label {
-      font-size: 0.7rem;
-      color: #8a8a8a;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-    }
-
-    .info-value {
-      font-size: 0.95rem;
-      color: #fff;
-      font-weight: 500;
-    }
-
-    .price-tag {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.9rem;
-      color: #2979ff;
-      letter-spacing: 1px;
-    }
-
-    .price-tag span {
-      font-size: 0.9rem;
-      color: #8a8a8a;
-      font-family: 'DM Sans', sans-serif;
-    }
-
-    .action-buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 18px;
-    }
-
-    .btn-detail {
-      padding: 13px 20px;
-      border-radius: 6px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 600;
-      text-align: center;
-      cursor: pointer;
-      transition: background 0.2s;
-      display: block;
-      text-decoration: none;
-    }
-
-    .btn-detail--primary {
-      background: #2979ff;
-      color: #fff;
-      border: none;
-    }
-
-    .btn-detail--primary:hover { background: #1a56cc; }
-
-    .btn-detail--outline {
-      background: transparent;
-      color: #fff;
-      border: 1px solid #2979ff;
-    }
-
-    .btn-detail--outline:hover { background: rgba(41, 121, 255, 0.08); }
-  </style>
 </head>
 <body>
 
@@ -197,6 +20,7 @@
       <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
       <li><a href="${pageContext.request.contextPath}/grounds" class="active">Grounds</a></li>
       <li><a href="${pageContext.request.contextPath}/about">About</a></li>
+       <li><a href="${pageContext.request.contextPath}/contact">Contact</a></li>
     </ul>
     <div class="navbar_actions">
       <c:choose>
@@ -223,7 +47,7 @@
   <div class="detail-header">
     <div class="detail-header_top">
       <a href="${pageContext.request.contextPath}/grounds" class="back-link">
-        ← Back to Grounds
+         Back to Grounds
       </a>
       <c:choose>
         <c:when test="${ground.active}">
@@ -280,13 +104,14 @@
         <div class="action-buttons">
           <c:choose>
             <c:when test="${sessionScope.loggedIn eq true and sessionScope.role ne 'admin' and ground.active}">
+
               <a href="${pageContext.request.contextPath}/bookingForm?groundId=${ground.groundId}"
                  class="btn btn--primary" style="display:block; text-align:center; width:100%;">
                 Book Now
               </a>
             </c:when>
             <c:when test="${sessionScope.role eq 'admin'}">
-              <a href="${pageContext.request.contextPath}/listGrounds" class="btn btn--outline" style="display:block; text-align:center; width:100%;">
+              <a href="${pageContext.request.contextPath}/admin" class="btn btn--outline" style="display:block; text-align:center; width:100%;">
                 Manage Ground
               </a>
             </c:when>

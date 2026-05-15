@@ -18,9 +18,7 @@ public class AdminService {
         return dao.getGrounds();
     }
 
-    public List<Map<String, Object>> getAllTeams() throws SQLException {
-        return dao.getTeams();
-    }
+
 
     public List<Map<String, Object>> getAllBookings() throws SQLException {
         return dao.getBookings();
@@ -44,9 +42,6 @@ public class AdminService {
         dao.restoreUser(id);
     }
 
-    public void deleteTeam(int id) throws SQLException {
-        dao.delete("teams", "team_id", id);
-    }
 
     public void deleteGround(int id) throws SQLException {
         dao.delete("grounds", "ground_id", id);
@@ -68,7 +63,5 @@ public class AdminService {
         return dao.getRecentBookings();
     }
 
-    public List<Map<String, Object>> getRecentTeams() throws SQLException {
-        return dao.getRecentTeams();
-    }
+
 }

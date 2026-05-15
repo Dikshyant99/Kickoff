@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 /**
  * AdminServlet handles all admin-side operations such as
- * managing users, teams, grounds, bookings and dashboard data.
+ * managing users,grounds, bookings and dashboard data.
  */
 @WebServlet(asyncSupported = true, urlPatterns = {"/admin"})
 public class AdminServlet extends HttpServlet {
@@ -56,12 +56,6 @@ public class AdminServlet extends HttpServlet {
                     request.getRequestDispatcher("/Pages/Admin/grounds.jsp")
                             .forward(request, response);
                     break;
-                // Display all teams
-                case "listTeams":
-                    request.setAttribute("teams", adminService.getAllTeams());
-                    request.getRequestDispatcher("/Pages/Admin/teams.jsp")
-                            .forward(request, response);
-                    break;
                 // Display all bookings
                 case "listBookings":
                     request.setAttribute("bookings", bookingService.getAllBookings());
@@ -92,14 +86,7 @@ public class AdminServlet extends HttpServlet {
                             "Ground deleted successfully.");
                     response.sendRedirect(request.getContextPath() + "/admin?action=listGrounds");
                     break;
-// Delete a team
-                case "deleteTeam":
-                    adminService.deleteTeam(
-                            Integer.parseInt(request.getParameter("id")));
-                    request.getSession().setAttribute("successMsg",
-                            "Team deleted successfully.");
-                    response.sendRedirect(request.getContextPath() + "/admin?action=listTeams");
-                    break;
+
 // Approve a booking request
                 case "approveBooking":
                     bookingService.approveBooking(
@@ -183,13 +170,11 @@ public class AdminServlet extends HttpServlet {
             throws ServletException, IOException, SQLException {
 // Total counts for dashboard summary
         request.setAttribute("totalUsers",    adminService.getCount("users"));
-        request.setAttribute("totalTeams",    adminService.getCount("teams"));
         request.setAttribute("totalGrounds",  adminService.getCount("grounds"));
         request.setAttribute("totalBookings", adminService.getCount("bookings"));
 // Recent activity lists
         request.setAttribute("recentUsers",    adminService.getRecentUsers());
         request.setAttribute("recentBookings", adminService.getRecentBookings());
-        request.setAttribute("recentTeams",    adminService.getRecentTeams());
 // Forward to dashboard page
         request.getRequestDispatcher("/Pages/Admin/dashboard.jsp")
                 .forward(request, response);

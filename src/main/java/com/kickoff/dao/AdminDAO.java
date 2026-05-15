@@ -72,36 +72,7 @@ public class AdminDAO {
         return list;
     }
 
-    // Teams
-    public List<Map<String, Object>> getTeams() throws SQLException {
-        List<Map<String, Object>> list = new ArrayList<>();
-        String sql = "SELECT t.team_id, t.name, t.sport_type, t.location, " +
-                "t.max_players, t.current_players, t.recruitment_status, " +
-                "u.first_name, u.last_name " +
-                "FROM teams t " +
-                "JOIN users u ON t.captain_id = u.user_id " +
-                "ORDER BY t.created_at DESC";
 
-        try (Connection con = DBUtil.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-
-            while (rs.next()) {
-                Map<String, Object> row = new HashMap<>();
-                row.put("teamId",            rs.getInt("team_id"));
-                row.put("name",              rs.getString("name"));
-                row.put("sportType",         rs.getString("sport_type"));
-                row.put("location",          rs.getString("location"));
-                row.put("maxPlayers",        rs.getInt("max_players"));
-                row.put("currentPlayers",    rs.getInt("current_players"));
-                row.put("recruitmentStatus", rs.getString("recruitment_status"));
-                row.put("captainName",       rs.getString("first_name") + " " +
-                        rs.getString("last_name"));
-                list.add(row);
-            }
-        }
-        return list;
-    }
     // Bookings
     public List<Map<String, Object>> getBookings() throws SQLException {
         List<Map<String, Object>> list = new ArrayList<>();
@@ -114,19 +85,20 @@ public class AdminDAO {
             while (rs.next()) {
                 Map<String, Object> row = new HashMap<>();
                 row.put("bookingId", rs.getInt("booking_id"));
-                row.put("status", rs.getString("status"));
+                row.put("status",    rs.getString("status"));
                 list.add(row);
             }
         }
         return list;
     }
 
-    // Inserting the grounds
+    // Insert Ground
     public void insertGround(int ownerId, String name, String location,
                              String city, String sportTypes,
                              String price, String description) throws SQLException {
 
-        String sql = "INSERT INTO grounds (owner_id, name, location, city, sport_types, price_per_hour, description, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, true)";
+        String sql = "INSERT INTO grounds (owner_id, name, location, city, sport_types, price_per_hour, description, is_active) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, true)";
 
         try (Connection con = DBUtil.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -142,7 +114,7 @@ public class AdminDAO {
         }
     }
 
-    // delete
+    // Delete
     public void delete(String table, String column, int id) throws SQLException {
         String sql = "DELETE FROM " + table + " WHERE " + column + " = ?";
 
@@ -153,7 +125,8 @@ public class AdminDAO {
             ps.executeUpdate();
         }
     }
-    // Soft deleting User
+
+    // Soft Delete User
     public void softDeleteUser(int userId) throws SQLException {
         String sql = "UPDATE users SET is_deleted = true WHERE user_id = ?";
         try (Connection con = DBUtil.getConnection();
@@ -172,7 +145,8 @@ public class AdminDAO {
             ps.executeUpdate();
         }
     }
-    // Update Booking
+
+    // Update Booking Status
     public void updateBookingStatus(int id, String status) throws SQLException {
         String sql = "UPDATE bookings SET status=? WHERE booking_id=?";
 
@@ -185,9 +159,11 @@ public class AdminDAO {
         }
     }
 
-    // Count
+    // Filtering deleted users
     public int getCount(String table) throws SQLException {
-        String sql = "SELECT COUNT(*) FROM " + table;
+        String sql = table.equals("users")
+                ? "SELECT COUNT(*) FROM users WHERE is_deleted = false"
+                : "SELECT COUNT(*) FROM " + table;
 
         try (Connection con = DBUtil.getConnection();
              PreparedStatement ps = con.prepareStatement(sql);
@@ -197,11 +173,11 @@ public class AdminDAO {
         }
     }
 
-    // Recent Data
+    // Recent Users, excludes soft-deleted users
     public List<Map<String, Object>> getRecentUsers() throws SQLException {
         List<Map<String, Object>> list = new ArrayList<>();
         String sql = "SELECT user_id, first_name, last_name, email, sport, role " +
-                "FROM users ORDER BY created_at DESC LIMIT 5";
+                "FROM users WHERE is_deleted = false ORDER BY created_at DESC LIMIT 5";
 
         try (Connection con = DBUtil.getConnection();
              PreparedStatement ps = con.prepareStatement(sql);
@@ -220,6 +196,8 @@ public class AdminDAO {
         }
         return list;
     }
+
+    // Recent Bookings
     public List<Map<String, Object>> getRecentBookings() throws SQLException {
         List<Map<String, Object>> list = new ArrayList<>();
         String sql = "SELECT b.booking_id, b.status, b.total_price, " +
@@ -247,36 +225,6 @@ public class AdminDAO {
                 row.put("slotDate",   rs.getString("slot_date"));
                 row.put("startTime",  rs.getString("start_time"));
                 row.put("endTime",    rs.getString("end_time"));
-                list.add(row);
-            }
-        }
-        return list;
-    }
-
-    public List<Map<String, Object>> getRecentTeams() throws SQLException {
-        List<Map<String, Object>> list = new ArrayList<>();
-        String sql = "SELECT t.team_id, t.name, t.sport_type, t.location, " +
-                "t.max_players, t.current_players, t.recruitment_status, " +
-                "u.first_name, u.last_name " +
-                "FROM teams t " +
-                "JOIN users u ON t.captain_id = u.user_id " +
-                "ORDER BY t.created_at DESC LIMIT 5";
-
-        try (Connection con = DBUtil.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-
-            while (rs.next()) {
-                Map<String, Object> row = new HashMap<>();
-                row.put("teamId",            rs.getInt("team_id"));
-                row.put("name",              rs.getString("name"));
-                row.put("sportType",         rs.getString("sport_type"));
-                row.put("location",          rs.getString("location"));
-                row.put("maxPlayers",        rs.getInt("max_players"));
-                row.put("currentPlayers",    rs.getInt("current_players"));
-                row.put("recruitmentStatus", rs.getString("recruitment_status"));
-                row.put("captainName",       rs.getString("first_name") + " " +
-                        rs.getString("last_name"));
                 list.add(row);
             }
         }

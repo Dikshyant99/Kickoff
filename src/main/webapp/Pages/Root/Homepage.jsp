@@ -80,12 +80,11 @@
 <div class="section">
     <div class="section_header">
         <h2 class="section_title">Available Grounds</h2>
-        <a href="${pageContext.request.contextPath}/grounds" class="section_link">View all →</a>
     </div>
     <div class="card_grid">
         <c:choose>
             <c:when test="${empty grounds}">
-                <%-- Static fallback --%>
+                <%-- Static Image --%>
                 <a href="${pageContext.request.contextPath}/grounds" class="ground_card">
                     <div class="ground_card_image">
                         <img src="${pageContext.request.contextPath}/Assets/oldtraff.jpg"
