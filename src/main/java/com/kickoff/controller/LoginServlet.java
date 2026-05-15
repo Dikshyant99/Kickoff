@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
+// Mapping this servlet to the "/login" URL
 @WebServlet(asyncSupported = true, urlPatterns = {"/login"})
 public class LoginServlet extends HttpServlet {
 
