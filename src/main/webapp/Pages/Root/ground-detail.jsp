@@ -236,8 +236,8 @@
     </div>
     <h1 class="detail-title">${ground.name}</h1>
     <div class="detail-meta">
-      <span>📍 ${ground.location}, ${ground.city}</span>
-      <span>🏅 ${ground.sportTypes}</span>
+      <span> ${ground.location}, ${ground.city}</span>
+      <span>${ground.sportTypes}</span>
     </div>
   </div>
 
