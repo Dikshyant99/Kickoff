@@ -126,44 +126,6 @@
           </c:otherwise>
         </c:choose>
       </div>
-
-      <!-- RECENT TEAMS -->
-      <div class="section">
-        <div class="section_title">Recent Teams</div>
-        <c:choose>
-          <c:when test="${empty recentTeams}">
-            <div class="empty">No teams created yet.</div>
-          </c:when>
-          <c:otherwise>
-            <c:forEach var="team" items="${recentTeams}">
-              <div class="list_item">
-                <div>
-                  <div class="list_item_name">${team.name}</div>
-                  <div class="list_item_meta">
-                    ${team.sportType} &nbsp;·&nbsp;
-                    ${team.location} &nbsp;·&nbsp;
-                    ${team.currentPlayers}/${team.maxPlayers} players
-                  </div>
-                </div>
-                <div class="list_item_right">
-                  <c:choose>
-                    <c:when test="${team.recruitmentStatus eq 'open'}">
-                      <span class="badge badge_green">Open</span>
-                    </c:when>
-                    <c:otherwise>
-                      <span class="badge badge_red">Closed</span>
-                    </c:otherwise>
-                  </c:choose>
-                  <a href="${pageContext.request.contextPath}/admin?action=deleteTeam&id=${team.teamId}"
-                     class="btn btn_red"
-                     onclick="return confirm('Delete this team?')">Delete</a>
-                </div>
-              </div>
-            </c:forEach>
-          </c:otherwise>
-        </c:choose>
-      </div>
-
     </main>
   </div>
 

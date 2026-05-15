@@ -80,7 +80,7 @@
     <div class="card">
 
       <h2>Contact <span class="highlight">Us</span></h2>
-      <p>We usually respond within 24 hours</p>
+      <p>We usually respond within 24 Hours</p>
 
       <%-- Success / Error messages --%>
       <c:if test="${not empty sessionScope.successMsg}">
