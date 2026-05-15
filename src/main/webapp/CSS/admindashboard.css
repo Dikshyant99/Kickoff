@@ -133,7 +133,7 @@ body {
 /* stat cards */
 .stats_grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
   margin-bottom: 36px;
 }
@@ -265,8 +265,9 @@ body {
   font-size: 13px;
   color: #f0f0f0;
   outline: none;
-  width: 240px;
+  width: 260px;
   margin-bottom: 16px;
+  display: block;
 }
 .search_bar::placeholder { color: #444; }
 .search_bar:focus { border-color: #2a6fdb; }
@@ -279,11 +280,22 @@ body {
   margin-bottom: 16px;
 }
 
+/* table wrapper */
+.table_wrap {
+  background: #181818;
+  border: 1px solid #242424;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
 /* data table */
 .data_table {
   width: 100%;
   border-collapse: collapse;
   font-size: 13px;
+}
+.data_table thead {
+  background: #111;
 }
 .data_table th {
   text-align: left;
@@ -292,17 +304,20 @@ body {
   color: #555;
   text-transform: uppercase;
   letter-spacing: 0.8px;
-  padding: 0 12px 10px;
+  padding: 12px 16px;
   border-bottom: 1px solid #242424;
+  white-space: nowrap;
 }
 .data_table td {
-  padding: 12px;
+  padding: 13px 16px;
   border-bottom: 1px solid #1e1e1e;
-  color: #ccc;
+  color: #bbb;
   vertical-align: middle;
 }
-.data_table tr:last-child td { border-bottom: none; }
-.data_table tr:hover td { background: #181818; }
+.data_table tbody tr:last-child td { border-bottom: none; }
+.data_table tbody tr:hover td { background: #1e1e1e; color: #f0f0f0; }
+.td_name { color: #f0f0f0; font-weight: 500; }
+.td_num { color: #666; font-size: 12px; width: 32px; }
 
 /* filter tabs */
 .filter_tabs {
