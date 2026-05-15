@@ -2,6 +2,7 @@ package com.kickoff.controller;
 
 import com.kickoff.dao.UserDAO;
 import com.kickoff.model.User;
+import com.kickoff.util.PasswordUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -111,6 +112,7 @@ public class UpdateProfileServlet extends HttpServlet {
             return;
         }
 
+        // Check all fields are filled
         if (currentPassword == null || currentPassword.trim().isEmpty() ||
                 newPassword     == null || newPassword.trim().isEmpty()     ||
                 confirmPassword == null || confirmPassword.trim().isEmpty()) {
@@ -121,6 +123,7 @@ public class UpdateProfileServlet extends HttpServlet {
             return;
         }
 
+        // New passwords must match
         if (!newPassword.equals(confirmPassword)) {
             session.setAttribute("errorMsg", "New passwords do not match.");
             session.setAttribute("user", user);
@@ -128,6 +131,7 @@ public class UpdateProfileServlet extends HttpServlet {
             return;
         }
 
+        // Minimum length check
         if (newPassword.length() < 6) {
             session.setAttribute("errorMsg", "Password must be at least 6 characters.");
             session.setAttribute("user", user);
@@ -135,16 +139,17 @@ public class UpdateProfileServlet extends HttpServlet {
             return;
         }
 
-        //  call getPassword()
-        if (!user.getPassword().equals(currentPassword)) {
+        // Verify current password against stored hash
+        if (!PasswordUtil.verify(currentPassword, user.getPassword())) {
             session.setAttribute("errorMsg", "Current password is incorrect.");
             session.setAttribute("user", user);
             response.sendRedirect(request.getContextPath() + "/editProfile");
             return;
         }
 
-        user.setPassword(newPassword);
-        boolean updated = userDAO.updateUser(user);
+        // Hash new password and save
+        String hashedNew = PasswordUtil.hash(newPassword);
+        boolean updated = userDAO.updatePassword(user.getUserId(), hashedNew);
 
         if (updated) {
             session.setAttribute("successMsg", "Password changed successfully.");
