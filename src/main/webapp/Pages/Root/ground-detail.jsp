@@ -10,67 +10,60 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/grounds.css"/>
   <style>
     .detail-header {
-      padding: 40px 60px;
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-    }
-
-    .detail-header_top {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      margin-bottom: 16px;
+      padding: 36px 48px;
+      background: #1a1a2e;
+      border-bottom: 1px solid #2a2a2a;
     }
 
     .back-link {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       color: #8a8a8a;
-      font-size: 0.9rem;
-      transition: color 0.2s;
+      font-size: 0.875rem;
+      text-decoration: none;
+      margin-bottom: 16px;
     }
 
-    .back-link:hover {
-      color: #2979ff;
-    }
+    .back-link:hover { color: #2979ff; }
 
     .detail-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 3rem;
-      color: #ffffff;
+      font-size: 2.8rem;
+      color: #fff;
       letter-spacing: 2px;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     .detail-meta {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 18px;
       color: #8a8a8a;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
     }
 
     .detail-meta span {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
     }
 
     .detail-badge {
-      padding: 6px 16px;
-      border-radius: 20px;
-      font-size: 0.8rem;
+      padding: 4px 10px;
+      font-size: 0.78rem;
       font-weight: 600;
+      border-radius: 4px;
     }
 
     .detail-badge.available {
-      background: rgba(34, 197, 94, 0.15);
+      background: rgba(34, 197, 94, 0.12);
       color: #22c55e;
       border: 1px solid rgba(34, 197, 94, 0.3);
     }
 
     .detail-badge.unavailable {
-      background: rgba(239, 68, 68, 0.15);
+      background: rgba(239, 68, 68, 0.12);
       color: #ef4444;
       border: 1px solid rgba(239, 68, 68, 0.3);
     }
@@ -78,18 +71,18 @@
     .detail-content {
       display: grid;
       grid-template-columns: 2fr 1fr;
-      gap: 32px;
-      padding: 40px 60px;
-      max-width: 1400px;
+      gap: 28px;
+      padding: 36px 48px;
+      max-width: 1200px;
       margin: 0 auto;
     }
 
     .detail-image {
       width: 100%;
-      height: 400px;
-      border-radius: 12px;
+      height: 380px;
+      border-radius: 8px;
       overflow: hidden;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
 
     .detail-image img {
@@ -101,59 +94,60 @@
     .detail-section {
       background: #181818;
       border: 1px solid #2a2a2a;
-      border-radius: 12px;
-      padding: 24px;
-      margin-bottom: 24px;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
     }
 
     .detail-section h3 {
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 600;
-      color: #ffffff;
-      margin-bottom: 16px;
-      padding-bottom: 12px;
+      color: #fff;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
       border-bottom: 1px solid #2a2a2a;
     }
 
     .detail-section p {
       color: #8a8a8a;
       line-height: 1.7;
+      font-size: 0.9rem;
     }
 
     .info-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
+      gap: 14px;
     }
 
     .info-item {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 3px;
     }
 
     .info-label {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       color: #8a8a8a;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 0.8px;
     }
 
     .info-value {
-      font-size: 1rem;
-      color: #ffffff;
+      font-size: 0.95rem;
+      color: #fff;
       font-weight: 500;
     }
 
     .price-tag {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 2rem;
+      font-size: 1.9rem;
       color: #2979ff;
       letter-spacing: 1px;
     }
 
     .price-tag span {
-      font-size: 1rem;
+      font-size: 0.9rem;
       color: #8a8a8a;
       font-family: 'DM Sans', sans-serif;
     }
@@ -161,40 +155,38 @@
     .action-buttons {
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      margin-top: 20px;
+      gap: 10px;
+      margin-top: 18px;
     }
 
     .btn-detail {
-      padding: 14px 24px;
-      border-radius: 8px;
+      padding: 13px 20px;
+      border-radius: 6px;
       font-family: 'DM Sans', sans-serif;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 600;
       text-align: center;
-      transition: all 0.2s;
+      cursor: pointer;
+      transition: background 0.2s;
       display: block;
+      text-decoration: none;
     }
 
     .btn-detail--primary {
       background: #2979ff;
-      color: #ffffff;
+      color: #fff;
       border: none;
     }
 
-    .btn-detail--primary:hover {
-      background: #1a56cc;
-    }
+    .btn-detail--primary:hover { background: #1a56cc; }
 
     .btn-detail--outline {
       background: transparent;
-      color: #ffffff;
-      border: 2px solid #2979ff;
+      color: #fff;
+      border: 1px solid #2979ff;
     }
 
-    .btn-detail--outline:hover {
-      background: rgba(41, 121, 255, 0.1);
-    }
+    .btn-detail--outline:hover { background: rgba(41, 121, 255, 0.08); }
   </style>
 </head>
 <body>
