@@ -131,6 +131,7 @@
       <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
       <li><a href="${pageContext.request.contextPath}/grounds">Grounds</a></li>
       <li><a href="${pageContext.request.contextPath}/about">About</a></li>
+       <li><a href="${pageContext.request.contextPath}/contact">Contact</a></li>
     </ul>
     <div class="navbar_avatar">
       <c:choose>
@@ -150,6 +151,7 @@
       <a href="${pageContext.request.contextPath}/profile"    class="sidebar_item active">My Profile</a>
       <a href="${pageContext.request.contextPath}/myBookings" class="sidebar_item">My Bookings</a>
       <a href="${pageContext.request.contextPath}/logout"     class="sidebar_item">Logout</a>
+
     </aside>
 
     <main class="main">
