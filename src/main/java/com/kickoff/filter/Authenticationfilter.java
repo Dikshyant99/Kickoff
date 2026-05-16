@@ -25,9 +25,10 @@ User routes require being logged in.*/
         "/changePassword",
         "/myBookings",
         "/bookingForm",
-        "/confirmBooking"
+        "/confirmBooking",
+        "/notifications"
 })
-public class AuthFilter implements Filter {
+public class Authenticationfilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {}

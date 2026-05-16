@@ -39,6 +39,7 @@
                 <a href="${pageContext.request.contextPath}/register" class="register_btn">Register</a>
             </c:otherwise>
         </c:choose>
+
     </div>
 </nav>
 

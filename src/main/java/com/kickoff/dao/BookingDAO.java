@@ -116,7 +116,7 @@ public class BookingDAO {
         }
     }
 
-    // get slotid from booking.
+    // get slotid from booking
     public int getSlotIdFromBooking(int bookingId) throws SQLException {
         String sql = "SELECT slot_id FROM bookings WHERE booking_id = ?";
 
@@ -126,6 +126,20 @@ public class BookingDAO {
             ps.setInt(1, bookingId);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) return rs.getInt("slot_id");
+        }
+        return -1;
+    }
+
+    // get user id from booking — used for sending notifications
+    public int getUserIdByBookingId(int bookingId) throws SQLException {
+        String sql = "SELECT user_id FROM bookings WHERE booking_id = ?";
+
+        try (Connection con = DBUtil.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, bookingId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) return rs.getInt("user_id");
         }
         return -1;
     }

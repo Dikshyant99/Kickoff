@@ -1,5 +1,6 @@
 package com.kickoff.controller;
 
+import com.kickoff.dao.NotificationDAO;
 import com.kickoff.dao.UserDAO;
 import com.kickoff.model.User;
 import jakarta.servlet.ServletException;
@@ -14,6 +15,7 @@ public class ProfileServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     private UserDAO userDAO = new UserDAO();
+    private NotificationDAO notifDAO = new NotificationDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -21,7 +23,6 @@ public class ProfileServlet extends HttpServlet {
 
         String email = (String) request.getSession().getAttribute("email");
 
-        // if not logged in redirect to login
         if (email == null) {
             response.sendRedirect(request.getContextPath() + "/login");
             return;
@@ -29,13 +30,15 @@ public class ProfileServlet extends HttpServlet {
 
         User user = userDAO.getUserByEmail(email);
 
-        // if user not found redirect to login
         if (user == null) {
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
 
-        //request attribute + forward
+        // notification data for bell
+        request.setAttribute("recentNotifs", notifDAO.getUnread(user.getUserId()));
+        request.setAttribute("unreadCount",  notifDAO.countUnread(user.getUserId()));
+
         request.setAttribute("user", user);
         request.getRequestDispatcher("/Pages/User/profile.jsp")
                 .forward(request, response);

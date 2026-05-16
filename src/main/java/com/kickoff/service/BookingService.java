@@ -70,4 +70,9 @@ public class BookingService {
         }
         return updated ? "success" : "Failed to reject booking.";
     }
+
+    // Get user id from booking — used to send notification to correct user
+    public int getUserIdByBookingId(int bookingId) throws SQLException {
+        return BookingDAO.getUserIdByBookingId(bookingId);
+    }
 }
