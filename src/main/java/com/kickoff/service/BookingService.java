@@ -4,22 +4,47 @@ import com.kickoff.dao.BookingDAO;
 import com.kickoff.model.Booking;
 import java.sql.SQLException;
 import java.util.List;
-
+/*
+ * Service layer for booking operations.
+ *
+ * Handles business logic such as:
+ * - Creating bookings
+ * - Cancelling bookings
+ * - Approving/rejecting bookings
+ * - Fetching booking data
+ * - Managing slot availability
+ */
 public class BookingService {
-
+    /*
+     * DAO instance used for
+     * database interactions.
+     */
     private BookingDAO BookingDAO = new BookingDAO();
 
-    // Get all bookings for a user
+    /*
+     * DAO instance used for
+     * database interactions.
+     */
     public List<Booking> getBookingsByUser(int userId) throws SQLException {
         return BookingDAO.getBookingsByUser(userId);
     }
 
-    // Get all bookings for admin
+    /*
+     * Retrieves all bookings (admin view).
+     */
     public List<Booking> getAllBookings() throws SQLException {
         return BookingDAO.getAllBookings();
     }
 
-    // Make a booking
+    /*
+     * Creates a new booking.
+     *
+     * Steps:
+     * - Validate input
+     * - Calculate price
+     * - Insert booking
+     * - Mark slot as booked
+     */
     public String makeBooking(int userId, int groundId, int slotId) throws SQLException {
         if (groundId <= 0 || slotId <= 0) {
             return "Invalid ground or slot selected.";
@@ -38,7 +63,11 @@ public class BookingService {
         return "success";
     }
 
-    // Cancel a booking
+    /*
+     * Cancels a booking made by user.
+     *
+     * Also frees up the associated slot.
+     */
     public String cancelBooking(int bookingId, int userId) throws SQLException {
         // Get slot id to free it up
         int slotId = BookingDAO.getSlotIdFromBooking(bookingId);
@@ -54,13 +83,20 @@ public class BookingService {
         return "success";
     }
 
-    // Approve booking (admin)
+    /*
+     * Approves a booking (admin action).
+     */
     public String approveBooking(int bookingId) throws SQLException {
         boolean updated = BookingDAO.updateBookingStatus(bookingId, "confirmed");
         return updated ? "success" : "Failed to approve booking.";
     }
 
-    // Reject booking (admin)
+
+    /*
+     * Rejects a booking (admin action).
+     *
+     * Also frees the slot.
+     */
     public String rejectBooking(int bookingId) throws SQLException {
         // Get slot id to free it up
         int slotId = BookingDAO.getSlotIdFromBooking(bookingId);
@@ -71,7 +107,11 @@ public class BookingService {
         return updated ? "success" : "Failed to reject booking.";
     }
 
-    // Get user id from booking — used to send notification to correct user
+    /*
+     * Returns user ID linked to booking.
+     *
+     * Used for notifications.
+     */
     public int getUserIdByBookingId(int bookingId) throws SQLException {
         return BookingDAO.getUserIdByBookingId(bookingId);
     }
