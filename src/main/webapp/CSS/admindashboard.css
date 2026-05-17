@@ -1,11 +1,12 @@
+/* Character encoding */
 @charset "UTF-8";
-
+/* Reset default browser styling */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
-
+/* Main page styling */
 body {
   font-family: 'DM Sans', sans-serif;
   background: #0f0f0f;
@@ -15,7 +16,9 @@ body {
   min-height: 100vh;
 }
 
-/* navbar */
+/* ---- NAVBAR ---- */
+
+/* Top navigation bar */
 .navbar {
   height: 60px;
   background: #1a1a1a;
@@ -28,25 +31,30 @@ body {
   top: 0;
   z-index: 100;
 }
+/* Website logo */
 .navbar_logo {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 26px;
   color: #f0f0f0;
   text-decoration: none;
 }
+/* Highlighted logo text */
 .navbar_logo span { color: #2a6fdb; }
 .navbar_links {
   display: flex;
   gap: 32px;
   list-style: none;
 }
+/* Navigation links container */
 .navbar_links a {
   font-size: 14px;
   font-weight: 500;
   color: #f0f0f0;
   text-decoration: none;
 }
+/* Navigation links */
 .navbar_links a:hover { color: #2a6fdb; }
+/* Admin badge */
 .admin_badge {
   font-size: 12px;
   font-weight: 600;
@@ -55,14 +63,19 @@ body {
   padding: 6px 14px;
   border-radius: 4px;
 }
+/* ---- LAYOUT ---- */
 
-/* layout */
+/* Main page layout */
+
+
 .layout {
   display: flex;
   flex: 1;
 }
 
-/* sidebar */
+/* ---- SIDEBAR ---- */
+
+/* Sidebar section */
 .sidebar {
   width: 200px;
   background: #141414;
@@ -72,6 +85,7 @@ body {
   top: 60px;
   height: calc(100vh - 60px);
 }
+/* Sidebar links */
 .sidebar_item {
   display: block;
   padding: 12px 24px;
@@ -84,6 +98,7 @@ body {
   border-left: 3px solid transparent;
   transition: all 0.15s;
 }
+/* Active sidebar link */
 .sidebar_item:hover {
   color: #f0f0f0;
   background: #1a1a1a;
@@ -94,8 +109,9 @@ body {
   background: #1e1e1e;
   border-left-color: #2a6fdb;
 }
+/* ---- MAIN CONTENT ---- */
 
-/* main */
+/* Main content area */
 .main {
   flex: 1;
   padding: 30px 40px;
@@ -110,7 +126,9 @@ body {
   margin-bottom: 24px;
 }
 
-/* messages */
+/* ---- MESSAGES ---- */
+
+/* Success message styling */
 .msg_success {
   background: rgba(26, 219, 94, 0.1);
   color: #1adb5e;
@@ -130,13 +148,16 @@ body {
   font-size: 14px;
 }
 
-/* stat cards */
+/* ---- STAT CARDS ---- */
+
+/* Stats cards layout */
 .stats_grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
   margin-bottom: 36px;
 }
+/* Individual stat card */
 .stat_card {
   background: #2a6fdb;
   border-radius: 8px;
@@ -156,7 +177,9 @@ body {
   color: #fff;
 }
 
-/* sections */
+/* ---- SECTIONS ---- */
+
+/* Section spacing */
 .section {
   margin-bottom: 36px;
 }
@@ -170,8 +193,9 @@ body {
   border-bottom: 1px solid #1e1e1e;
   margin-bottom: 14px;
 }
+/* ---- LIST ITEMS ---- */
 
-/* list items */
+/* List item container */
 .list_item {
   background: #181818;
   border: 1px solid #242424;
@@ -200,7 +224,9 @@ body {
   flex-shrink: 0;
 }
 
-/* badges */
+/* ---- BADGES ---- */
+
+/* Common badge styling */
 .badge {
   font-size: 11px;
   font-weight: 600;
@@ -229,7 +255,9 @@ body {
   border: 1px solid rgba(245, 166, 35, 0.25);
 }
 
-/* buttons */
+/* ---- BUTTONS ---- */
+
+/* Common button styling */
 .btn {
   font-family: 'DM Sans', sans-serif;
   font-size: 12px;
@@ -255,7 +283,9 @@ body {
 .btn_red { background: #e53e3e; color: #fff; }
 .btn_red:hover { background: #c53030; }
 
-/* search */
+/* ---- SEARCH BAR ---- */
+
+/* Search input field */
 .search_bar {
   background: #1a1a1a;
   border: 1px solid #2a2a2a;
@@ -280,7 +310,9 @@ body {
   margin-bottom: 16px;
 }
 
-/* table wrapper */
+/* ---- TABLE ---- */
+
+/* Table wrapper */
 .table_wrap {
   background: #181818;
   border: 1px solid #242424;
@@ -319,7 +351,9 @@ body {
 .td_name { color: #f0f0f0; font-weight: 500; }
 .td_num { color: #666; font-size: 12px; width: 32px; }
 
-/* filter tabs */
+/* ---- FILTER TABS ---- */
+
+/* Filter tab container */
 .filter_tabs {
   display: flex;
   border-bottom: 1px solid #242424;
@@ -343,7 +377,9 @@ body {
 .filter_tab.active_green { color: #1adb5e; border-bottom-color: #1adb5e; }
 .filter_tab.active_red { color: #e05252; border-bottom-color: #e05252; }
 
-/* empty state */
+/* ---- EMPTY STATE ---- */
+
+/* Empty content message */
 .empty {
   text-align: center;
   color: #444;
