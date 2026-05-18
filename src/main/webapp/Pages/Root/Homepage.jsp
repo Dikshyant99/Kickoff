@@ -189,7 +189,7 @@
         </a>
 
         <a href="${pageContext.request.contextPath}/grounds?sport=football" class="sport_card">
-            <img src="Assets/oldtrff.jpg" alt="Football">
+            <img src="Assets/oldtraff.jpg" alt="Football">
             <div class="overlay"></div>
             <h3>Football</h3>
         </a>
