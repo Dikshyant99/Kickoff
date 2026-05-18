@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<!-- ===== NAVBAR ===== -->
+<!-- NAVBAR -->
 <nav class="navbar">
     <a href="${pageContext.request.contextPath}/home" class="navbar_logo">Kick<span>Off</span></a>
     <ul class="navbar_links">
@@ -43,7 +43,7 @@
     </div>
 </nav>
 
-<!-- ===== HERO ===== -->
+<!-- HERO -->
 <section class="hero">
     <h1 class="hero_title">
         BOOK &nbsp;·&nbsp; PLAY &nbsp;·&nbsp; <span>Connect</span>
@@ -77,7 +77,7 @@
 
 <hr class="section_divider"/>
 
-<!-- ===== AVAILABLE GROUNDS ===== -->
+<!--AVAILABLE GROUNDS-->
 <div class="section">
     <div class="section_header">
         <h2 class="section_title">Available Grounds</h2>
@@ -223,7 +223,7 @@
 
 <hr class="section_divider"/>
 
-<!-- ===== FOOTER ===== -->
+<!--FOOTER -->
 <footer class="footer">
     <a href="${pageContext.request.contextPath}/home" class="footer_logo">Kick<span>Off</span></a>
     <ul class="footer_links">
