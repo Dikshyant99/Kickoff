@@ -4,14 +4,17 @@ import com.kickoff.dao.UserDAO;
 import com.kickoff.model.User;
 import com.kickoff.util.PasswordUtil;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
 import java.io.IOException;
 
 @WebServlet(asyncSupported = true, urlPatterns = {"/updateProfile", "/changePassword"})
+@MultipartConfig
 public class UpdateProfileServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -21,6 +24,7 @@ public class UpdateProfileServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession(false);
 
         if (session == null || session.getAttribute("email") == null) {
@@ -42,13 +46,14 @@ public class UpdateProfileServlet extends HttpServlet {
         }
     }
 
-    // handling the profile update
+    // Image Upload
     private void handleUpdateProfile(HttpServletRequest request,
                                      HttpServletResponse response,
                                      HttpSession session,
                                      String sessionEmail)
             throws ServletException, IOException {
 
+        // Get form parameters
         String firstName  = request.getParameter("firstName");
         String lastName   = request.getParameter("lastName");
         String newEmail   = request.getParameter("email");
@@ -56,6 +61,7 @@ public class UpdateProfileServlet extends HttpServlet {
         String sport      = request.getParameter("sport");
         String skillLevel = request.getParameter("skillLevel");
 
+        // Validate required fields
         if (firstName == null || firstName.trim().isEmpty() ||
                 newEmail == null || newEmail.trim().isEmpty()) {
 
@@ -66,35 +72,67 @@ public class UpdateProfileServlet extends HttpServlet {
             return;
         }
 
+        // Get current user
         User user = userDAO.getUserByEmail(sessionEmail);
         if (user == null) {
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
 
+        // ===== HANDLE IMAGE UPLOAD (Same pattern as RegisterServlet) =====
+        Part filePart = request.getPart("profilePic");
+        String fileName = (filePart != null) ? filePart.getSubmittedFileName() : null;
+
+        String imagePath = null;  // Will remain null if no new image uploaded
+        if (fileName != null && !fileName.isEmpty()) {
+            // Generate unique filename: userId_timestamp_ originalfilename
+            int userId = (int) session.getAttribute("userId");
+            String uniqueFileName = userId + "_" + System.currentTimeMillis() + "_" + fileName;
+
+            imagePath = "uploads/" + uniqueFileName;
+            String uploadDir = getServletContext().getRealPath("") + "/uploads/";
+            java.io.File dir = new java.io.File(uploadDir);
+            if (!dir.exists()) dir.mkdirs();
+
+            filePart.write(uploadDir + uniqueFileName);
+        }
+        // ===== END IMAGE UPLOAD =====
+
+        // Update user object with form data
         user.setFirstName(firstName.trim());
-        user.setLastName(lastName     != null ? lastName.trim()   : "");
+        user.setLastName(lastName != null ? lastName.trim() : "");
         user.setEmail(newEmail.trim());
-        user.setPhone(phone           != null ? phone.trim()      : "");
-        user.setSport(sport           != null ? sport.trim()      : "");
+        user.setPhone(phone != null ? phone.trim() : "");
+        user.setSport(sport != null ? sport.trim() : "");
         user.setSkillLevel(skillLevel != null ? skillLevel.trim() : "");
 
+        // If new image was uploaded, update the image path
+        if (imagePath != null) {
+            user.setImage(imagePath);
+        }
+
+        // Update in database
         boolean updated = userDAO.updateUser(user);
 
         if (updated) {
+            // Update session email if changed
             if (!sessionEmail.equals(newEmail.trim())) {
                 session.setAttribute("email", newEmail.trim());
             }
+            // Update session user object
+            session.setAttribute("user", user);
             session.setAttribute("successMsg", "Profile updated successfully.");
             response.sendRedirect(request.getContextPath() + "/profile");
         } else {
-            session.setAttribute("errorMsg", "Failed to update. Please try again.");
+            session.setAttribute("errorMsg", "Failed to update profile. Please try again.");
             session.setAttribute("user", user);
             response.sendRedirect(request.getContextPath() + "/editProfile");
         }
     }
 
-    // handling the password change
+    // ============================================================================
+    // HANDLE PASSWORD CHANGE (ORIGINAL)
+    // ============================================================================
     private void handleChangePassword(HttpServletRequest request,
                                       HttpServletResponse response,
                                       HttpSession session,
