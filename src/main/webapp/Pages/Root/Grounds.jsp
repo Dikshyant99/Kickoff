@@ -18,6 +18,7 @@
       <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
       <li><a href="${pageContext.request.contextPath}/grounds" class="active">Grounds</a></li>
       <li><a href="${pageContext.request.contextPath}/about">About</a></li>
+      <li><a href="/kickoff/contact">Contact</a></li>
     </ul>
     <div class="navbar_actions">
       <c:choose>

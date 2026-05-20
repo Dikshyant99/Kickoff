@@ -21,8 +21,6 @@
     </ul>
     <div class="navbar_actions">
       <span class="welcome_text">Hi, ${sessionScope.firstName}</span>
-      <a href="${pageContext.request.contextPath}/profile" class="login_btn">Dashboard</a>
-      <a href="${pageContext.request.contextPath}/logout"  class="register_btn">Logout</a>
     </div>
   </nav>
 
