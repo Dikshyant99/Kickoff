@@ -159,7 +159,6 @@ public class GroundDAO {
          */
         String sql = "SELECT * FROM ground_slots " +
                 "WHERE ground_id = ? AND status = 'available' " +
-                "AND slot_date >= CURDATE() " +
                 "ORDER BY slot_date, start_time";
 
         try (Connection con = DBUtil.getConnection();
