@@ -5,9 +5,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Edit Profile - KickOff</title>
+  <title>Register - KickOff</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/userdashboard.css"/>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/register.css"/>
 </head>
 <body>
 
@@ -17,241 +17,182 @@
       <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
       <li><a href="${pageContext.request.contextPath}/grounds">Grounds</a></li>
       <li><a href="${pageContext.request.contextPath}/about">About</a></li>
-      <li><a href="${pageContext.request.contextPath}/contact">Contact</a></li>
+       <li><a href="${pageContext.request.contextPath}/contact">Contact</a></li>
     </ul>
     <div class="navbar_actions">
-      <span class="welcome_text">Hi, ${sessionScope.firstName}</span>
-      <a href="${pageContext.request.contextPath}/profile" class="login_btn">Dashboard</a>
-      <a href="${pageContext.request.contextPath}/logout"  class="register_btn">Logout</a>
+      <a href="${pageContext.request.contextPath}/login"    class="login_btn">Login</a>
+      <a href="${pageContext.request.contextPath}/register" class="register_btn">Register</a>
     </div>
   </nav>
 
-  <div class="layout">
+  <div class="auth_wrapper">
+    <div class="auth_card">
 
-    <aside class="sidebar">
-      <a href="${pageContext.request.contextPath}/profile"    class="sidebar_item">My Profile</a>
-      <a href="${pageContext.request.contextPath}/myBookings" class="sidebar_item">My Bookings</a>
-      <a href="${pageContext.request.contextPath}/logout"     class="sidebar_item">Logout</a>
-    </aside>
+      <div class="auth_brand">
+        <a href="${pageContext.request.contextPath}/home">Kick<span>Off</span></a>
+      </div>
+      <p class="auth_heading">Create your account</p>
+      <p class="auth_subheading">Join thousands of players and teams across Nepal</p>
 
-    <main class="main">
+      <hr class="auth_divider"/>
 
-      <div class="page_header">
-        <p class="page_title">Edit Profile</p>
-        <a href="${pageContext.request.contextPath}/profile" class="btn btn_outline">Back</a>
+      <form action="${pageContext.request.contextPath}/register" method="post" enctype="multipart/form-data">
+
+        <c:if test="${not empty sessionScope.errorMsg}">
+          <div class="msg_error">${sessionScope.errorMsg}</div>
+          <c:remove var="errorMsg" scope="session"/>
+        </c:if>
+
+        <c:if test="${not empty sessionScope.successMsg}">
+          <div class="msg_success">${sessionScope.successMsg}</div>
+          <c:remove var="successMsg" scope="session"/>
+        </c:if>
+
+        <p class="section_tag">Personal Info</p>
+
+        <div class="form_row_2col">
+          <div class="form_group">
+            <label class="form_label" for="firstName">First name</label>
+            <input class="form_input" type="text" id="firstName" name="firstName"
+                   placeholder="Dikshyant"
+                   value="${not empty sessionScope.firstName ? sessionScope.firstName : ''}"
+                   required autocomplete="given-name"/>
+          </div>
+          <div class="form_group">
+            <label class="form_label" for="lastName">Last name</label>
+            <input class="form_input" type="text" id="lastName" name="lastName"
+                   placeholder="Karki"
+                   value="${not empty sessionScope.lastName ? sessionScope.lastName : ''}"
+                   required autocomplete="family-name"/>
+          </div>
+        </div>
+
+        <div class="form_group">
+          <label class="form_label" for="email">Email address</label>
+          <input class="form_input" type="email" id="email" name="email"
+                 placeholder="dikshyant67@gmail.com"
+                 value="${not empty sessionScope.email ? sessionScope.email : ''}"
+                 required autocomplete="email"/>
+        </div>
+
+        <div class="form_group">
+          <label class="form_label" for="phone">Phone number</label>
+          <input class="form_input" type="tel" id="phone" name="phone"
+                 placeholder="98XXXXXXXX"
+                 value="${not empty sessionScope.phone ? sessionScope.phone : ''}"
+                 autocomplete="tel"/>
+        </div>
+
+        <div class="form_group">
+          <label class="form_label" for="image">Profile Image</label>
+          <input class="form_input" type="file" id="image" name="image"
+                 accept="image/*"/>
+        </div>
+
+        <p class="section_tag">Sports Profile</p>
+
+        <div class="form_row_2col">
+          <div class="form_group">
+            <label class="form_label" for="sport">Favourite sport</label>
+            <select class="form_select" id="sport" name="sport">
+              <option value="" disabled
+                <c:if test="${empty sessionScope.sport}">selected</c:if>>
+                Select sport
+              </option>
+              <option value="football"
+                <c:if test="${sessionScope.sport eq 'football'}">selected</c:if>>
+                Football
+              </option>
+              <option value="cricket"
+                <c:if test="${sessionScope.sport eq 'cricket'}">selected</c:if>>
+                Cricket
+              </option>
+              <option value="basketball"
+                <c:if test="${sessionScope.sport eq 'basketball'}">selected</c:if>>
+                Basketball
+              </option>
+              <option value="tennis"
+                <c:if test="${sessionScope.sport eq 'tennis'}">selected</c:if>>
+                Tennis
+              </option>
+            </select>
+          </div>
+          <div class="form_group">
+            <label class="form_label" for="skill">Skill level</label>
+            <select class="form_select" id="skill" name="skillLevel">
+              <option value="" disabled
+                <c:if test="${empty sessionScope.skillLevel}">selected</c:if>>
+                Select level
+              </option>
+              <option value="beginner"
+                <c:if test="${sessionScope.skillLevel eq 'beginner'}">selected</c:if>>
+                Beginner
+              </option>
+              <option value="intermediate"
+                <c:if test="${sessionScope.skillLevel eq 'intermediate'}">selected</c:if>>
+                Intermediate
+              </option>
+              <option value="advanced"
+                <c:if test="${sessionScope.skillLevel eq 'advanced'}">selected</c:if>>
+                Advanced
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <p class="section_tag">Security</p>
+
+        <div class="form_group">
+          <label class="form_label" for="password">Password</label>
+          <input class="form_input" type="password" id="password" name="password"
+                 placeholder="Min. 8 characters with letters and numbers"
+                 required autocomplete="new-password"/>
+        </div>
+
+        <div class="form_group">
+          <label class="form_label" for="confirmPassword">Confirm password</label>
+          <input class="form_input" type="password" id="confirmPassword"
+                 name="confirmPassword"
+                 placeholder="Repeat your password"
+                 required autocomplete="new-password"/>
+        </div>
+
+        <div class="terms_row">
+          <input type="checkbox" id="terms" name="terms" required/>
+          <label class="terms_text" for="terms">
+            I agree to KickOff's
+            <a href="#">Terms of Service</a> and
+            <a href="#">Privacy Policy</a>
+          </label>
+        </div>
+
+        <button type="submit" class="auth_submit_btn">Create Account</button>
+
+      </form>
+
+      <div class="auth_separator">
+        <div class="auth_separator_line"></div>
+        <span class="auth_separator_text">or sign up with</span>
+        <div class="auth_separator_line"></div>
       </div>
 
-      <!-- Success/Error Messages -->
-      <c:if test="${not empty sessionScope.successMsg}">
-        <div class="msg_success">${sessionScope.successMsg}</div>
-        <c:remove var="successMsg" scope="session"/>
-      </c:if>
-      <c:if test="${not empty sessionScope.errorMsg}">
-        <div class="msg_error">${sessionScope.errorMsg}</div>
-        <c:remove var="errorMsg" scope="session"/>
-      </c:if>
+      <p class="auth_footer_text">
+        Already have an account?
+        <a href="${pageContext.request.contextPath}/login">Log in</a>
+      </p>
 
-      <!-- ===== EDIT PROFILE FORM ===== -->
-      <form action="${pageContext.request.contextPath}/updateProfile"
-            method="post"
-            enctype="multipart/form-data"
-            style="margin-bottom: 24px;">
-
-        <div class="profile_card" style="margin-bottom: 24px;">
-          <h3 style="font-size: 1.1rem; font-weight: 600; color: #f0f0f0; margin-bottom: 20px;">
-            Personal Information
-          </h3>
-
-          <!-- ===== PROFILE PICTURE UPLOAD (NEW) ===== -->
-          <div style="margin-bottom: 24px;">
-            <label style="display: block; font-size: 0.85rem; color: #999; margin-bottom: 8px;">
-              Profile Picture
-            </label>
-            <input type="file"
-                   id="profilePicInput"
-                   name="profilePic"
-                   accept="image/*"
-                   style="width: 100%; padding: 12px; background: #2a2a2a; border: 1px solid #444; border-radius: 6px; color: #f0f0f0; font-size: 0.95rem; cursor: pointer;"
-                   onchange="previewImage(event)"/>
-
-            <!-- Preview of selected image -->
-            <div id="previewContainer" style="margin-top: 12px; display: none;">
-              <p style="font-size: 0.85rem; color: #999; margin-bottom: 8px;">Preview:</p>
-              <img id="previewImage"
-                   src=""
-                   alt="Preview"
-                   style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 2px solid #2a6fdb;"/>
-            </div>
-          </div>
-
-          <!-- First Name & Last Name -->
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
-            <div>
-              <label style="display: block; font-size: 0.85rem; color: #999; margin-bottom: 8px;">
-                First Name
-              </label>
-              <input type="text"
-                     name="firstName"
-                     value="${user.firstName}"
-                     required
-                     style="width: 100%; padding: 12px; background: #2a2a2a; border: 1px solid #444; border-radius: 6px; color: #f0f0f0; font-size: 0.95rem;"/>
-            </div>
-            <div>
-              <label style="display: block; font-size: 0.85rem; color: #999; margin-bottom: 8px;">
-                Last Name
-              </label>
-              <input type="text"
-                     name="lastName"
-                     value="${user.lastName}"
-                     style="width: 100%; padding: 12px; background: #2a2a2a; border: 1px solid #444; border-radius: 6px; color: #f0f0f0; font-size: 0.95rem;"/>
-            </div>
-          </div>
-
-          <!-- Email -->
-          <div style="margin-bottom: 16px;">
-            <label style="display: block; font-size: 0.85rem; color: #999; margin-bottom: 8px;">
-              Email
-            </label>
-            <input type="email"
-                   name="email"
-                   value="${user.email}"
-                   required
-                   style="width: 100%; padding: 12px; background: #2a2a2a; border: 1px solid #444; border-radius: 6px; color: #f0f0f0; font-size: 0.95rem;"/>
-          </div>
-
-          <!-- Phone -->
-          <div style="margin-bottom: 16px;">
-            <label style="display: block; font-size: 0.85rem; color: #999; margin-bottom: 8px;">
-              Phone
-            </label>
-            <input type="text"
-                   name="phone"
-                   value="${user.phone}"
-                   style="width: 100%; padding: 12px; background: #2a2a2a; border: 1px solid #444; border-radius: 6px; color: #f0f0f0; font-size: 0.95rem;"/>
-          </div>
-
-          <!-- Sport & Skill Level -->
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
-            <div>
-              <label style="display: block; font-size: 0.85rem; color: #999; margin-bottom: 8px;">
-                Favorite Sport
-              </label>
-              <input type="text"
-                     name="sport"
-                     value="${user.sport}"
-                     style="width: 100%; padding: 12px; background: #2a2a2a; border: 1px solid #444; border-radius: 6px; color: #f0f0f0; font-size: 0.95rem;"/>
-            </div>
-            <div>
-              <label style="display: block; font-size: 0.85rem; color: #999; margin-bottom: 8px;">
-                Skill Level
-              </label>
-              <select name="skillLevel"
-                      style="width: 100%; padding: 12px; background: #2a2a2a; border: 1px solid #444; border-radius: 6px; color: #f0f0f0; font-size: 0.95rem;">
-                <option value="">Select Skill Level</option>
-                <option value="Beginner" ${user.skillLevel eq 'Beginner' ? 'selected' : ''}>Beginner</option>
-                <option value="Intermediate" ${user.skillLevel eq 'Intermediate' ? 'selected' : ''}>Intermediate</option>
-                <option value="Advanced" ${user.skillLevel eq 'Advanced' ? 'selected' : ''}>Advanced</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- Save Changes Button -->
-          <div style="display: flex; gap: 12px; margin-top: 24px;">
-            <button type="button"
-                    class="btn btn_outline"
-                    onclick="window.location.href='${pageContext.request.contextPath}/profile'"
-                    style="width: 50%; padding: 12px; font-size: 1rem;">
-              Cancel
-            </button>
-            <button type="submit"
-                    class="btn btn_primary"
-                    style="width: 50%; padding: 12px; font-size: 1rem;">
-              Save Changes
-            </button>
-          </div>
-        </div>
-      </form>
-
-      <!-- ===== CHANGE PASSWORD FORM ===== -->
-      <form action="${pageContext.request.contextPath}/changePassword" method="post">
-        <div class="profile_card">
-          <h3 style="font-size: 1.1rem; font-weight: 600; color: #f0f0f0; margin-bottom: 20px;">
-            Change Password
-          </h3>
-
-          <!-- Current Password -->
-          <div style="margin-bottom: 16px;">
-            <label style="display: block; font-size: 0.85rem; color: #999; margin-bottom: 8px;">
-              Current Password
-            </label>
-            <input type="password"
-                   name="currentPassword"
-                   required
-                   style="width: 100%; padding: 12px; background: #2a2a2a; border: 1px solid #444; border-radius: 6px; color: #f0f0f0; font-size: 0.95rem;"/>
-          </div>
-
-          <!-- New Password -->
-          <div style="margin-bottom: 16px;">
-            <label style="display: block; font-size: 0.85rem; color: #999; margin-bottom: 8px;">
-              New Password
-            </label>
-            <input type="password"
-                   name="newPassword"
-                   required
-                   style="width: 100%; padding: 12px; background: #2a2a2a; border: 1px solid #444; border-radius: 6px; color: #f0f0f0; font-size: 0.95rem;"/>
-          </div>
-
-          <!-- Confirm Password -->
-          <div style="margin-bottom: 16px;">
-            <label style="display: block; font-size: 0.85rem; color: #999; margin-bottom: 8px;">
-              Confirm Password
-            </label>
-            <input type="password"
-                   name="confirmPassword"
-                   required
-                   style="width: 100%; padding: 12px; background: #2a2a2a; border: 1px solid #444; border-radius: 6px; color: #f0f0f0; font-size: 0.95rem;"/>
-          </div>
-
-          <!-- Update Password Button -->
-          <div style="display: flex; gap: 12px; margin-top: 24px;">
-            <button type="button"
-                    class="btn btn_outline"
-                    onclick="window.location.href='${pageContext.request.contextPath}/profile'"
-                    style="width: 50%; padding: 12px; font-size: 1rem;">
-              Cancel
-            </button>
-            <button type="submit"
-                    class="btn btn_primary"
-                    style="width: 50%; padding: 12px; font-size: 1rem;">
-              Update Password
-            </button>
-          </div>
-        </div>
-      </form>
-
-    </main>
+    </div>
   </div>
 
-  <!-- JavaScript for image preview -->
-  <script>
-    function previewImage(event) {
-      const file = event.target.files[0];
-
-      if (file) {
-        const reader = new FileReader();
-
-        reader.onload = function(e) {
-          const previewContainer = document.getElementById('previewContainer');
-          const previewImage = document.getElementById('previewImage');
-
-          previewImage.src = e.target.result;
-          previewContainer.style.display = 'block';
-        };
-
-        reader.readAsDataURL(file);
-      }
-    }
-  </script>
+  <footer class="footer">
+    <a href="${pageContext.request.contextPath}/home" class="footer_logo">Kick<span>Off</span></a>
+    <ul class="footer_links">
+      <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
+      <li><a href="${pageContext.request.contextPath}/about">About</a></li>
+      <li><a href="${pageContext.request.contextPath}/contact">Contact</a></li>
+    </ul>
+    <p class="footer_copy">Â© 2026 KickOff. All rights reserved.</p>
+  </footer>
 
 </body>
 </html>
