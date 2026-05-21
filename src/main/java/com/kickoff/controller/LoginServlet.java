@@ -62,6 +62,7 @@ public class LoginServlet extends HttpServlet {
         if (result.equals("success")) {
 
             User user = userService.getUserByEmail(email);
+            System.out.println("Email validation: " + email.contains("@"));//
 
             //null check on user
             if (user == null) {
