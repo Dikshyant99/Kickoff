@@ -104,7 +104,7 @@ public class BookingServlet extends HttpServlet {
         request.setAttribute("ground", ground);
         request.setAttribute("slots", slots);
         // Forward to booking form page
-        request.getRequestDispatcher("/Pages/User/booking-form.jsp")
+        request.getRequestDispatcher("/WEB-INF/Pages/User/booking-form.jsp")
                 .forward(request, response);
     }
 
@@ -147,7 +147,7 @@ public class BookingServlet extends HttpServlet {
 
         // Send data to JSP
         request.setAttribute("bookings", bookings);
-        request.getRequestDispatcher("/Pages/User/bookings.jsp")
+        request.getRequestDispatcher("/WEB-INF/Pages/User/bookings.jsp")
                 .forward(request, response);
     }
 

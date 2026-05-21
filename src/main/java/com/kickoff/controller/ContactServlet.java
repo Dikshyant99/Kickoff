@@ -19,7 +19,7 @@ public class ContactServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Forwarding the request to Contact.jsp page
-        request.getRequestDispatcher("/Pages/Root/Contact.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/Pages/Root/Contact.jsp").forward(request, response);
     }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

@@ -91,7 +91,7 @@ public class HomeServlet extends HttpServlet {
         }
 
         // Forwarding request to Homepage.jsp
-        request.getRequestDispatcher("/Pages/Root/Homepage.jsp")
+        request.getRequestDispatcher("/WEB-INF/Pages/Root/Homepage.jsp")
                 .forward(request, response);
     }
     // Handles POST requests by calling doGet()

@@ -54,7 +54,7 @@ public class GroundServlet extends HttpServlet {
             request.setAttribute("errorMsg", "Error: " + e.getMessage());
         }
         // Forwarding request to Grounds.jsp page
-        request.getRequestDispatcher("/Pages/Root/Grounds.jsp")
+        request.getRequestDispatcher("/WEB-INF/Pages/Root/Grounds.jsp")
                 .forward(request, response);
     }
 }

@@ -47,12 +47,12 @@ public class GroundDetailServlet extends HttpServlet {
             // If no ground found, show 404 error page
             if (ground == null) {
                 request.setAttribute("errorMsg", "Ground not found");
-                request.getRequestDispatcher("/Pages/ErrorPage/404error.jsp").forward(request, response);
+                request.getRequestDispatcher("/WEB-INF/Pages/ErrorPage/404error.jsp").forward(request, response);
                 return;
             }
             // Send ground details to JSP page
             request.setAttribute("ground", ground);
-            request.getRequestDispatcher("/Pages/Root/ground-detail.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/Pages/Root/ground-detail.jsp").forward(request, response);
 
         } catch (NumberFormatException e) {
             // If ID is invalid number, redirect to grounds page
@@ -61,7 +61,7 @@ public class GroundDetailServlet extends HttpServlet {
             // Handle any unexpected errors
             e.printStackTrace();
             request.setAttribute("errorMsg", "Error: " + e.getMessage());
-            request.getRequestDispatcher("/Pages/ErrorPage/404error.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/Pages/ErrorPage/404error.jsp").forward(request, response);
         }
     }
 }

@@ -40,7 +40,7 @@ public class ProfileServlet extends HttpServlet {
         request.setAttribute("unreadCount",  notifDAO.countUnread(user.getUserId()));
 
         request.setAttribute("user", user);
-        request.getRequestDispatcher("/Pages/User/profile.jsp")
+        request.getRequestDispatcher("/WEB-INF/Pages/User/profile.jsp")
                 .forward(request, response);
     }
 

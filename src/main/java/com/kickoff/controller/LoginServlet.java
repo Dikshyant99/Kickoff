@@ -42,7 +42,7 @@ public class LoginServlet extends HttpServlet {
 
         request.setAttribute("savedEmail", savedEmail);
         request.setAttribute("remembered", remembered);
-        request.getRequestDispatcher("/Pages/Auth/login.jsp")
+        request.getRequestDispatcher("/WEB-INF/Pages/Auth/login.jsp")
                 .forward(request, response);
     }
 

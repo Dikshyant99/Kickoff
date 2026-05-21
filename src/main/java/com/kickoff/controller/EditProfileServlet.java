@@ -43,7 +43,7 @@ public class EditProfileServlet extends HttpServlet {
 // Send user object to JSP to pre-fill the form fields
         request.setAttribute("user", user);
         // Forward to edit profile page
-        request.getRequestDispatcher("/Pages/User/editProfile.jsp")
+        request.getRequestDispatcher("/WEB-INF/Pages/User/editProfile.jsp")
                 .forward(request, response);
     }
     /**

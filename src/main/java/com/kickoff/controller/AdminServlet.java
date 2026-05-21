@@ -58,20 +58,20 @@ public class AdminServlet extends HttpServlet {
                 // Display all users
                 case "listUsers":
                     request.setAttribute("users", adminService.getAllUsers());
-                    request.getRequestDispatcher("/Pages/Admin/users.jsp")
+                    request.getRequestDispatcher("/WEB-INF/Pages/Admin/users.jsp")
                             .forward(request, response);
                     break;
                 // Display all grounds
                 case "listGrounds":
                     request.setAttribute("grounds", adminService.getAllGrounds());
-                    request.getRequestDispatcher("/Pages/Admin/grounds.jsp")
+                    request.getRequestDispatcher("/WEB-INF/Pages/Admin/grounds.jsp")
                             .forward(request, response);
                     break;
 
                 //Display Bookings
                 case "listBookings":
                     request.setAttribute("bookings", bookingService.getAllBookings());
-                    request.getRequestDispatcher("/Pages/Admin/bookings.jsp")
+                    request.getRequestDispatcher("/WEB-INF/Pages/Admin/bookings.jsp")
                             .forward(request, response);
                     break;
                 //Soft Delete Users
@@ -231,7 +231,7 @@ public class AdminServlet extends HttpServlet {
         request.setAttribute("recentBookings", adminService.getRecentBookings());
 
         // Forward to dashboard page
-        request.getRequestDispatcher("/Pages/Admin/dashboard.jsp")
+        request.getRequestDispatcher("/WEB-INF/Pages/Admin/dashboard.jsp")
                 .forward(request, response);
     }
 }
