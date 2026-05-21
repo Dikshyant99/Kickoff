@@ -204,7 +204,7 @@
                 <td>
                   <a href="${pageContext.request.contextPath}/admin?action=deleteUser&id=${user.userId}"
                      class="action_link action_deactivate"
-                     onclick="return confirm('Deactivate this user?')">Deactivate</a>
+                     ">Deactivate</a>
                 </td>
               </tr>
             </c:forEach>

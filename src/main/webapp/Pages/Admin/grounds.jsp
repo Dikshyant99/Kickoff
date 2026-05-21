@@ -122,7 +122,7 @@
                   </c:choose>
                   <a href="${pageContext.request.contextPath}/admin?action=deleteGround&id=${ground.groundId}"
                      class="btn btn_red"
-                     onclick="return confirm('Delete this ground?')">Delete</a>
+                    ">Delete</a>
                 </div>
               </div>
             </c:forEach>

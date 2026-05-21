@@ -79,7 +79,7 @@
                   <span class="badge badge_blue">${user.role}</span>
                   <a href="${pageContext.request.contextPath}/admin?action=deleteUser&id=${user.userId}"
                      class="btn btn_red"
-                     onclick="return confirm('Delete this user?')">Delete</a>
+                     ">Delete</a>
                 </div>
               </div>
             </c:forEach>

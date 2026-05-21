@@ -77,7 +77,7 @@
                     <span class="badge badge_yellow">Pending</span>
                     <a href="${pageContext.request.contextPath}/cancelBooking?id=${booking.bookingId}"
                        class="btn btn_red"
-                       onclick="return confirm('Cancel this booking?')">Cancel</a>
+                      ">Cancel</a>
                   </c:when>
                   <c:otherwise>
                     <span class="badge badge_red">Cancelled</span>
