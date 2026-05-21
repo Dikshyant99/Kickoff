@@ -114,7 +114,7 @@ public class UserDAO {
         return null;
     }
 
-    // ===== EMAIL EXISTS =====
+    //  EMAIL EXISTS
     // Checks if email already exists in database
     // Used during registration to prevent duplicate accounts
     public boolean emailExists(String email) {
