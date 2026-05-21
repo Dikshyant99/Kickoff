@@ -51,6 +51,7 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
+        request.getSession().setMaxInactiveInterval(900);
 
         String email      = request.getParameter("email");
         String password   = request.getParameter("password");
@@ -82,6 +83,7 @@ public class LoginServlet extends HttpServlet {
             SessionUtil.setAttribute(request, "role",       user.getRole());
             SessionUtil.setAttribute(request, "image",      user.getImage());
             SessionUtil.setAttribute(request, "createdAt",  user.getCreatedAt());
+
 
             //Handling remember me using Cookies
             if ("on".equals(rememberMe)) {
