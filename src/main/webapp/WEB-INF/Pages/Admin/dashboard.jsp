@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!-- JSTL tags are used for conditions and loops -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,10 +39,12 @@
 
       <c:if test="${not empty sessionScope.successMsg}">
         <div class="msg_success">${sessionScope.successMsg}</div>
+        <!-- Remove success message after displaying once -->
         <c:remove var="successMsg" scope="session"/>
       </c:if>
       <c:if test="${not empty sessionScope.errorMsg}">
         <div class="msg_error">${sessionScope.errorMsg}</div>
+        <!-- Remove error message after showing -->
         <c:remove var="errorMsg" scope="session"/>
       </c:if>
 
@@ -49,6 +52,7 @@
       <div class="stats_grid">
         <div class="stat_card">
           <div class="stat_label">Total Users</div>
+          <!-- Show 0 if value is null or empty -->
           <div class="stat_value">${not empty totalUsers ? totalUsers : 0}</div>
         </div>
         <div class="stat_card">
@@ -65,10 +69,12 @@
       <div class="section">
         <div class="section_title">Recent Users</div>
         <c:choose>
+          <!-- Check whether recent users list is empty -->
           <c:when test="${empty recentUsers}">
             <div class="empty">No users registered yet.</div>
           </c:when>
           <c:otherwise>
+            <!-- Loop through recent users -->
             <c:forEach var="user" items="${recentUsers}">
               <div class="list_item">
                 <div>
@@ -77,6 +83,7 @@
                 </div>
                 <div class="list_item_right">
                   <span class="badge badge_blue">${user.role}</span>
+                  <!-- Confirmation popup before deleting user -->
                   <a href="${pageContext.request.contextPath}/admin?action=deleteUser&id=${user.userId}"
                      class="btn btn_red"
                      onclick="return confirm('Delete this user?')">Delete</a>
@@ -84,6 +91,7 @@
               </div>
             </c:forEach>
           </c:otherwise>
+
         </c:choose>
       </div>
 
@@ -91,10 +99,12 @@
       <div class="section">
         <div class="section_title">Recent Booking Requests</div>
         <c:choose>
+          <!-- Show message if no bookings exist -->
           <c:when test="${empty recentBookings}">
             <div class="empty">No booking requests yet.</div>
           </c:when>
           <c:otherwise>
+            <!-- Loop through booking records -->
             <c:forEach var="booking" items="${recentBookings}">
               <div class="list_item">
                 <div>
@@ -107,17 +117,22 @@
                 </div>
                 <div class="list_item_right">
                   <c:choose>
+                    <!-- Approved booking -->
                     <c:when test="${booking.status eq 'confirmed'}">
                       <span class="badge badge_green">Approved</span>
                     </c:when>
+                    <!-- Pending booking can be approved or rejected -->
                     <c:when test="${booking.status eq 'pending'}">
                       <span class="badge badge_yellow">Pending</span>
+                      <!-- Send booking id to approve action -->
                       <a href="${pageContext.request.contextPath}/admin?action=approveBooking&id=${booking.bookingId}"
                          class="btn btn_green">Approve</a>
+                      <!-- Send booking id to reject action -->
                       <a href="${pageContext.request.contextPath}/admin?action=rejectBooking&id=${booking.bookingId}"
                          class="btn btn_red">Reject</a>
                     </c:when>
                     <c:otherwise>
+                      <!-- Remaining bookings are considered cancelled -->
                       <span class="badge badge_red">Cancelled</span>
                     </c:otherwise>
                   </c:choose>

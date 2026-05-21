@@ -11,7 +11,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-
 /**
  * This Servlet is responsible for handling all admin-related actions
  * such as managing users, grounds, bookings, and dashboard data.
@@ -50,7 +49,6 @@ public class AdminServlet extends HttpServlet {
 
         try {
             switch (action) {
-
                 case "dashboard":
                     loadDashboard(request, response);
                     break;
@@ -61,6 +59,7 @@ public class AdminServlet extends HttpServlet {
                     request.getRequestDispatcher("/WEB-INF/Pages/Admin/users.jsp")
                             .forward(request, response);
                     break;
+
                 // Display all grounds
                 case "listGrounds":
                     request.setAttribute("grounds", adminService.getAllGrounds());
