@@ -56,6 +56,8 @@ public class LoginServlet extends HttpServlet {
         String password   = request.getParameter("password");
         String rememberMe = request.getParameter("rememberMe");
 
+        System.out.println("Login attempt for email: " + email);
+
         String result = userService.checkLogin(email, password);
 
         if (result.equals("success")) {
